@@ -28,4 +28,15 @@
         <item name="colorSurfaceInverse">@color/md_theme_dark_inverseSurface</item>
         <item name="colorPrimaryInverse">@color/md_theme_dark_inversePrimary</item>
     </style>
+
+
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/md_theme_dark_primary</item>
+        <item name="android:windowSplashScreenBackground" tools:targetApi="s">@color/md_theme_dark_primary</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        <item name="android:windowSplashScreenAnimatedIcon" tools:targetApi="s">@drawable/ic_launcher_foreground</item>
+        <item name="android:windowSplashScreenIconBackgroundColor" tools:targetApi="s">@color/md_theme_dark_primary</item>
+        <item name="windowSplashScreenIconBackgroundColor">@color/md_theme_dark_primary</item>
+        <item name="postSplashScreenTheme">@style/Theme.FitTrack</item>
+    </style>
 </resources>

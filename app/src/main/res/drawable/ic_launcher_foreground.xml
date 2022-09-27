@@ -3,38 +3,38 @@
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
-  <group android:scaleX="0.07743497"
-      android:scaleY="0.07743497"
+  <group android:scaleX="1.6489094"
+      android:scaleY="1.6489094"
       android:translateX="26.22809"
       android:translateY="25.96854">
     <path
-        android:pathData="M588.67,134.7C647.82,193.85 648.56,287.65 592,344.21C535.43,400.78 441.64,400.03 382.49,340.88C323.34,281.73 322.59,187.94 379.16,131.37C435.72,74.81 529.52,75.55 588.67,134.7Z"
-        android:strokeWidth="40"
+        android:pathData="M27.754,6.187C30.599,9.033 30.641,13.553 27.91,16.284C25.179,19.015 20.659,18.973 17.813,16.128C14.968,13.282 14.926,8.762 17.657,6.031C20.388,3.3 24.909,3.342 27.754,6.187Z"
+        android:strokeWidth="1.5"
         android:fillColor="#00000000"
         android:strokeColor="#ffffff"/>
     <path
-        android:pathData="M253.08,472.15L370.31,354.92"
-        android:strokeWidth="40"
+        android:pathData="M11.83,22.111L17.331,16.611"
+        android:strokeWidth="2"
         android:fillColor="#00000000"
         android:strokeColor="#ffffff"/>
     <path
-        android:pathData="M316.65,587.06L135.81,406.21"
-        android:strokeWidth="32"
+        android:pathData="M14.858,27.545L6.373,19.059"
+        android:strokeWidth="1.5"
         android:fillColor="#00000000"
         android:strokeColor="#ffffff"/>
     <path
-        android:pathData="M287.34,616.36L106.5,435.52"
-        android:strokeWidth="32"
+        android:pathData="M13.483,28.92L4.998,20.435"
+        android:strokeWidth="1.5"
         android:fillColor="#00000000"
         android:strokeColor="#ffffff"/>
     <path
-        android:pathData="M258.03,645.67L77.19,464.83"
-        android:strokeWidth="32"
+        android:pathData="M12.108,30.295L3.622,21.81"
+        android:strokeWidth="1.5"
         android:fillColor="#00000000"
         android:strokeColor="#ffffff"/>
     <path
-        android:pathData="M121.49,603.74L154.26,570.97"
-        android:strokeWidth="40"
+        android:pathData="M5.657,28.284L7.194,26.747"
+        android:strokeWidth="2"
         android:fillColor="#00000000"
         android:strokeColor="#ffffff"/>
   </group>
