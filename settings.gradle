@@ -14,3 +14,5 @@ dependencyResolutionManagement {
 }
 rootProject.name = "FitTrack"
 include ':app'
+include ':commonui'
+include ':feature-onboard'

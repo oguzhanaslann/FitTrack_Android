@@ -25,4 +25,9 @@
             android:id="@+id/action_SecondFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/onboardFragment"
+        tools:layout="@layout/fragment_onboard"
+        android:name="com.oguzhanaslann.feature_onboard.OnboardFragment"
+        android:label="OnboardFragment" />
 </navigation>

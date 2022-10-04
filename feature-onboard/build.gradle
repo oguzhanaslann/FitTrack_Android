@@ -1,26 +1,24 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
-    id 'kotlin-kapt'
-    id 'dagger.hilt.android.plugin'
 }
 
 android {
+    namespace 'com.oguzhanaslann.feature_onboard'
     compileSdk build_versions.compile_sdk
+
     defaultConfig {
-        applicationId "com.oguzhanaslann.fittrack"
         minSdk build_versions.min_sdk
         targetSdk build_versions.target_sdk
-        versionCode build_versions.version_code
-        versionName build_versions.version_name
+
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
         release {
-            minifyEnabled shouldMinify
-            shrinkResources shouldShrinkResources
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -31,6 +29,7 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
     buildFeatures {
         viewBinding true
         dataBinding true
@@ -38,15 +37,7 @@ android {
 }
 
 dependencies {
-
     implementation project(":commonui")
-    implementation project(":feature-onboard")
-
-    implementation 'androidx.core:core-splashscreen:1.0.0'
-
-
-    implementation "com.google.dagger:hilt-android:$hilt_version"
-    kapt "com.google.dagger:hilt-compiler:$hilt_version"
 
     testImplementation "junit:junit:$versions.junit"
     androidTestImplementation "androidx.test.ext:junit:$versions.androidx_junit"
