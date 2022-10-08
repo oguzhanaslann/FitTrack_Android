@@ -26,6 +26,7 @@ import com.oguzhanaslann.commonui.Navigator
 import com.oguzhanaslann.fittrack.R
 import com.oguzhanaslann.fittrack.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -56,6 +57,7 @@ class MainActivity : AppCompatActivity() {
                 else -> Unit // navigateHome()
             }
 
+            // TODO: this is an ugly solution, find a better way to handle this
             Handler(Looper.getMainLooper()).postDelayed({
                 it.remove() // Remove the splash screen view
             }, 500) // Delay removal to allow exit animation to play and navigation to complete
@@ -70,10 +72,16 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
     }
 
-    private fun navigateOnboard() = navigator.navigateToOnBoard(navController)
+    private fun navigateOnboard() {
+        navigator.navigateToOnBoard(navController) {
+            Timber.e("Navigation to OnBoard failed")
+        }
+    }
 
     private fun navigateAuthentication() {
-        //navigator.navigateToAuthentication(navController)
+        navigator.navigateToAuthentication(navController) {
+            Timber.e("Navigation to authentication failed")
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

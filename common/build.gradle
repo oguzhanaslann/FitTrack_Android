@@ -5,11 +5,12 @@ plugins {
 
 android {
     namespace 'com.oguzhanaslann.common'
-    compileSdk 32
+    compileSdk build_versions.compile_sdk
 
     defaultConfig {
-        minSdk 24
-        targetSdk 32
+        minSdk build_versions.min_sdk
+        targetSdk build_versions.target_sdk
+
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -17,7 +18,8 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled shouldMinify
+            shrinkResources shouldShrinkResources
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -32,12 +34,14 @@ android {
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'com.google.android.material:material:1.6.1'
 
     implementation "androidx.datastore:datastore-preferences:1.0.0"
     implementation "androidx.datastore:datastore-preferences-core:1.0.0"
+
+    api "com.jakewharton.timber:timber:$versions.timber"
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
