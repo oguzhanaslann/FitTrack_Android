@@ -1,27 +1,31 @@
 package com.oguzhanaslann.fittrack.ui
 
+import android.app.Activity
+import android.graphics.Color
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.view.Window
+import android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
-import androidx.lifecycle.flowWithLifecycle
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
-import com.google.android.material.snackbar.Snackbar
+import com.oguzhanaslann.commonui.Navigator
 import com.oguzhanaslann.fittrack.R
 import com.oguzhanaslann.fittrack.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -34,15 +38,29 @@ class MainActivity : AppCompatActivity() {
     private val navController
         get() = findNavController(R.id.nav_host_fragment_content_main)
 
+    private val navigator = Navigator()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()
         WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
         mainViewModel.initializeApp()
         splashScreen.setKeepOnScreenCondition {
-            Log.e("TAG", "onCreate: ${mainViewModel.appUiState.value.isInitializing} ")
             mainViewModel.appUiState.value.isInitializing
         }
+
+        splashScreen.setOnExitAnimationListener {
+            when {
+                mainViewModel.currentState().hasSeenOnBoard.not() -> navigateOnboard()
+                mainViewModel.currentState().isAuthenticated.not() -> navigateAuthentication()
+                else -> Unit // navigateHome()
+            }
+
+            Handler(Looper.getMainLooper()).postDelayed({
+                it.remove() // Remove the splash screen view
+            }, 500) // Delay removal to allow exit animation to play and navigation to complete
+        }
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -50,35 +68,12 @@ class MainActivity : AppCompatActivity() {
 
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
-
-        binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAnchorView(R.id.fab)
-                .setAction("Action", null).show()
-        }
-
-
-        subscribeObservers()
     }
 
-    private fun subscribeObservers() {
-        lifecycleScope.launch {
-            mainViewModel.appUiState
-                .flowWithLifecycle(lifecycle)
-                .filter { !it.isInitializing }
-                .collect {
-                    Log.e("TAG", "subscribeObservers: ${it} ")
-                    when {
-                        it.hasSeenOnBoard.not() -> navigateOnboard()
-                    }
-                }
-        }
-    }
+    private fun navigateOnboard() = navigator.navigateToOnBoard(navController)
 
-    private fun navigateOnboard() {
-        Log.e("TAG", "navigateOnboard: ")
-//        navController.navigate(R.id.action_global_nav_graph_onboard)
-        navController.navigate(deepLink = Uri.parse("https://com.oguzhanaslann.fittrack/feature_onboard"))
+    private fun navigateAuthentication() {
+        //navigator.navigateToAuthentication(navController)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

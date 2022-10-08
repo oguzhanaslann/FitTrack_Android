@@ -43,15 +43,15 @@ class MainViewModel @Inject constructor(
         initialValue = AppUiState.default()
     )
 
-
+    fun currentState() = appUiState.value
 
     fun initializeApp() {
-
         viewModelScope.launch {
             isInitializing.emit(true)
             val appInitialization = initializeAppUseCase()
             hasSeenOnBoard.emit(appInitialization.hasSeenOnboarding)
             isAuthenticated.emit(appInitialization.hasAuthenticated)
+            delay(5000)
             isInitializing.emit(false)
         }
     }
