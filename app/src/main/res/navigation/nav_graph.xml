@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/onboardFragment">
+    app:startDestination="@id/FirstFragment">
 
     <fragment
         android:id="@+id/FirstFragment"
@@ -26,10 +26,9 @@
             app:destination="@id/FirstFragment" />
     </fragment>
 
+    <include app:graph="@navigation/nav_graph_onboard" />
 
-    <fragment
-        android:id="@+id/onboardFragment"
-        tools:layout="@layout/fragment_onboard"
-        android:name="com.oguzhanaslann.feature_onboard.OnboardFragment"
-        android:label="OnboardFragment" />
+    <action
+        android:id="@+id/action_global_nav_graph_onboard"
+        app:destination="@id/nav_graph_onboard" />
 </navigation>

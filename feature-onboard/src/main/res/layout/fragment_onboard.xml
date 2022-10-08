@@ -70,7 +70,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
-        app:layout_constraintBottom_toTopOf="@id/filledButton"
+        app:layout_constraintBottom_toTopOf="@id/go_next_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -80,15 +80,16 @@
         app:tabMode="fixed" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/filledButton"
+        android:id="@+id/go_next_button"
         android:layout_width="0dp"
         android:layout_height="56dp"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
         android:backgroundTint="?attr/colorOnPrimary"
-        android:text="Get Started"
+        android:text="@string/onboard_go_next"
         android:textColor="?attr/colorPrimary"
+        android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

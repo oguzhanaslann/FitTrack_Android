@@ -16,3 +16,4 @@ rootProject.name = "FitTrack"
 include ':app'
 include ':commonui'
 include ':feature-onboard'
+include ':common'

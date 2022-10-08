@@ -2,6 +2,7 @@ package com.oguzhanaslann.fittrack.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.oguzhanaslann.fittrack.domain.usecase.InitializeAppUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
@@ -19,26 +20,39 @@ data class AppUiState(
 }
 
 @HiltViewModel
-class MainViewModel @Inject constructor() : ViewModel() {
+class MainViewModel @Inject constructor(
+    private val initializeAppUseCase: InitializeAppUseCase
+) : ViewModel() {
+    private val isInitializing = MutableStateFlow<Boolean>(true)
+    private val hasSeenOnBoard = MutableStateFlow<Boolean>(false)
+    private val isAuthenticated = MutableStateFlow<Boolean>(false)
 
-    private val _appUiState = MutableStateFlow(AppUiState.default())
-    val appUiState: StateFlow<AppUiState> = _appUiState
-
-    val isInitializing = _appUiState.map { it.isInitializing }.stateIn(
-        viewModelScope,
-        SharingStarted.WhileSubscribed(5000),
-        initialValue = true
+    val appUiState: StateFlow<AppUiState> = combine(
+        isInitializing,
+        hasSeenOnBoard,
+        isAuthenticated
+    ) { isInitializing, hasSeenOnBoard, isAuthenticated ->
+        AppUiState(
+            isInitializing = isInitializing,
+            hasSeenOnBoard = hasSeenOnBoard,
+            isAuthenticated = isAuthenticated
+        )
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.Eagerly,
+        initialValue = AppUiState.default()
     )
 
+
+
     fun initializeApp() {
-        _appUiState.value = _appUiState.value!!.copy(isInitializing = true)
+
         viewModelScope.launch {
-            delay(1500)
-            _appUiState.value = _appUiState.value!!.copy(
-                isInitializing = false,
-                hasSeenOnBoard = false,
-                isAuthenticated = false
-            )
+            isInitializing.emit(true)
+            val appInitialization = initializeAppUseCase()
+            hasSeenOnBoard.emit(appInitialization.hasSeenOnboarding)
+            isAuthenticated.emit(appInitialization.hasAuthenticated)
+            isInitializing.emit(false)
         }
     }
 

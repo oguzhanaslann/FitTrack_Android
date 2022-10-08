@@ -1,5 +1,6 @@
 package com.oguzhanaslann.fittrack.ui
 
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -8,6 +9,8 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -16,6 +19,9 @@ import com.google.android.material.snackbar.Snackbar
 import com.oguzhanaslann.fittrack.R
 import com.oguzhanaslann.fittrack.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -25,13 +31,16 @@ class MainActivity : AppCompatActivity() {
 
     private val mainViewModel: MainViewModel by viewModels()
 
+    private val navController
+        get() = findNavController(R.id.nav_host_fragment_content_main)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()
         WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
         mainViewModel.initializeApp()
         splashScreen.setKeepOnScreenCondition {
-            Log.e("TAG", "onCreate: ${mainViewModel.isInitializing.value} " )
+            Log.e("TAG", "onCreate: ${mainViewModel.appUiState.value.isInitializing} ")
             mainViewModel.appUiState.value.isInitializing
         }
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -39,7 +48,6 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
 
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
@@ -48,6 +56,29 @@ class MainActivity : AppCompatActivity() {
                 .setAnchorView(R.id.fab)
                 .setAction("Action", null).show()
         }
+
+
+        subscribeObservers()
+    }
+
+    private fun subscribeObservers() {
+        lifecycleScope.launch {
+            mainViewModel.appUiState
+                .flowWithLifecycle(lifecycle)
+                .filter { !it.isInitializing }
+                .collect {
+                    Log.e("TAG", "subscribeObservers: ${it} ")
+                    when {
+                        it.hasSeenOnBoard.not() -> navigateOnboard()
+                    }
+                }
+        }
+    }
+
+    private fun navigateOnboard() {
+        Log.e("TAG", "navigateOnboard: ")
+//        navController.navigate(R.id.action_global_nav_graph_onboard)
+        navController.navigate(deepLink = Uri.parse("https://com.oguzhanaslann.fittrack/feature_onboard"))
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
