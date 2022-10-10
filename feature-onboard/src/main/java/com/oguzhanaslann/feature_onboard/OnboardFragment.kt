@@ -1,7 +1,6 @@
 package com.oguzhanaslann.feature_onboard
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
@@ -20,6 +19,7 @@ import com.oguzhanaslann.commonui.navController
 import com.oguzhanaslann.commonui.showErrorPopUpDialog
 import com.oguzhanaslann.feature_onboard.databinding.FragmentOnboardBinding
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 private const val TAG = "OnboardFragment"
 
@@ -37,7 +37,7 @@ class OnboardFragment : Fragment(R.layout.fragment_onboard) {
         override fun handleOnBackPressed() {
             isEnabled = onboardViewModel.canGoBack()
             onboardViewModel.goBack()
-            Log.d(TAG, "OnboardFragment handleOnBackPressed: handled, isEnabled: $isEnabled")
+            Timber.d("OnboardFragment handleOnBackPressed: handled, isEnabled: $isEnabled")
         }
     }
 
@@ -46,8 +46,11 @@ class OnboardFragment : Fragment(R.layout.fragment_onboard) {
         _binder = FragmentOnboardBinding.bind(view)
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, onBackPressedCallback)
+        initViews()
+        subscribeObservers()
+    }
 
-
+    private fun initViews() {
         binding.onboardViewPager.adapter = OnboardingPagerAdapter(
             binding.root.context,
             childFragmentManager,
@@ -64,7 +67,9 @@ class OnboardFragment : Fragment(R.layout.fragment_onboard) {
                 onAnyPageReached()
             }
         }
+    }
 
+    private fun subscribeObservers() {
         launchOnViewLifecycleOwnerScope { lifecycleOwner, scope ->
             onboardViewModel.onboardUIState
                 .flowWithLifecycle(lifecycle)
