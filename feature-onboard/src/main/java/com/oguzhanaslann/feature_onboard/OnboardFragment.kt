@@ -1,21 +1,27 @@
 package com.oguzhanaslann.feature_onboard
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
+import androidx.navigation.NavOptions
 import com.oguzhanaslann.common.State
 import com.oguzhanaslann.common.onError
 import com.oguzhanaslann.common.onSuccess
+import com.oguzhanaslann.commonui.Navigator
 import com.oguzhanaslann.commonui.attachTabsWithPager
 import com.oguzhanaslann.commonui.doOnPageSelected
 import com.oguzhanaslann.commonui.isLastPage
 import com.oguzhanaslann.commonui.launchOnViewLifecycleOwnerScope
+import com.oguzhanaslann.commonui.navController
 import com.oguzhanaslann.commonui.showErrorPopUpDialog
-import com.oguzhanaslann.commonui.showSnackbar
 import com.oguzhanaslann.feature_onboard.databinding.FragmentOnboardBinding
 import dagger.hilt.android.AndroidEntryPoint
+
+private const val TAG = "OnboardFragment"
 
 @AndroidEntryPoint
 class OnboardFragment : Fragment(R.layout.fragment_onboard) {
@@ -25,9 +31,23 @@ class OnboardFragment : Fragment(R.layout.fragment_onboard) {
 
     private val onboardViewModel: OnboardViewModel by viewModels()
 
+    private val navigator = Navigator()
+
+    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            isEnabled = onboardViewModel.canGoBack()
+            onboardViewModel.goBack()
+            Log.d(TAG, "OnboardFragment handleOnBackPressed: handled, isEnabled: $isEnabled")
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binder = FragmentOnboardBinding.bind(view)
+
+        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, onBackPressedCallback)
+
+
         binding.onboardViewPager.adapter = OnboardingPagerAdapter(
             binding.root.context,
             childFragmentManager,
@@ -49,6 +69,7 @@ class OnboardFragment : Fragment(R.layout.fragment_onboard) {
             onboardViewModel.onboardUIState
                 .flowWithLifecycle(lifecycle)
                 .collect {
+                    onBackPressedCallback.isEnabled = onboardViewModel.canGoBack()
                     binding.onboardViewPager.currentItem = it.currentPage
                     navigateByOnboardState(it.markAsSeenState)
                 }
@@ -69,7 +90,12 @@ class OnboardFragment : Fragment(R.layout.fragment_onboard) {
     }
 
     private fun navigateAuthentication() {
-        //TODO("Not yet implemented")
+        navigator.navigateToAuthentication(
+            navController = navController,
+            navOptions = NavOptions.Builder()
+                .setPopUpTo(R.id.nav_graph_onboard, true)
+                .build()
+        )
     }
 
     private fun onLastPageReached() {

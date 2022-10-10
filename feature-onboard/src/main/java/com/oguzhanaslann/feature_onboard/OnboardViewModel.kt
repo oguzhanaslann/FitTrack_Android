@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.math.max
 import kotlin.math.min
 
 @HiltViewModel
@@ -46,6 +47,14 @@ class OnboardViewModel @Inject constructor(
 
     fun onNextPage() {
         currentOnboardPageState.update { min(it + 1, LAST_PAGE) }
+    }
+
+    fun canGoBack(): Boolean {
+        return currentOnboardPageState.value > FIRST_PAGE
+    }
+
+    fun goBack() {
+        currentOnboardPageState.update { max(it - 1, FIRST_PAGE) }
     }
 
     companion object {

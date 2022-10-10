@@ -2,29 +2,46 @@ package com.oguzhanaslann.commonui
 
 import android.net.Uri
 import androidx.navigation.NavController
+import androidx.navigation.NavOptions
 
 interface Navigator {
-    fun navigateToOnBoard(navController: NavController, onErrorAction: () -> Unit = {})
-    fun navigateToAuthentication(navController: NavController, onErrorAction: () -> Unit = {})
+    fun navigateToOnBoard(
+        navController: NavController,
+        navOptions: NavOptions? = null,
+        onErrorAction: () -> Unit = {}
+    )
+
+    fun navigateToAuthentication(
+        navController: NavController,
+        navOptions: NavOptions? = null,
+        onErrorAction: () -> Unit = {}
+    )
 }
 
 fun Navigator(): Navigator {
     return object : Navigator {
-        override fun navigateToOnBoard(navController: NavController, onErrorAction: () -> Unit) {
+        override fun navigateToOnBoard(
+            navController: NavController,
+            navOptions: NavOptions?,
+            onErrorAction: () -> Unit
+        ) {
             navigateSafe(
                 navController = navController,
                 deeplinkUri = DeeplinkBuilder.asUri(DeeplinkBuilder.ONBOARD_DEEPLINK),
+                navOptions = navOptions,
                 onErrorAction = onErrorAction
             )
         }
 
         override fun navigateToAuthentication(
             navController: NavController,
+            navOptions: NavOptions?,
             onErrorAction: () -> Unit
         ) {
             navigateSafe(
                 navController = navController,
                 deeplinkUri = DeeplinkBuilder.asUri(DeeplinkBuilder.AUTHENTICATION_DEEPLINK),
+                navOptions = navOptions,
                 onErrorAction = onErrorAction
             )
         }
@@ -33,10 +50,11 @@ fun Navigator(): Navigator {
         private fun navigateSafe(
             navController: NavController,
             deeplinkUri: Uri,
+            navOptions: NavOptions? = null,
             onErrorAction: () -> Unit = {},
         ) {
             try {
-                navController.navigate(deeplinkUri)
+                navController.navigate(deeplinkUri,navOptions)
             } catch (navException: IllegalArgumentException) {
                 onErrorAction()
             }

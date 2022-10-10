@@ -39,6 +39,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -668,3 +669,6 @@ fun Context.showSnackbar(
         durationMillis
     ).show()
 }
+
+val Fragment.navController
+    get() = findNavController()
