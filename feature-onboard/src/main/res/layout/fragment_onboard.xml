@@ -12,88 +12,115 @@
         android:id="@+id/view"
         android:layout_width="324dp"
         android:layout_height="324dp"
-        android:layout_marginTop="36dp"
+
         android:background="@drawable/circler_shape_on_primary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/guideline" />
 
     <View
         android:id="@+id/view2"
-        android:layout_width="464dp"
-        android:layout_height="464dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="-32dp"
+        android:layout_marginTop="-32dp"
+        android:layout_marginEnd="-32dp"
+        android:layout_marginBottom="-32dp"
         android:alpha="0.77"
         android:background="@drawable/circler_shape_on_primary"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/view"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/view"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/view"
         app:layout_constraintTop_toTopOf="@+id/view" />
 
     <View
-        android:layout_width="578dp"
-        android:layout_height="578dp"
-        android:layout_marginTop="8dp"
+        android:id="@+id/view4"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="-64dp"
+        android:layout_marginTop="-64dp"
+        android:layout_marginEnd="-64dp"
+        android:layout_marginBottom="-64dp"
         android:alpha="0.57"
         android:background="@drawable/circler_shape_on_primary"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/view"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/view"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="@+id/view"
+        app:layout_constraintTop_toTopOf="@+id/view" />
 
     <View
         android:id="@+id/view3"
-        android:layout_width="658dp"
-        android:layout_height="658dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="-96dp"
+        android:layout_marginTop="-96dp"
+        android:layout_marginEnd="-96dp"
+        android:layout_marginBottom="-96dp"
         android:alpha="0.25"
         android:background="@drawable/circler_shape_on_primary"
         app:layout_constraintBottom_toBottomOf="@+id/view"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/view"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/view"
         app:layout_constraintTop_toTopOf="@+id/view" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/onboard_view_pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="-80dp"
         android:background="@android:color/transparent"
-        app:layout_constraintBottom_toBottomOf="@+id/view3"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/onboard_tab_layout"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        app:layout_constraintBottom_toTopOf="@id/go_next_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:tabBackground="@drawable/tabs_selector"
-        app:tabGravity="center"
-        app:tabIndicatorHeight="0dp"
-        app:tabMode="fixed" />
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.05" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/go_next_button"
-        android:layout_width="0dp"
-        android:layout_height="56dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="32dp"
-        android:backgroundTint="?attr/colorOnPrimary"
-        android:text="@string/onboard_go_next"
-        android:textColor="?attr/colorPrimary"
-        android:textAllCaps="false"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.75" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/onboard_tab_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            app:layout_constraintBottom_toTopOf="@id/go_next_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:tabBackground="@drawable/tabs_selector"
+            app:tabGravity="center"
+            app:tabIndicatorHeight="0dp"
+            app:tabMode="fixed" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/go_next_button"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="32dp"
+            android:backgroundTint="?attr/colorOnPrimary"
+            android:text="@string/onboard_go_next"
+            android:textColor="?attr/colorPrimary"
+            android:textAllCaps="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
