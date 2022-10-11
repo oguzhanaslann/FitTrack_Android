@@ -1,6 +1,7 @@
 package com.oguzhanaslann.feature_onboard
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
@@ -58,6 +59,8 @@ class OnboardFragment : Fragment(R.layout.fragment_onboard) {
         )
 
         attachTabsWithPager(binding.onboardTabLayout, binding.onboardViewPager)
+
+        binding.onboardViewPager.currentItem = onboardViewModel.getCurrentPage()
 
         binding.onboardViewPager.doOnPageSelected {
             onboardViewModel.onPageChanged(it)
