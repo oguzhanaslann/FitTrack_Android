@@ -12,7 +12,6 @@
         android:id="@+id/view"
         android:layout_width="324dp"
         android:layout_height="324dp"
-
         android:background="@drawable/circler_shape_on_primary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

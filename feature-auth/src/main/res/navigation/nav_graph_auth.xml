@@ -9,9 +9,18 @@
         android:id="@+id/signInFragment"
         android:name="com.oguzhanaslann.feature_auth.ui.SignInFragment"
         android:label="fragment_sign_in"
-        tools:layout="@layout/fragment_sign_in" />
+        tools:layout="@layout/fragment_sign_in" >
+        <action
+            android:id="@+id/action_signInFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+    </fragment>
     <deepLink
         android:id="@+id/deepLink"
         android:autoVerify="true"
         app:uri="https://com.oguzhanaslann.fittrack/feature_authentication" />
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.oguzhanaslann.feature_auth.ui.SignUpFragment"
+        android:label="fragment_sign_up"
+        tools:layout="@layout/fragment_sign_up" />
 </navigation>

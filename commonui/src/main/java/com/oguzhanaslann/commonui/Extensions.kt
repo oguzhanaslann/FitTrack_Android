@@ -14,6 +14,8 @@ import android.net.Uri
 import android.os.Build
 import android.text.SpannableString
 import android.text.Spanned
+import android.text.TextPaint
+import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.view.LayoutInflater
 import android.view.View
@@ -672,3 +674,33 @@ fun Context.showSnackbar(
 
 val Fragment.navController
     get() = findNavController()
+
+
+fun TextView.setSpan(
+    hint: String,
+    spannedText : String,
+    onSpanClicked : (View) -> Unit
+) {
+
+    fun String.indexRangeOf(sub: String): Pair<Int, Int>? {
+        val start = indexOf(sub)
+        return when (start != -1) {
+            true -> Pair(start, start + sub.length - 1)
+            false -> null
+        }
+    }
+
+    val spannableString = SpannableString(hint)
+    val spanRange = hint.indexRangeOf(spannedText)
+
+    if (spanRange != null) {
+        spannableString.setClickableSpan(
+            spanRange = spanRange,
+            onClick = onSpanClicked,
+            spanFlag = Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+    }
+
+    movementMethod = LinkMovementMethod.getInstance()
+    text = spannableString
+}
