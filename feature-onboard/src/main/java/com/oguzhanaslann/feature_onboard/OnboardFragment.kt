@@ -1,7 +1,6 @@
 package com.oguzhanaslann.feature_onboard
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
@@ -17,7 +16,7 @@ import com.oguzhanaslann.commonui.doOnPageSelected
 import com.oguzhanaslann.commonui.isLastPage
 import com.oguzhanaslann.commonui.launchOnViewLifecycleOwnerScope
 import com.oguzhanaslann.commonui.navController
-import com.oguzhanaslann.commonui.showErrorPopUpDialog
+import com.oguzhanaslann.commonui.showErrorSnackbar
 import com.oguzhanaslann.feature_onboard.databinding.FragmentOnboardBinding
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -89,7 +88,7 @@ class OnboardFragment : Fragment(R.layout.fragment_onboard) {
             navigateAuthentication()
         }.onError {
 //            context?.showSnackbar(binding.root, getString(R.string.please_try_again))
-            showErrorPopUpDialog(
+            showErrorSnackbar(
                 message = getString(R.string.please_try_again),
                 container = binding.root,
                 onDialogDismissed = {}

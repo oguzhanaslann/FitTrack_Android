@@ -16,6 +16,12 @@ interface Navigator {
         navOptions: NavOptions? = null,
         onErrorAction: () -> Unit = {}
     )
+
+    fun navigateToHome(
+        navController: NavController,
+        navOptions: NavOptions? = null,
+        onErrorAction: () -> Unit = {}
+    )
 }
 
 fun Navigator(): Navigator {
@@ -41,6 +47,19 @@ fun Navigator(): Navigator {
             navigateSafe(
                 navController = navController,
                 deeplinkUri = DeeplinkBuilder.asUri(DeeplinkBuilder.AUTHENTICATION_DEEPLINK),
+                navOptions = navOptions,
+                onErrorAction = onErrorAction
+            )
+        }
+
+        override fun navigateToHome(
+            navController: NavController,
+            navOptions: NavOptions?,
+            onErrorAction: () -> Unit
+        ) {
+            navigateSafe(
+                navController = navController,
+                deeplinkUri = DeeplinkBuilder.asUri(DeeplinkBuilder.HOME_DEEPLINK),
                 navOptions = navOptions,
                 onErrorAction = onErrorAction
             )

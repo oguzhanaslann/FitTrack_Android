@@ -10,4 +10,7 @@
         android:name="com.oguzhanaslann.feature_home.HomepageFragment"
         android:label="fragment_homepage"
         tools:layout="@layout/fragment_homepage" />
+    <deepLink
+        android:id="@+id/deepLink"
+        app:uri="https://com.oguzhanaslann.fittrack/feature_home" />
 </navigation>

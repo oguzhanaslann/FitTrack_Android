@@ -32,6 +32,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/nav_graph"
-        tools:layout="@layout/fragment_first" />
+        tools:layout="@layout/fragment_homepage" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

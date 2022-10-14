@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/colorPrimary"
-    tools:context=".ui.SignInFragment">
+    tools:context=".ui.signin.SignInFragment">
 
     <View
         android:id="@+id/inner_circle"

@@ -1,7 +1,11 @@
 package com.oguzhanaslann.fittrack.ui
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
+import android.view.View
+import android.view.ViewTreeObserver
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -47,7 +51,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mainViewModel.initializeApp()
         splashScreen.setKeepOnScreenCondition { mainViewModel.appUiState.value.isInitializing }
-
         splashScreen.setOnExitAnimationListener {
             when {
                 mainViewModel.currentState().hasSeenOnBoard.not() -> navigateOnboard()
@@ -55,9 +58,10 @@ class MainActivity : AppCompatActivity() {
                 else -> Unit // navigateHome()
             }
 
-            it.remove()
+            Handler(Looper.getMainLooper()).postDelayed({
+                it.remove()
+            }, 100)
         }
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         onBackPressedDispatcher.addCallback(onBackPressedCallback)

@@ -11,4 +11,8 @@
     <string name="don_t_have_an_account_sign_up_span_text">Sign up</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="user_agreement">User Agreement</string>
+    <string name="email_invalid">Email is not valid</string>
+    <string name="password_invalid">Password is not valid</string>
+    <string name="unknown_error">"something went wrong "</string>
+    <string name="email_or_password_wrong">Your email or password is wrong</string>
 </resources>

@@ -14,7 +14,6 @@ import android.net.Uri
 import android.os.Build
 import android.text.SpannableString
 import android.text.Spanned
-import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.view.LayoutInflater
@@ -534,12 +533,12 @@ fun showInfoPopUpDialog(
         paddingStart = 0,
         paddingEnd = 0,
         initViews = { view: View, snackbar: Snackbar ->
-//            view.apply {
-//                findViewById<TextView>(R.id.inform_message).text = message
-//                findViewById<View>(R.id.cross).setOnClickListener {
-//                    snackbar.dismiss()
-//                }
-//            }
+            view.apply {
+                findViewById<TextView>(R.id.inform_message).text = message
+                findViewById<View>(R.id.cross).setOnClickListener {
+                    snackbar.dismiss()
+                }
+            }
         }
     ).addCallback(object : Snackbar.Callback() {
         override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
@@ -589,7 +588,7 @@ fun showSuccessPopUpDialog(
     })
 }
 
-fun showErrorPopUpDialog(
+fun showErrorSnackbar(
     context: Context,
     message: String?,
     container: View,
@@ -600,7 +599,7 @@ fun showErrorPopUpDialog(
         context = context,
         container = container,
         durationMillis = durationMillis,
-        layout = R.layout.custom_snackbar_layout,
+        layout = R.layout.custom_error_snackbar_layout,
         paddingTop = 0,
         paddingBottom = 16.dp,
         paddingStart = 0,
@@ -625,7 +624,7 @@ fun showErrorPopUpDialog(
     })
 }
 
-fun showErrorPopUpDialog(
+fun showErrorSnackbar(
     message: String?,
     container: View,
     onDialogDismissed: () -> Unit = {},
@@ -635,7 +634,7 @@ fun showErrorPopUpDialog(
         context = container.context,
         container = container,
         durationMillis = durationMillis,
-        layout = R.layout.custom_snackbar_layout,
+        layout = R.layout.custom_error_snackbar_layout,
         paddingTop = 0,
         paddingBottom = 16.dp,
         paddingStart = 0,
