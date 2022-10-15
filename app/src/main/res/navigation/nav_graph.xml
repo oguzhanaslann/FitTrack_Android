@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/nav_graph_home">
 
@@ -9,4 +10,9 @@
     <include app:graph="@navigation/nav_graph_auth" />
 
     <include app:graph="@navigation/nav_graph_home" />
+    <activity
+        android:id="@+id/hilt_MainActivity"
+        tools:layout="@layout/activity_main"
+        android:name="com.oguzhanaslann.fittrack.ui.Hilt_MainActivity"
+        android:label="Hilt_MainActivity" />
 </navigation>

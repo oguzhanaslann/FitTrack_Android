@@ -15,6 +15,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import com.oguzhanaslann.commonui.Navigator
+import com.oguzhanaslann.commonui.activityViewBinding
 import com.oguzhanaslann.fittrack.R
 import com.oguzhanaslann.fittrack.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,8 +27,7 @@ private const val TAG = "MainActivity"
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-//    private lateinit var appBarConfiguration: AppBarConfiguration
-    private lateinit var binding: ActivityMainBinding
+    private val binding by activityViewBinding { ActivityMainBinding.inflate(layoutInflater) }
 
     private val mainViewModel: MainViewModel by viewModels()
 
@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
                 it.remove()
             }, 100)
         }
-        binding = ActivityMainBinding.inflate(layoutInflater)
+
         setContentView(binding.root)
         onBackPressedDispatcher.addCallback(onBackPressedCallback)
     }
