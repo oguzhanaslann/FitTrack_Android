@@ -72,6 +72,9 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
                             val errorMessage = getErrorMessageFrom(it)
                             showErrorSnackbar(errorMessage, binding.root)
                         }
+                        .also {
+                            signInViewModel.setSignInStateAsConsumed()
+                        }
                 }
         }
     }

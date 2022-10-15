@@ -18,7 +18,7 @@ fun AppInitRepository(
         }
 
         override suspend fun hasAuthenticated(): Boolean {
-            return false
+            return fitTrackDataStore.getUserLoggedIn().first()
         }
     }
 }

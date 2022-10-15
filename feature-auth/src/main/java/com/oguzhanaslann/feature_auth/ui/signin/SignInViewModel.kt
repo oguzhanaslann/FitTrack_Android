@@ -77,6 +77,10 @@ class SignInViewModel @Inject constructor(
         return signInResult.toState()
     }
 
+    fun setSignInStateAsConsumed() {
+        signInState.update { State.Initial }
+    }
+
     companion object {
         // user email key
         const val USER_EMAIL_KEY = "userEmail"

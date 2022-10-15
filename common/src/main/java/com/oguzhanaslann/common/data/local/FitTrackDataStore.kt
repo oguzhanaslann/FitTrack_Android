@@ -8,17 +8,24 @@ import androidx.datastore.preferences.core.emptyPreferences
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 
-val preferencesUserIsPremiumKey = booleanPreferencesKey("com.oguzhanaslann.fittrack.user_is_premium")
+val preferencesUserHasSeenOnboardingKey = booleanPreferencesKey("com.oguzhanaslann.fittrack.user_has_seen_onboarding")
+val preferencesUserIsLoggedInKey = booleanPreferencesKey("com.oguzhanaslann.fittrack.user_is_logged_in")
 
 class FitTrackDataStore(
     private val dataStore: DataStore<Preferences>
 ) {
 
     suspend fun setUserSeenOnboarding(hasSeen: Boolean) =  runSafeSetOperation {
-        dataStore.edit { it[preferencesUserIsPremiumKey] = hasSeen }
+        dataStore.edit { it[preferencesUserHasSeenOnboardingKey] = hasSeen }
     }
 
-    suspend fun getUserSeenOnboarding() = dataStore.safeData.map { it[preferencesUserIsPremiumKey] ?: false }
+    suspend fun getUserSeenOnboarding() = dataStore.safeData.map { it[preferencesUserHasSeenOnboardingKey] ?: false }
+
+    suspend fun setUserLoggedIn(isLoggedIn: Boolean) = runSafeSetOperation {
+        dataStore.edit { it[preferencesUserIsLoggedInKey] = isLoggedIn }
+    }
+
+    suspend fun getUserLoggedIn() = dataStore.safeData.map { it[preferencesUserIsLoggedInKey] ?: false }
 
     private val DataStore<Preferences>.safeData
         get() = data.catch {
