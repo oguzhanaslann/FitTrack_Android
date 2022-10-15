@@ -10,7 +10,7 @@ data class SignInUIState(
     val signInState: State<Unit>
 ) {
     companion object {
-        val initial = SignInUIState(
+        fun initial() = SignInUIState(
             email = "",
             password = "",
             canSignIn = false,

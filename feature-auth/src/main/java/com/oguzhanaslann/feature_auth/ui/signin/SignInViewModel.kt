@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.oguzhanaslann.common.State
 import com.oguzhanaslann.common.toState
 import com.oguzhanaslann.feature_auth.domain.Authenticator
+import com.oguzhanaslann.feature_auth.util.FIVE_SECS_MILLIS
 import com.oguzhanaslann.feature_auth.util.isEmailValid
 import com.oguzhanaslann.feature_auth.util.isPasswordValid
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,8 +20,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
-    private val savedStateHandle: SavedStateHandle,
-    private val authenticationRepository: Authenticator
+    private val authenticator: Authenticator,
+    private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private val userEmail = savedStateHandle.getStateFlow(USER_EMAIL_KEY, "")
@@ -41,7 +42,7 @@ class SignInViewModel @Inject constructor(
     }.stateIn(
         viewModelScope,
         SharingStarted.WhileSubscribed(FIVE_SECS_MILLIS),
-        SignInUIState.initial
+        SignInUIState.initial()
     )
 
     fun setUserEmail(email: String) {
@@ -59,13 +60,12 @@ class SignInViewModel @Inject constructor(
             signInState.value = State.Loading
             val isEmailValid = isEmailValid(userEmail.value)
             val isPasswordValid = isPasswordValid(userPassword.value)
-            val isValid = isEmailValid && isPasswordValid(userPassword.value)
+            val isValid = isEmailValid && isPasswordValid
 
             val state = when {
                 isValid -> signInUser(userEmail.value, userPassword.value)
                 !isEmailValid -> State.Error(EMAIL_INVALID)
-                !isPasswordValid -> State.Error(PASSWORD_INVALID)
-                else -> State.Error(UNKNOWN_ERROR)
+                else -> State.Error(PASSWORD_INVALID)
             }
 
             signInState.value = state
@@ -73,7 +73,7 @@ class SignInViewModel @Inject constructor(
     }
 
     private suspend fun signInUser(email: String, password: String): State<Unit> {
-        val signInResult = authenticationRepository.signIn(email, password)
+        val signInResult = authenticator.signIn(email, password)
         return signInResult.toState()
     }
 
@@ -87,9 +87,6 @@ class SignInViewModel @Inject constructor(
 
         // user password key
         const val USER_PASSWORD_KEY = "userPassword"
-
-        // 5 secs millis
-        const val FIVE_SECS_MILLIS = 5000L
 
         // email invalid
         const val EMAIL_INVALID = "Email is not valid"

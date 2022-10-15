@@ -9,5 +9,7 @@ interface UserDao : BaseDao<UserEntity> {
 
     @Query("SELECT * FROM user WHERE email = :email")
     suspend fun getUserByEmail(email: String): UserEntity?
-    // insert into user (email,password) values (email,password)
+
+    @Query("DELETE FROM user")
+    suspend fun clear()
 }
