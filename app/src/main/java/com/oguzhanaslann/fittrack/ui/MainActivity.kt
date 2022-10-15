@@ -64,8 +64,16 @@ class MainActivity : AppCompatActivity() {
         }
 
         setContentView(binding.root)
+        setUpBottomNavigation()
         onBackPressedDispatcher.addCallback(onBackPressedCallback)
     }
+
+
+    private fun setUpBottomNavigation() = binding.bottomNavigationView.run {
+        background = null
+        menu.getItem(MIDDLE_ELEMENT_INDEX).isEnabled = false
+    }
+
 
     private fun navigateOnboard() {
         navigator.navigateToOnBoard(
@@ -88,5 +96,9 @@ class MainActivity : AppCompatActivity() {
         ) {
             Timber.e("Navigation to authentication failed")
         }
+    }
+
+    companion object {
+        private const val MIDDLE_ELEMENT_INDEX = 2
     }
 }

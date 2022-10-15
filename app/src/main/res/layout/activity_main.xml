@@ -11,21 +11,21 @@
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="visible"
-        android:fitsSystemWindows="true">
+        android:fitsSystemWindows="true"
+        android:visibility="visible">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
             android:background="?android:colorBackground"
-            app:menu="@menu/settings_menu"
-            android:layout_height="?attr/actionBarSize" >
+            app:menu="@menu/settings_menu">
 
-           <ImageView
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_gravity="center_vertical"
-                android:src="@drawable/fittrack_name_logo"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/fittrack_name_logo" />
 
 
         </com.google.android.material.appbar.MaterialToolbar>
@@ -37,10 +37,56 @@
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_marginTop="?attr/actionBarSize"
         app:defaultNavHost="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:navGraph="@navigation/nav_graph"
         tools:layout="@layout/fragment_homepage" />
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_new_item_fab"
+        style="@style/Widget.MaterialComponents.FloatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="?attr/colorSecondary"
+        app:borderWidth="0dp"
+        app:fabSize="mini"
+        app:layout_anchor="@id/bottomAppBar"
+        app:layout_anchorGravity="top|center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_round_add_24"
+         />
+
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/bottomAppBar"
+        style="@style/Widget.MaterialComponents.BottomAppBar"
+        android:layout_width="match_parent"
+        app:fabCradleMargin="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:backgroundTint="?android:colorBackground">
+
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavigationView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="16dp"
+            app:elevation="0dp"
+            android:elevation="0dp"
+            app:labelVisibilityMode="labeled"
+            app:menu="@menu/main_bottom_nav_menu" />
+
+        <!--
+
+                    app:itemIconTint="@drawable/bottom_navigation_color_selector"
+                    app:itemTextColor="@drawable/bottom_navigation_color_selector"
+        -->
+
+    </com.google.android.material.bottomappbar.BottomAppBar>
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
