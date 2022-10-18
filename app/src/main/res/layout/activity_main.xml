@@ -57,34 +57,29 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_round_add_24"
-         />
+        app:srcCompat="@drawable/ic_round_add_24" />
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottomAppBar"
         style="@style/Widget.MaterialComponents.BottomAppBar"
         android:layout_width="match_parent"
-        app:fabCradleMargin="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:backgroundTint="?android:colorBackground">
+        android:backgroundTint="?android:colorBackground"
+        app:fabCradleMargin="0dp">
 
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNavigationView"
+            style="@style/Widget.App.BottomNavigationView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginEnd="16dp"
-            app:elevation="0dp"
             android:elevation="0dp"
-            app:labelVisibilityMode="labeled"
+            app:elevation="0dp"
+            app:labelVisibilityMode="auto"
             app:menu="@menu/main_bottom_nav_menu" />
 
-        <!--
-
-                    app:itemIconTint="@drawable/bottom_navigation_color_selector"
-                    app:itemTextColor="@drawable/bottom_navigation_color_selector"
-        -->
 
     </com.google.android.material.bottomappbar.BottomAppBar>
 

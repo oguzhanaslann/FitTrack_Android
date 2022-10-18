@@ -41,4 +41,15 @@
         <item name="postSplashScreenTheme">@style/Theme.FitTrack</item>
         <item name="android:windowLightStatusBar">true</item>
     </style>
+
+    <style name="Widget.App.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.BottomNavigationView</item>
+    </style>
+
+    <style name="ThemeOverlay.App.BottomNavigationView" parent="">
+        <item name="colorSecondaryContainer">@color/md_theme_dark_primary</item>
+        <item name="colorOnSecondaryContainer">@color/md_theme_dark_onPrimary</item>
+        <item name="colorOnSurface">@color/md_theme_dark_primary</item>
+    </style>
+
 </resources>
