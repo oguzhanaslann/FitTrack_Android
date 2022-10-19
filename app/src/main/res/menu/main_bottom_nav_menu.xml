@@ -6,7 +6,7 @@
         android:title="@string/home" />
 
     <item
-        android:id="@+id/nav_graph_workouts"
+        android:id="@id/nav_graph_workouts"
         android:icon="@drawable/ic_gym"
         android:title="@string/workout" />
 
@@ -15,7 +15,7 @@
         android:title="" />
 
     <item
-        android:id="@+id/nav_graph_reports"
+        android:id="@id/nav_graph_reports"
         android:icon="@drawable/ic_calendar"
         android:title="@string/reports" />
 

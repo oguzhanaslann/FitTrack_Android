@@ -14,6 +14,7 @@ import androidx.core.view.WindowCompat
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import com.oguzhanaslann.commonui.Navigator
 import com.oguzhanaslann.commonui.activityViewBinding
 import com.oguzhanaslann.fittrack.R
@@ -60,6 +61,7 @@ class MainActivity : AppCompatActivity() {
 
             Handler(Looper.getMainLooper()).postDelayed({
                 it.remove()
+                binding.bottomNavigationView.setupWithNavController(navController)
             }, 100)
         }
 

@@ -1,20 +1,20 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
 }
 
 android {
+    namespace 'com.oguzhanaslann.feature_workouts'
     compileSdk build_versions.compile_sdk
+
     defaultConfig {
-        applicationId "com.oguzhanaslann.fittrack"
         minSdk build_versions.min_sdk
         targetSdk build_versions.target_sdk
-        versionCode build_versions.version_code
-        versionName build_versions.version_name
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -31,28 +31,11 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    buildFeatures {
-        viewBinding true
-        dataBinding true
-    }
 }
 
 dependencies {
-
     implementation project(":commonui")
     implementation project(":common")
-    implementation project(":feature-onboard")
-    implementation project(":feature-auth")
-    implementation project(":feature-home")
-    implementation project(":feature-workouts")
-    implementation project(":feature-reports")
-
-    implementation 'androidx.core:core-splashscreen:1.0.0'
-
-
-
-    implementation "androidx.datastore:datastore-preferences:1.0.0"
-    implementation "androidx.datastore:datastore-preferences-core:1.0.0"
 
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
