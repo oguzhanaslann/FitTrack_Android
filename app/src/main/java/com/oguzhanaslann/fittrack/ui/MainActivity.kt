@@ -53,11 +53,11 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.initializeApp()
         splashScreen.setKeepOnScreenCondition { mainViewModel.appUiState.value.isInitializing }
         splashScreen.setOnExitAnimationListener {
-            when {
-                mainViewModel.currentState().hasSeenOnBoard.not() -> navigateOnboard()
-                mainViewModel.currentState().isAuthenticated.not() -> navigateAuthentication()
-                else -> Unit // navigateHome()
-            }
+//            when {
+//                mainViewModel.currentState().hasSeenOnBoard.not() -> navigateOnboard()
+//                mainViewModel.currentState().isAuthenticated.not() -> navigateAuthentication()
+//                else -> Unit // navigateHome()
+//            }
 
             Handler(Looper.getMainLooper()).postDelayed({
                 it.remove()
