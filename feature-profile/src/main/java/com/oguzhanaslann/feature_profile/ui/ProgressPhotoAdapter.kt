@@ -1,19 +1,12 @@
-package com.oguzhanaslann.feature_profile
+package com.oguzhanaslann.feature_profile.ui
 
-import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.oguzhanaslann.commonui.horizontalLinearLayoutManaged
-import com.oguzhanaslann.commonui.viewBinding
-import com.oguzhanaslann.feature_profile.databinding.FragmentProfileBinding
 import com.oguzhanaslann.feature_profile.databinding.ItemGalleryLayoutBinding
-
-data class ProgressPhoto(val id: Int, val url: String, val description: String)
+import com.oguzhanaslann.feature_profile.domain.ProgressPhoto
 
 class ProgressPhotoAdapter :
     ListAdapter<ProgressPhoto, ProgressPhotoAdapter.Holder>(DiffCallBack()) {
@@ -48,33 +41,6 @@ class ProgressPhotoAdapter :
         override fun areContentsTheSame(oldItem: ProgressPhoto, newItem: ProgressPhoto): Boolean =
             oldItem == newItem
 
-    }
-
-}
-
-class ProfileFragment : Fragment(R.layout.fragment_profile) {
-
-    private val binding by viewBinding(FragmentProfileBinding::bind)
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        binding.recyclerView.apply {
-            horizontalLinearLayoutManaged()
-            val _adapter = ProgressPhotoAdapter().apply {
-
-            }
-
-            adapter = _adapter
-
-            _adapter.submitList(
-                listOf(
-                    ProgressPhoto(1, "url", "description"),
-                    ProgressPhoto(2, "url", "description"),
-                    ProgressPhoto(3, "url", "description"),
-                )
-            )
-        }
     }
 
 }
