@@ -443,7 +443,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/materialTextView13"
+            android:id="@+id/gallery_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -467,9 +467,9 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/materialTextView13"
+            app:layout_constraintTop_toBottomOf="@+id/gallery_header"
             tools:itemCount="8"
-            tools:listitem="@layout/item_gallery_layout" />
+            tools:listitem="@layout/item_gallery_layou_dummy" />
 
 
         <com.google.android.material.textview.MaterialTextView

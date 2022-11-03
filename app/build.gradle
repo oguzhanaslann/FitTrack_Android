@@ -6,6 +6,7 @@ plugins {
 }
 
 android {
+    namespace 'com.oguzhanaslann.fittrack'
     compileSdk build_versions.compile_sdk
     defaultConfig {
         applicationId "com.oguzhanaslann.fittrack"
@@ -35,6 +36,7 @@ android {
         viewBinding true
         dataBinding true
     }
+
 }
 
 dependencies {
