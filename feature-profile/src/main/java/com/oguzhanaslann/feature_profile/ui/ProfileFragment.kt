@@ -3,9 +3,17 @@ package com.oguzhanaslann.feature_profile.ui
 import android.os.Bundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.ui.graphics.Color
 import androidx.fragment.app.Fragment
+import com.github.mikephil.charting.components.Legend
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.components.YAxis
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
 import com.oguzhanaslann.commonui.dp
 import com.oguzhanaslann.commonui.horizontalLinearLayoutManaged
+import com.oguzhanaslann.commonui.themeColor
 import com.oguzhanaslann.commonui.viewBinding
 import com.oguzhanaslann.feature_profile.R
 import com.oguzhanaslann.feature_profile.databinding.FragmentProfileBinding
@@ -42,6 +50,56 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                     ProgressPhoto("3", "url", "description"),
                 )
             )
+        }
+
+        binding.weightLineChart.apply {
+            val entries = listOf(
+                Entry(0f, 70f),
+                Entry(1f, 75f),
+                Entry(2f, 80f),
+            )
+
+            val dataSet = LineDataSet(entries, "")
+
+            dataSet.apply {
+                color = context.getColor(com.oguzhanaslann.commonui.R.color.md_theme_light_primary)
+            }
+
+            data = LineData(dataSet)
+            xAxis.apply {
+                setDrawAxisLine(true)
+                setDrawGridLines(false)
+                setDrawLabels(true)
+                position = XAxis.XAxisPosition.BOTTOM
+                setAvoidFirstLastClipping(true)
+                setDrawLimitLinesBehindData(true)
+
+//                valueFormatter = object : ValueFormatter() {
+//                    override fun getAxisLabel(value: Float, axis: AxisBase?): String {
+//                        val day = stats[value.toInt()].first
+//                        return labelFactory(day)
+//                    }
+//                }
+//                typeface = Typeface.createFromAsset(requireContext().assets, "app/res/font/poppins_semi_bold.otf")
+            }
+
+            axisLeft.apply {
+                setDrawTopYLabelEntry(true)
+                isEnabled = true
+                setDrawAxisLine(true)
+                setDrawGridLines(false)
+                setDrawLabels(true)
+                setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART)
+//                axisMinimum = 0f
+            }
+            axisRight.isEnabled = false
+
+            setTouchEnabled(false)
+            isDragEnabled = false
+            isScaleYEnabled = false
+            isScaleXEnabled = false
+            legend.form = Legend.LegendForm.NONE
+            invalidate()
         }
 
     }
