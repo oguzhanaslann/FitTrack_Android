@@ -3,6 +3,11 @@
 
     <style name="Widget.App.CardView" parent="Widget.MaterialComponents.CardView">
         <item name="shapeAppearance">@style/MD3.Shape.Medium.Custom</item>
+        <item name="cardElevation">0dp</item>
+    </style>
+
+    <style name="Widget.App.CardView.Border" parent="Widget.Material3.CardView.Outlined">
+        <item name="cardBackgroundColor">@android:color/transparent</item>
     </style>
 
 </resources>

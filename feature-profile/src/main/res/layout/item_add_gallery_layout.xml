@@ -2,11 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_container_add"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/card_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -16,12 +16,12 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/add_photo_card"
+            style="@style/Widget.App.CardView.Border"
             android:layout_width="132dp"
             android:layout_height="172dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            app:cardBackgroundColor="?android:colorBackground"
             app:layout_constraintBottom_toTopOf="@+id/gallery_item_description"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"

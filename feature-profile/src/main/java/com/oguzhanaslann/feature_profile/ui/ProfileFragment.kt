@@ -1,13 +1,10 @@
 package com.oguzhanaslann.feature_profile.ui
 
-import android.content.Context
-import android.graphics.Typeface
 import android.os.Bundle
-import android.util.TypedValue
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
@@ -30,7 +27,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private val progressPhotoAdapter by lazy {
         ProgressPhotoAdapter(
             onAddPhotoClick = ::onAddPhotoClick,
-            firstItemPadding = 8.dp
+            onFirstItemBound = ::addItemMarginToFirstItem
         )
     }
 
@@ -111,5 +108,13 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     private fun onAddPhotoClick() {
         takePicturePreview.launch(null)
+    }
+
+    private fun addItemMarginToFirstItem(view: View) {
+        val layoutParams  = view.layoutParams as? RecyclerView.LayoutParams
+        layoutParams?.let {
+            it.marginStart = 8.dp
+            view.layoutParams = layoutParams
+        }
     }
 }
