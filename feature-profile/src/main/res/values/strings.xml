@@ -2,4 +2,10 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add_photo">Add new photo</string>
+    <string name="done">Done</string>
+    <string name="active_plan">Active plan</string>
+    <string name="_continue">Continue</string>
+    <string name="see_plan">See Plan</string>
+    <string name="old_workout_plans">Old workouts</string>
+    <string name="favorite_recipes">Favorite Recipes</string>
 </resources>

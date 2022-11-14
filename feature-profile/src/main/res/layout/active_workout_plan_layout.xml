@@ -11,12 +11,11 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/imageView4"
+            android:id="@+id/active_plan_image"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:foreground="#66000000"
+            android:foreground="@color/overlay_color"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_add_photo"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -31,12 +30,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:text="Workout Plan Name"
             android:textColor="#FFFFFF"
             android:textSize="24sp"
             app:layout_constraintEnd_toStartOf="@id/barrier2"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Workout Plan Name" />
 
         <TextView
             android:id="@+id/active_workout_plan_description"
@@ -44,16 +43,16 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:text="Workout Plan Description"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_constraintEnd_toStartOf="@id/barrier2"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/active_workout_plan_name" />
+            app:layout_constraintTop_toBottomOf="@id/active_workout_plan_name"
+            tools:text="Workout Plan Description" />
 
 
         <com.oguzhanaslann.commonui.view.CircularProgressBar
-            android:id="@+id/circularProgressBar"
+            android:id="@+id/active_plan_progress"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="32dp"
@@ -84,36 +83,47 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:barrierDirection="left"
-            app:constraint_referenced_ids="circularProgressBar" />
+            app:constraint_referenced_ids="active_plan_progress" />
 
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/materialTextView12"
+            android:id="@+id/active_plan_progress_percentage_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="%50"
             android:textAppearance="?attr/textAppearanceTitleLarge"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toTopOf="@+id/materialTextView"
-            app:layout_constraintEnd_toEndOf="@+id/circularProgressBar"
+            app:layout_constraintEnd_toEndOf="@+id/active_plan_progress"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="@+id/circularProgressBar"
-            app:layout_constraintTop_toTopOf="@+id/circularProgressBar"
-            app:layout_constraintVertical_chainStyle="packed" />
+            app:layout_constraintStart_toStartOf="@+id/active_plan_progress"
+            app:layout_constraintTop_toTopOf="@+id/active_plan_progress"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="%50" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/materialTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Done"
+            android:text="@string/done"
             android:textAppearance="?attr/textAppearanceBodyMedium"
             android:textColor="?attr/colorPrimary"
-            app:layout_constraintBottom_toBottomOf="@+id/circularProgressBar"
-            app:layout_constraintEnd_toEndOf="@+id/circularProgressBar"
+            app:layout_constraintBottom_toBottomOf="@+id/active_plan_progress"
+            app:layout_constraintEnd_toEndOf="@+id/active_plan_progress"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="@+id/circularProgressBar"
-            app:layout_constraintTop_toBottomOf="@+id/materialTextView12" />
+            app:layout_constraintStart_toStartOf="@+id/active_plan_progress"
+            app:layout_constraintTop_toBottomOf="@+id/active_plan_progress_percentage_text" />
 
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/active_plan_start_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/_continue"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="16dp"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

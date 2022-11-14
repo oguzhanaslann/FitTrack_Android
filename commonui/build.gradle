@@ -59,6 +59,7 @@ dependencies {
     api ("androidx.lifecycle:lifecycle-process:$lifecycle_version")
     api ("androidx.lifecycle:lifecycle-reactivestreams-ktx:$lifecycle_version")
 
+    api("io.coil-kt:coil:2.2.2")
 
     api "androidx.compose.ui:ui:$versions.compose_version"
     api "androidx.compose.material:material:$versions.compose_version"
