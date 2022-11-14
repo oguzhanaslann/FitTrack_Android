@@ -1,10 +1,14 @@
 package com.oguzhanaslann.feature_profile.ui
 
+import android.content.Context
+import android.graphics.Typeface
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.ui.graphics.Color
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
@@ -62,7 +66,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             val dataSet = LineDataSet(entries, "")
 
             dataSet.apply {
-                color = context.getColor(com.oguzhanaslann.commonui.R.color.md_theme_light_primary)
+                this.color = context.themeColor(R.attr.colorPrimaryProfile)
             }
 
             data = LineData(dataSet)
@@ -80,7 +84,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 //                        return labelFactory(day)
 //                    }
 //                }
-//                typeface = Typeface.createFromAsset(requireContext().assets, "app/res/font/poppins_semi_bold.otf")
+//                typeface = Typeface.createFromAsset(requireContext().assets, "app/src/main/res/font/poppins_semi_bold.ttf")
             }
 
             axisLeft.apply {
@@ -99,6 +103,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             isScaleYEnabled = false
             isScaleXEnabled = false
             legend.form = Legend.LegendForm.NONE
+            description = Description().apply { text = "" }
             invalidate()
         }
 

@@ -56,6 +56,10 @@
 
         <item name="android:windowLightStatusBar">true</item>
 
+        <item name="colorPrimaryProfile">?attr/colorPrimary</item>
+
+        <item name="materialCardViewStyle">@style/Widget.App.CardView</item>
+
     </style>
 
     <style name="Theme.FitTrack" parent="Base.Theme.FitTrack" />

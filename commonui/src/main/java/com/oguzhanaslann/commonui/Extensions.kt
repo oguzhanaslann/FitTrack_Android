@@ -16,6 +16,7 @@ import android.text.SpannableString
 import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -30,6 +31,7 @@ import android.widget.TextView
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
+import androidx.annotation.FontRes
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.core.animation.doOnEnd
@@ -63,15 +65,22 @@ fun getUriOfDrawable(context: Context?, @DrawableRes drawableId: Int): Uri? = co
     Uri.parse("android.resource://${packageName}/$drawableId")
 }
 
+//@ColorInt
+//fun Context.themeColor(
+//    @AttrRes themeAttrId: Int
+//): Int {
+//    return obtainStyledAttributes(
+//        intArrayOf(themeAttrId)
+//    ).use {
+//        it.getColor(0, Color.MAGENTA)
+//    }
+//}
+
 @ColorInt
-fun Context.themeColor(
-    @AttrRes themeAttrId: Int
-): Int {
-    return obtainStyledAttributes(
-        intArrayOf(themeAttrId)
-    ).use {
-        it.getColor(0, Color.MAGENTA)
-    }
+fun Context.themeColor(@AttrRes attr: Int): Int {
+    val typedValue = TypedValue()
+    theme.resolveAttribute(attr, typedValue, true)
+    return ContextCompat.getColor(this, typedValue.resourceId)
 }
 
 fun Fragment.openInBrowser(pageUrl: String) {
@@ -674,11 +683,10 @@ fun Context.showSnackbar(
 val Fragment.navController
     get() = findNavController()
 
-
 fun TextView.setSpan(
     hint: String,
-    spannedText : String,
-    onSpanClicked : (View) -> Unit
+    spannedText: String,
+    onSpanClicked: (View) -> Unit
 ) {
 
     fun String.indexRangeOf(sub: String): Pair<Int, Int>? {
