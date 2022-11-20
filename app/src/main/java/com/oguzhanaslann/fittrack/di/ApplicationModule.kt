@@ -1,7 +1,7 @@
 package com.oguzhanaslann.fittrack.di
 
 import android.content.Context
-import com.oguzhanaslann.common.data.local.room.FitTrackDatabase
+import com.oguzhanaslann.commonui.data.local.room.FitTrackDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

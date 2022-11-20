@@ -1,6 +1,6 @@
 package com.oguzhanaslann.fittrack.data
 
-import com.oguzhanaslann.common.data.local.FitTrackDataStore
+import com.oguzhanaslann.commonui.data.local.FitTrackDataStore
 import kotlinx.coroutines.flow.first
 
 interface AppInitRepository {

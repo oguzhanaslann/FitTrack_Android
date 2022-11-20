@@ -1,15 +1,17 @@
-package com.oguzhanaslann.common.data.local
+package com.oguzhanaslann.commonui.data.local
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
+import androidx.datastore.preferences.core.intPreferencesKey
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 
 val preferencesUserHasSeenOnboardingKey = booleanPreferencesKey("com.oguzhanaslann.fittrack.user_has_seen_onboarding")
 val preferencesUserIsLoggedInKey = booleanPreferencesKey("com.oguzhanaslann.fittrack.user_is_logged_in")
+val preferencesUserIdKey = intPreferencesKey("com.oguzhanaslann.fittrack.user_id")
 
 class FitTrackDataStore(
     private val dataStore: DataStore<Preferences>
@@ -36,5 +38,9 @@ class FitTrackDataStore(
         return runCatching {
             block()
         }
+    }
+
+   suspend fun setUserId(id: Int) {
+        runSafeSetOperation { dataStore.edit { it[preferencesUserIdKey] = id } }
     }
 }

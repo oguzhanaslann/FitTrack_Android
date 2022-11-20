@@ -1,6 +1,6 @@
 package com.oguzhanaslann.feature_onboard.di
 
-import com.oguzhanaslann.common.data.local.FitTrackDataStore
+import com.oguzhanaslann.commonui.data.local.FitTrackDataStore
 import com.oguzhanaslann.feature_onboard.data.OnboardingRepository
 import com.oguzhanaslann.feature_onboard.data.local.OnboardingLocalSource
 import dagger.Module

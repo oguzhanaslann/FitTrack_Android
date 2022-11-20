@@ -1,4 +1,4 @@
-package com.oguzhanaslann.common.data.local.room.dao
+package com.oguzhanaslann.commonui.data.local.room.dao
 
 import androidx.room.Dao
 import androidx.room.Delete

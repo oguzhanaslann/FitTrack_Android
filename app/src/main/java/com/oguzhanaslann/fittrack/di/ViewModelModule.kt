@@ -1,6 +1,6 @@
 package com.oguzhanaslann.fittrack.di
 
-import com.oguzhanaslann.common.data.local.FitTrackDataStore
+import com.oguzhanaslann.commonui.data.local.FitTrackDataStore
 import com.oguzhanaslann.fittrack.data.AppInitRepository
 import com.oguzhanaslann.fittrack.domain.usecase.InitializeAppUseCase
 import dagger.Module
