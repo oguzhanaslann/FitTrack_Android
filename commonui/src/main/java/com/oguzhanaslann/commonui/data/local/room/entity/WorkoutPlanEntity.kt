@@ -78,37 +78,21 @@ data class ExerciseEntity(
     var id: Int? = null
 }
 
-@Entity(tableName = "exercise_set")
-data class ExerciseSetEntity(
-    @ColumnInfo(name = "exercise_id")
-    val exerciseId: Int,
-    val order: Int,
-    val reps: Int? = null,
-    val weight: Int? = null,
-    val rest: Int? = null
-) {
-    @androidx.room.PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "exercise_set_id")
-    var id: Int? = null
-}
-
-data class ExerciseWithSets(
-    @Embedded val exerciseEntity: ExerciseEntity,
-    @Relation(
-        parentColumn = "exercise_id",
-        entityColumn = "exercise_id"
-    )
-    val exerciseSets: List<ExerciseSetEntity>
-)
-
-@Entity(tableName = "daily_plan_exercise_cross_ref", primaryKeys = ["daily_plan_id", "exercise_id"])
-data class DailyPlanExerciseCrossRef(
+@Entity(tableName = "daily_plan_exercise", primaryKeys = ["daily_plan_id", "exercise_id"])
+data class DailyPlanExercise(
     @ColumnInfo(name = "daily_plan_id")
     val dailyPlanId: Int,
     @ColumnInfo(name = "exercise_id")
     val exerciseId: Int,
+    @Embedded
+    val exerciseSet: ExerciseSet
+)
 
-    val order: Int
+data class ExerciseSet(
+    val order: Int,
+    val reps: Int? = null,
+    val weight: Int? = null,
+    val rest: Int? = null,
 )
 
 data class DailyPlanWithExercises(
@@ -116,12 +100,10 @@ data class DailyPlanWithExercises(
     @Relation(
         parentColumn = "daily_plan_id",
         entityColumn = "exercise_id",
-        associateBy = Junction(DailyPlanExerciseCrossRef::class),
-        entity = ExerciseEntity::class
+        associateBy = Junction(DailyPlanExercise::class),
     )
-    val exercises: List<ExerciseWithSets>
+    val exercises: List<ExerciseEntity>
 )
-
 
 data class WorkoutPlanDetail(
     @Embedded val workoutPlanEntity: WorkoutPlanEntity,
@@ -130,5 +112,112 @@ data class WorkoutPlanDetail(
         parentColumn = "workout_plan_id",
         entityColumn = "workout_plan_id"
     )
-    val dailyPlans: List<DailyPlanWithExercises>
+    val dailyPlans: List<DailyPlanWithExercises>,
+
+    @Relation(
+        parentColumn = "workout_plan_id",
+        entityColumn = "tag_name",
+        associateBy = Junction(WorkoutPlanTagCrossRef::class)
+    )
+    val tags: List<TagEntity>
+)
+
+@Entity(tableName = "user_workout_plan")
+data class UserWorkoutPlanEntity(
+    val name: String,
+    val imageUrl: String,
+    val description: String,
+
+    @ColumnInfo(name = "user_id")
+    val userId: Int,
+
+    @ColumnInfo(name = "start_date")
+    val startDate: Long,
+
+    @ColumnInfo(name = "end_date")
+    val endDate: Long,
+
+    @ColumnInfo(name = "is_completed")
+    val isCompleted: Boolean  = false,
+
+    @ColumnInfo(name = "is_active")
+    val isActive: Boolean,
+) {
+    @androidx.room.PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "user_workout_plan_id")
+    var id: Int? = null
+}
+
+@Entity(tableName = "user_daily_plan")
+data class UserDailyPlanEntity(
+
+    @ColumnInfo(name = "user_workout_plan_id")
+    val activeWorkoutPlanId: Int,
+
+    @ColumnInfo(name = "name")
+    val name: String,
+
+    @ColumnInfo(name = "order")
+    val order : Int,
+
+    @ColumnInfo(name = "user_id")
+    val userId: Int,
+
+    val imageUrl: String,
+
+    val description: String,
+
+    @ColumnInfo(name = "start_date")
+    val startDate: Long,
+
+    @ColumnInfo(name = "end_date")
+    val endDate: Long,
+
+    @ColumnInfo(name = "is_completed")
+    val isCompleted: Boolean = false,
+
+    @ColumnInfo(name = "is_active")
+    val isActive: Boolean,
+) {
+    @androidx.room.PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "user_daily_plan_id")
+    var id: Int? = null
+}
+
+data class UserWorkoutWithDailyPlans(
+    @Embedded
+    val userDailyPlanEntity: UserWorkoutPlanEntity,
+
+    @Relation(
+        parentColumn = "user_workout_plan_id",
+        entityColumn = "user_workout_plan_id"
+    )
+    val dailyPlans : List<UserDailyPlanEntity>
+)
+
+@Entity(tableName = "user_exercise")
+data class UserExerciseEntity(
+    @ColumnInfo(name = "user_daily_plan_id")
+    val activeDailyPlanId: Int,
+    val name: String,
+    val imageUrl: String,
+    val description: String,
+
+    @ColumnInfo(name = "is_completed")
+    val isCompleted: Boolean = false,
+) {
+    @androidx.room.PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "user_exercise_id")
+    var id: Int? = null
+}
+
+data class UserDailyPlanWithExercises(
+    @Embedded
+    val userDailyPlanEntity: UserDailyPlanEntity,
+
+    @Relation(
+        parentColumn = "user_daily_plan_id",
+        entityColumn = "user_daily_plan_id"
+    )
+    val exercises : List<UserExerciseEntity>
 )

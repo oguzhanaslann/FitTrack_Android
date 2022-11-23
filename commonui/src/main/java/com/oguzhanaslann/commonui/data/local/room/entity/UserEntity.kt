@@ -33,7 +33,7 @@ data class ProgressionPhotoEntity(
     val photoUrl: String,
     @ColumnInfo(name = "user_id")
     val userId : Int,
-    val date: String
+    val date: Long
 )
 
 data class UserWithWorkoutPlan(
@@ -78,7 +78,7 @@ data class UserWithFavoriteRecipes(
 @Entity(tableName = "weight_record_entity")
 data class WeightRecordEntity(
     val weight: Double,
-    val date: String,
+    val date: Long,
     @ColumnInfo(name = "user_id")
     val userId: Int
 ) {

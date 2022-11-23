@@ -10,11 +10,10 @@ import com.google.common.truth.Truth.assertThat
 import com.oguzhanaslann.commonui.data.local.room.dao.DailyPlanDao
 import com.oguzhanaslann.commonui.data.local.room.dao.DailyPlanExerciseCrossRefDao
 import com.oguzhanaslann.commonui.data.local.room.dao.ExerciseDao
-import com.oguzhanaslann.commonui.data.local.room.dao.ExerciseSetDao
 import com.oguzhanaslann.commonui.data.local.room.dao.TagDao
 import com.oguzhanaslann.commonui.data.local.room.dao.WorkoutPlanDao
 import com.oguzhanaslann.commonui.data.local.room.dao.WorkoutPlanTagCrossRefDao
-import com.oguzhanaslann.commonui.data.local.room.entity.DailyPlanExerciseCrossRef
+import com.oguzhanaslann.commonui.data.local.room.entity.DailyPlanExercise
 import com.oguzhanaslann.commonui.data.local.room.entity.WorkoutPlanTagCrossRef
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -40,7 +39,6 @@ class WorkoutDAOTest {
     lateinit var workoutPlanTagDao: WorkoutPlanTagCrossRefDao
     lateinit var dailyPlanDao: DailyPlanDao
     lateinit var exerciseDao: ExerciseDao
-    lateinit var exerciseSetDao: ExerciseSetDao
     lateinit var dailyPlanExerciseDao: DailyPlanExerciseCrossRefDao
 
     @Before
@@ -54,7 +52,6 @@ class WorkoutDAOTest {
         workoutPlanTagDao = db.workoutPlanTagDao()
         dailyPlanDao = db.dailyPlanDao()
         exerciseDao = db.exerciseDao()
-        exerciseSetDao = db.exerciseSetDao()
         dailyPlanExerciseDao = db.dailyPlanExerciseDao()
     }
 
@@ -121,44 +118,18 @@ class WorkoutDAOTest {
         exerciseDao.insert(exerciseEntity)
         val exerciseFromDb = exerciseDao.getExerciseByName(exerciseEntity.name)
 
-        val exerciseSetEntity = createExerciseSetEntity(exerciseFromDb!!.id!!)
-        exerciseSetDao.insert(exerciseSetEntity)
-
-        val dailyPlanExerciseCrossRef =
-            DailyPlanExerciseCrossRef(dailyPlanFromDb!!.id!!, exerciseFromDb.id!!, order = 0)
-        dailyPlanExerciseDao.insert(dailyPlanExerciseCrossRef)
+        val dailyPlanExercise =
+            DailyPlanExercise(
+                dailyPlanId = dailyPlanFromDb!!.id!!,
+                exerciseId = exerciseFromDb!!.id!!,
+                exerciseSet = createExerciseSet()
+            )
+        dailyPlanExerciseDao.insert(dailyPlanExercise)
 
         val workoutPlanDetail = workoutPlanDao.getWorkoutPlanDetail(workoutPlanFromDb!!.id!!)
         assertThat(workoutPlanDetail).isNotNull()
     }
 
-    @Test
-    fun test_get_daily_plan_with_exercises() = runTest {
-        val workoutPlanEntity = createWorkoutPlanEntity()
-        workoutPlanDao.insert(workoutPlanEntity)
-        val workoutPlanFromDb = workoutPlanDao.getWorkoutPlanByName(workoutPlanEntity.name)
 
-        val dailyPlanEntity = createDailyPlanEntity(workoutPlanFromDb!!.id!!)
-        dailyPlanDao.insert(dailyPlanEntity)
-        val dailyPlanFromDb = dailyPlanDao.getDailyPlanByName(dailyPlanEntity.name)
-
-        val exerciseEntity = createExerciseEntity()
-        exerciseDao.insert(exerciseEntity)
-        val exerciseFromDb = exerciseDao.getExerciseByName(exerciseEntity.name)
-
-        val exerciseSetEntity = createExerciseSetEntity(exerciseFromDb!!.id!!)
-        exerciseSetDao.insert(exerciseSetEntity)
-
-        val dailyPlanExerciseCrossRef = DailyPlanExerciseCrossRef(
-            dailyPlanId = dailyPlanFromDb!!.id!!,
-            exerciseId = exerciseFromDb!!.id!!,
-            order = 0
-        )
-
-        dailyPlanExerciseDao.insert(dailyPlanExerciseCrossRef)
-
-        val dailyPlanWithExercises = dailyPlanDao.getDailyPlanWithExercises(dailyPlanFromDb!!.id!!)
-        assertThat(dailyPlanWithExercises).isNotNull()
-    }
 
 }

@@ -52,18 +52,87 @@ interface DailyPlanDao : BaseDao<DailyPlanEntity> {
 
 @Dao
 interface ExerciseDao : BaseDao<ExerciseEntity> {
-
-    @Transaction
-    @Query("SELECT * FROM exercise WHERE exercise_id = :id")
-    suspend fun getExerciseWithSets(id: Int): ExerciseWithSets?
-
-    //get by name
     @Query("SELECT * FROM exercise WHERE name = :name")
     suspend fun getExerciseByName(name: String): ExerciseEntity?
 }
 
 @Dao
-interface ExerciseSetDao : BaseDao<ExerciseSetEntity>
+interface DailyPlanExerciseCrossRefDao : BaseDao<DailyPlanExercise>
 
 @Dao
-interface DailyPlanExerciseCrossRefDao : BaseDao<DailyPlanExerciseCrossRef>
+interface UserWorkoutPlanDao : BaseDao<UserWorkoutPlanEntity> {
+    @Query("SELECT * FROM user_workout_plan WHERE user_id = :userId")
+    suspend fun getUserWorkoutPlanByUserId(userId: Int): List<UserWorkoutPlanEntity>
+
+    @Query("SELECT * FROM user_workout_plan WHERE user_workout_plan_id = :id")
+    suspend fun getUserWorkoutPlanById(id: Int): UserWorkoutPlanEntity?
+
+    @Transaction
+    @Query("SELECT * FROM user_workout_plan WHERE user_workout_plan_id = :id")
+    suspend fun getUserWorkoutPlanWithWorkoutPlan(id: Int): UserWorkoutWithDailyPlans?
+
+    @Transaction
+    @Query("SELECT * FROM user_workout_plan WHERE user_id = :userId AND is_active = 1")
+    suspend fun getActiveUserWorkoutPlan(userId: Int): UserWorkoutWithDailyPlans?
+
+    @Transaction
+    @Query("SELECT * FROM user_workout_plan WHERE user_id = :userId AND is_active = 0 AND is_completed = 1")
+    suspend fun getPastCompletedUserWorkoutPlans(userId: Int): List<UserWorkoutWithDailyPlans>?
+}
+
+@Dao
+interface UserDailyPlanDao : BaseDao<UserDailyPlanEntity> {
+    @Query("SELECT * FROM user_daily_plan WHERE user_id = :userId")
+    suspend fun getUserDailyPlanByUserId(userId: Int): List<UserDailyPlanEntity>
+
+    @Query(
+        """
+        SELECT * FROM user_daily_plan WHERE user_workout_plan_id = :userWorkoutPlanId
+            AND name = :name 
+            AND `order` = :order
+    """
+    )
+    suspend fun getUserDailyPlanByUserWorkoutPlanIdAndNameAndOrder(
+        userWorkoutPlanId: Int,
+        name: String,
+        order: Int
+    ): UserDailyPlanEntity?
+
+    @Transaction
+    @Query(
+        """
+        SELECT * FROM user_daily_plan WHERE user_id = :userId
+            AND is_completed = 1
+    """
+    )
+    suspend fun getUserCompletedExercises(userId: Int): List<UserDailyPlanWithExercises>?
+
+    @Transaction
+    @Query(
+        """
+        SELECT * FROM user_daily_plan WHERE user_id = :userId
+            AND end_date <= :date
+            AND is_completed = 1
+    """
+    )
+    suspend fun getPastCompletedUserDailyPlanWithExercises(
+        userId: Int,
+        date: Long
+    ): List<UserDailyPlanWithExercises>?
+
+    @Transaction
+    @Query(
+        """
+        SELECT * FROM user_daily_plan WHERE user_id = :userId
+            AND end_date = :date
+            AND is_completed = 1
+    """
+    )
+    suspend fun getCompletedUserDailyPlanWithExercisesByDate(
+        userId: Int,
+        date: Long
+    ): List<UserDailyPlanWithExercises>?
+}
+
+@Dao
+interface UserExerciseDao : BaseDao<UserExerciseEntity>

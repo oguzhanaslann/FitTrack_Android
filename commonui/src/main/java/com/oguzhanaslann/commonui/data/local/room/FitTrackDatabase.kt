@@ -20,8 +20,10 @@ import com.oguzhanaslann.commonui.data.local.room.entity.*
         WorkoutPlanTagCrossRef::class,
         DailyPlanEntity::class,
         ExerciseEntity::class,
-        ExerciseSetEntity::class,
-        DailyPlanExerciseCrossRef::class
+        DailyPlanExercise::class,
+        UserWorkoutPlanEntity::class,
+        UserDailyPlanEntity::class,
+        UserExerciseEntity::class,
     ],
     version = DATABASE_VERSION
 )
@@ -38,10 +40,13 @@ abstract class FitTrackDatabase : RoomDatabase() {
     abstract fun dailyPlanDao(): DailyPlanDao
     abstract fun dailyPlanExerciseDao(): DailyPlanExerciseCrossRefDao
     abstract fun exerciseDao(): ExerciseDao
-    abstract fun exerciseSetDao(): ExerciseSetDao
+    abstract fun userWorkoutPlanDao(): UserWorkoutPlanDao
+    abstract fun userDailyPlanDao(): UserDailyPlanDao
+    abstract fun userExerciseDao(): UserExerciseDao
+
 
     companion object {
-        const val DATABASE_NAME = "fittrack.db"
+        private const val DATABASE_NAME = "fittrack.db"
 
         const val DATABASE_VERSION = 1
 

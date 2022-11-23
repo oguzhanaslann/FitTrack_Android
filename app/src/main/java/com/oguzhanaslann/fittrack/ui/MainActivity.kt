@@ -25,6 +25,12 @@ import timber.log.Timber
 
 private const val TAG = "MainActivity"
 
+/*
+*   todo : close past daily plan automatically
+*
+*
+* */
+
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 

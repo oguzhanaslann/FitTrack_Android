@@ -2,6 +2,7 @@ package com.oguzhanaslann.commonui.data.local.room
 
 import androidx.annotation.VisibleForTesting
 import com.oguzhanaslann.commonui.data.local.room.entity.DailyPlanEntity
+import com.oguzhanaslann.commonui.data.local.room.entity.ExerciseSet
 import com.oguzhanaslann.commonui.data.local.room.entity.ProgressionPhotoEntity
 import com.oguzhanaslann.commonui.data.local.room.entity.RecipeEntity
 import com.oguzhanaslann.commonui.data.local.room.entity.TagEntity
@@ -25,7 +26,7 @@ fun createRecipeEntity() = RecipeEntity(
 @VisibleForTesting
 fun createWeightRecordEntity(userId: Int) = WeightRecordEntity(
     weight = 0.0,
-    date = "",
+    date = 0,
     userId = userId
 )
 
@@ -34,7 +35,7 @@ fun createProgressionPhotoEntity(userId: Int): ProgressionPhotoEntity {
     return ProgressionPhotoEntity(
         photoUrl = "sample://photo",
         userId = userId,
-        date = ""
+        date = 0
     )
 }
 
@@ -47,10 +48,9 @@ fun createTagEntity() = TagEntity(
 fun createDailyPlanEntity(workoutPlanId: Int) = DailyPlanEntity(
     name = "Daily Plan 1",
     imageUrl = "",
-    workoutPlanId = workoutPlanId,
+    workoutPlanId = workoutPlanId
 )
 
-//createExerciseEntity
 @VisibleForTesting
 fun createExerciseEntity() = com.oguzhanaslann.commonui.data.local.room.entity.ExerciseEntity(
     name = "Exercise 1",
@@ -58,10 +58,8 @@ fun createExerciseEntity() = com.oguzhanaslann.commonui.data.local.room.entity.E
     description = "Lorem ipsum",
 )
 
-//createExerciseSetEntity
 @VisibleForTesting
-fun createExerciseSetEntity(exerciseId: Int) = com.oguzhanaslann.commonui.data.local.room.entity.ExerciseSetEntity(
-    exerciseId = exerciseId,
+fun createExerciseSet() = ExerciseSet(
     order = 0,
     reps = null,
     weight = null,
