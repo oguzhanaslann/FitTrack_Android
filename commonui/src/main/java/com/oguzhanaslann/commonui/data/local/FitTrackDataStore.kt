@@ -43,4 +43,6 @@ class FitTrackDataStore(
    suspend fun setUserId(id: Int) {
         runSafeSetOperation { dataStore.edit { it[preferencesUserIdKey] = id } }
     }
+
+    suspend fun getUserId() = dataStore.safeData.map { it[preferencesUserIdKey] ?: 0 }
 }

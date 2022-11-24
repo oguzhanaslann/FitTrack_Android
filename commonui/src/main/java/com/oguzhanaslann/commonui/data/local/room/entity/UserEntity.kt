@@ -78,6 +78,7 @@ data class UserWithFavoriteRecipes(
 @Entity(tableName = "weight_record_entity")
 data class WeightRecordEntity(
     val weight: Double,
+    val weightUnit: String,
     val date: Long,
     @ColumnInfo(name = "user_id")
     val userId: Int
@@ -89,11 +90,7 @@ data class WeightRecordEntity(
 
 data class UserProfile(
     @Embedded val user: UserEntity,
-    @Relation(
-        parentColumn = "active_workout_plan_id",
-        entityColumn = "workout_plan_id"
-    )
-    val workoutPlanEntity: WorkoutPlanEntity,
+
     @Relation(
         parentColumn = "user_id",
         entityColumn = "user_id"
@@ -111,7 +108,14 @@ data class UserProfile(
         parentColumn = "user_id",
         entityColumn = "user_id"
     )
-    val weightRecords: List<WeightRecordEntity>
+    val weightRecords: List<WeightRecordEntity>,
+
+    @Relation(
+        parentColumn = "user_id",
+        entityColumn = "user_id",
+        entity = UserDailyPlanEntity::class
+    )
+    val workoutPlans: List<UserWorkoutWithDailyPlans>
 )
 
 data class UserWithWeightRecords(

@@ -32,6 +32,7 @@ interface UserDao : BaseDao<UserEntity> {
     @Transaction
     @Query("SELECT * FROM user WHERE user_id = :userId")
     suspend fun getUserProfile(userId: Int): UserProfile?
+
 }
 
 @Dao

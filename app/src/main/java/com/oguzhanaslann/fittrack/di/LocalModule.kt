@@ -39,5 +39,5 @@ object LocalModule {
     @Singleton
     fun provideFitTrackDataStore(
         dataStore: DataStore<Preferences>
-    ) = FitTrackDataStore(dataStore)
+    ): FitTrackDataStore = FitTrackDataStore(dataStore)
 }

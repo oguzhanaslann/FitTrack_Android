@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.mikephil.charting.data.Entry
 import com.oguzhanaslann.common.State
+import com.oguzhanaslann.common.toState
 import com.oguzhanaslann.feature_profile.domain.ActiveWorkoutPlan
 import com.oguzhanaslann.feature_profile.domain.FavoriteRecipe
 import com.oguzhanaslann.feature_profile.domain.OldWorkoutPlanOverView
@@ -22,8 +23,8 @@ data class ProfileUIState(
     val userName: String = "",
     val progressPhotos: List<ProgressPhoto> = emptyList(),
     val weight: List<WeightProgress> = emptyList(),
-    val activeWorkoutPlan: ActiveWorkoutPlan? = null,
     val favoriteRecipes: List<FavoriteRecipe> = emptyList(),
+    val activeWorkoutPlan: ActiveWorkoutPlan? = null,
     val oldWorkouts: List<OldWorkoutPlanOverView> = emptyList()
 )
 
@@ -38,7 +39,7 @@ class ProfileViewModel @Inject constructor(
         _profileUIState.value = State.Loading
         viewModelScope.launch {
             val profileUIState = profileRepository.getProfileUIState()
-            profileUIState.collect { _profileUIState.value = State.Success(it) }
+            profileUIState.collect { _profileUIState.value = it.toState() }
         }
     }
 }
