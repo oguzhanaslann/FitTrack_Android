@@ -176,7 +176,7 @@ class UserDAOTest {
         val dailyPlan = createUserDailyPlanEntity(planFromDb.id!!, userFromDb.id!!)
         userDailyPlanDao.insert(dailyPlan)
 
-        val userProfile = userDao.getUserProfile(userFromDb.id!!)
+        val userProfile = userDao.getUserProfileSuspend(userFromDb.id!!)
         assertThat(userProfile).isNotNull()
         assertThat(userProfile!!.user.id).isEqualTo(userFromDb.id)
         assertThat(userProfile.workoutPlans).isNotEmpty()

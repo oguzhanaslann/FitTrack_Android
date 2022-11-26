@@ -1,5 +1,6 @@
-package com.oguzhanaslann.feature_profile.domain
+package com.oguzhanaslann.feature_profile.domain.model
 
+import android.util.Log
 import com.oguzhanaslann.common.DateHelper
 import com.oguzhanaslann.common.Mapper
 import com.oguzhanaslann.common.mapBy
@@ -9,13 +10,17 @@ import com.oguzhanaslann.commonui.data.local.room.entity.UserProfile
 import com.oguzhanaslann.commonui.data.local.room.entity.UserWorkoutWithDailyPlans
 import com.oguzhanaslann.commonui.data.local.room.entity.WeightRecordEntity
 import com.oguzhanaslann.feature_profile.data.local.ProfileLocalDataSource
+import com.oguzhanaslann.feature_profile.domain.usecase.PhotoUrlAndLastEditDate
 import com.oguzhanaslann.feature_profile.ui.ProfileUIState
+import com.oguzhanaslann.feature_profile.ui.User
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import java.util.*
 
 interface ProfileRepository {
     suspend fun getProfileUIState(): Flow<Result<ProfileUIState>>
+    suspend fun setUserProfilePhoto(url: String)
+    suspend fun updateProgressPhotos(progressPhotoUrls: List<PhotoUrlAndLastEditDate>)
 }
 
 fun ProfileRepository(
@@ -24,15 +29,26 @@ fun ProfileRepository(
 ): ProfileRepository = object : ProfileRepository {
     override suspend fun getProfileUIState(): Flow<Result<ProfileUIState>> {
         val userId = profileLocalDataSource.getUserId()
-        return flow {
-            val userProfile = profileLocalDataSource.getUserProfile(userId)
+        return profileLocalDataSource.getUserProfile(userId).map { userProfile ->
+            Log.e("TAG", "getProfileUIState: $userProfile")
             if (userProfile != null) {
                 val profileUIState = mapper.map(userProfile)
-                emit(Result.success(profileUIState))
+                Result.success(profileUIState)
             } else {
-                emit(Result.failure(Exception("User not found")))
+                Result.failure(Exception("User not found"))
             }
         }
+    }
+
+    override suspend fun setUserProfilePhoto(url: String) {
+        val userId = profileLocalDataSource.getUserId()
+        val result = profileLocalDataSource.setUserProfilePhoto(userId, url)
+        Log.e("TAG", "setUserProfilePhoto: result : ${result.exceptionOrNull()}")
+    }
+
+    override suspend fun updateProgressPhotos(progressPhotoUrls: List<PhotoUrlAndLastEditDate>) {
+        val userId = profileLocalDataSource.getUserId()
+        profileLocalDataSource.updateProgressPhotosOfUser(progressPhotoUrls,userId)
     }
 }
 
@@ -50,11 +66,15 @@ class UserProfileToProfileUIStateMapper(
             input.workoutPlans.filter { it.userDailyPlanEntity.isActive.not() && it.userDailyPlanEntity.isCompleted }
 
         return ProfileUIState(
-            userName = "${input.user.name} ${input.user.surname}",
+            user = User(
+                id = input.user.id ?: 0,
+                name = "${input.user.name} ${input.user.surname}",
+                profilePhotoUrl = input.user.profilePhotoUrl,
+            ),
             progressPhotos = input.progressionPhotos.mapBy(progressionMapper),
             weight = input.weightRecords.mapBy(weightMapper),
             favoriteRecipes = input.favoriteRecipes.mapBy(recipeMapper),
-            activeWorkoutPlan = workoutMapper.map(activePLan!!),
+            activeWorkoutPlan = activePLan?.let { workoutMapper.map(it) },
             oldWorkouts = oldPlans.mapBy(oldWorkoutMapper)
         )
     }

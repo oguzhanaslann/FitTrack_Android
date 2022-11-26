@@ -4,12 +4,20 @@ import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
 import com.oguzhanaslann.commonui.data.local.room.entity.*
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface UserDao : BaseDao<UserEntity> {
 
     @Query("SELECT * FROM user WHERE email = :email")
     suspend fun getUserByEmail(email: String): UserEntity?
+
+    @Query("SELECT * FROM user WHERE user_id = :id")
+    suspend fun getUserByIdSuspend(id: Int): UserEntity?
+
+    @Query("SELECT * FROM user WHERE user_id = :id")
+    fun getUserById(id: Int): Flow<UserEntity>
+
 
     @Query("DELETE FROM user")
     suspend fun clear()
@@ -31,8 +39,11 @@ interface UserDao : BaseDao<UserEntity> {
     //UserProfile
     @Transaction
     @Query("SELECT * FROM user WHERE user_id = :userId")
-    suspend fun getUserProfile(userId: Int): UserProfile?
+    suspend fun getUserProfileSuspend(userId: Int): UserProfile?
 
+    @Transaction
+    @Query("SELECT * FROM user WHERE user_id = :userId")
+    fun getUserProfile(userId: Int): Flow<UserProfile>
 }
 
 @Dao
@@ -40,6 +51,9 @@ interface ProgressionPhotoDao : BaseDao<ProgressionPhotoEntity> {
 
     @Query("DELETE FROM progression_photo")
     suspend fun clear()
+
+    @Query("DELETE FROM progression_photo WHERE user_id = :userId")
+    suspend fun deleteAllPhotosOfUser(userId: Int)
 }
 
 @Dao

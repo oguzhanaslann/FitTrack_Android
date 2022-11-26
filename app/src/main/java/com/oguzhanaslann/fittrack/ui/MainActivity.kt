@@ -11,6 +11,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
+import androidx.core.view.isVisible
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -24,12 +25,6 @@ import timber.log.Timber
 
 
 private const val TAG = "MainActivity"
-
-/*
-*   todo : close past daily plan automatically
-*
-*
-* */
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -59,15 +54,26 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.initializeApp()
         splashScreen.setKeepOnScreenCondition { mainViewModel.appUiState.value.isInitializing }
         splashScreen.setOnExitAnimationListener {
-//            when {
-//                mainViewModel.currentState().hasSeenOnBoard.not() -> navigateOnboard()
-//                mainViewModel.currentState().isAuthenticated.not() -> navigateAuthentication()
-//                else -> Unit // navigateHome()
-//            }
+            when {
+                mainViewModel.currentState().hasSeenOnBoard.not() -> navigateOnboard()
+                mainViewModel.currentState().isAuthenticated.not() -> navigateAuthentication()
+                else -> Unit // navigateHome()
+            }
 
             Handler(Looper.getMainLooper()).postDelayed({
                 it.remove()
                 binding.bottomNavigationView.setupWithNavController(navController)
+
+                navController.addOnDestinationChangedListener { _, destination , _ ->
+                    val destinationId = destination.id
+                    val isOnBoard = destinationId == com.oguzhanaslann.feature_onboard.R.id.onboardFragment
+                    val isSignIn = destinationId == com.oguzhanaslann.feature_auth.R.id.signInFragment
+                    val isSignUp = destinationId == com.oguzhanaslann.feature_auth.R.id.signUpFragment
+                    val isAuthentication = isSignIn || isSignUp
+                    binding.appBarLayout.isVisible = !(isOnBoard || isAuthentication)
+                    binding.bottomAppBar.isVisible = !(isOnBoard || isAuthentication)
+                    binding.addNewItemFab.isVisible = !(isOnBoard || isAuthentication)
+                }
             }, 100)
         }
 

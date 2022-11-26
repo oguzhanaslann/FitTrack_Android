@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.oguzhanaslann.feature_profile.R
 import com.oguzhanaslann.feature_profile.databinding.ItemAddGalleryLayoutBinding
 import com.oguzhanaslann.feature_profile.databinding.ItemGalleryLayoutBinding
-import com.oguzhanaslann.feature_profile.domain.ProgressPhoto
+import com.oguzhanaslann.feature_profile.domain.model.ProgressPhoto
 
 class ProgressPhotoAdapter(
     private inline val onAddPhotoClick: () -> Unit = {},

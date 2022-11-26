@@ -3,6 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="viewModel"
+            type="com.oguzhanaslann.feature_profile.ui.ProfileViewModel" />
+    </data>
 
 
     <androidx.core.widget.NestedScrollView
@@ -27,6 +32,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageButton
+                android:id="@+id/profile_edit_photo_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/circular_image_button_shape"
@@ -459,7 +465,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout6" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
+                android:id="@+id/rv_gallery"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -487,7 +493,7 @@
                 android:text="Weight"
                 android:textAppearance="?attr/textAppearanceTitleMedium"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+                app:layout_constraintTop_toBottomOf="@+id/rv_gallery" />
 
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/weight_line_chart"

@@ -2,24 +2,33 @@ package com.oguzhanaslann.feature_profile.ui
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import com.oguzhanaslann.common.isTrue
 import com.oguzhanaslann.common.onSuccess
 import com.oguzhanaslann.commonui.dp
+import com.oguzhanaslann.commonui.horizontalLinearLayoutManaged
+import com.oguzhanaslann.commonui.showErrorSnackbar
+import com.oguzhanaslann.commonui.showSuccessSnackbar
 import com.oguzhanaslann.commonui.themeColor
 import com.oguzhanaslann.commonui.viewBinding
 import com.oguzhanaslann.feature_profile.R
 import com.oguzhanaslann.feature_profile.databinding.FragmentProfileBinding
-import com.oguzhanaslann.feature_profile.domain.OldWorkoutPlanOverView
+import com.oguzhanaslann.feature_profile.domain.model.OldWorkoutPlanOverView
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
+
+val Fragment.TAG get() = this::class.java.simpleName
 
 @AndroidEntryPoint
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
@@ -35,8 +44,27 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     }
 
     private val takePicturePreview =
-        registerForActivityResult(ActivityResultContracts.TakePicturePreview()) {
-            // todo handle image
+        registerForActivityResult(ActivityResultContracts.TakePicture()) {
+            if (it.isTrue()) {
+                showSuccessSnackbar(
+                    container = binding.root,
+                    message = "Photo added successfully",
+                    onDialogDismissed = {}
+                )
+                profileViewModel.updateProgressPhotos()
+            } else {
+                showErrorSnackbar(
+                    container = binding.root,
+                    message = "Photo adding failed",
+                    onDialogDismissed = {}
+                )
+            }
+        }
+
+    private val photoPicker =
+        registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+            uri ?: return@registerForActivityResult
+            profileViewModel.updateProfilePhoto(uri)
         }
 
     private val oldWorkoutPlanAdapter by lazy {
@@ -51,6 +79,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.viewModel = profileViewModel
         initUI()
         profileViewModel.getProfileUIState()
         subscribeObservers()
@@ -94,18 +123,39 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             description = Description().apply { text = "" }
             invalidate()
         }
+        binding.profileEditPhotoButton.setOnClickListener {
+            photoPicker.launch(
+                PickVisualMediaRequest(
+                    ActivityResultContracts.PickVisualMedia.ImageOnly
+                )
+            )
+        }
+        binding.rvGallery.apply {
+            horizontalLinearLayoutManaged()
+            adapter = progressPhotoAdapter
+        }
+
     }
 
     private fun subscribeObservers() {
         profileViewModel.profileUIState.observe(viewLifecycleOwner) {
             it.onSuccess {
-                binding.userNameText.text = it.userName
+                binding.userNameText.text = it.user.name
+                loadProfilePhoto(it.user.profilePhotoUrl)
                 progressPhotoAdapter.submitList(it.progressPhotos)
                 setWeightProgressChart(it)
                 oldWorkoutPlanAdapter.submitList(it.oldWorkouts)
                 favoriteRecipeAdapter.submitList(it.favoriteRecipes)
                 setActiveWorkoutPlan(it)
             }
+        }
+    }
+
+    private fun loadProfilePhoto(url: String?) {
+        binding.profileImage.load(url) {
+            placeholder(com.oguzhanaslann.commonui.R.drawable.placeholder_thumbnail)
+            error(com.oguzhanaslann.commonui.R.drawable.placeholder_thumbnail)
+            lifecycle(viewLifecycleOwner)
         }
     }
 
@@ -128,7 +178,9 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     }
 
     private fun onAddPhotoClick() {
-        takePicturePreview.launch(null)
+        takePicturePreview.launch(
+            profileViewModel.getNewProgressPhotoUri()
+        )
     }
 
     private fun addItemMarginToFirstItem(view: View) {

@@ -31,7 +31,6 @@ import android.widget.TextView
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
-import androidx.annotation.FontRes
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.core.animation.doOnEnd
@@ -53,6 +52,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import java.io.File
 
 fun ViewPager2.nextOrStayOnLast() {
     currentItem = minOf(currentItem + 1, adapter?.itemCount ?: 0)
@@ -561,7 +561,7 @@ fun showInfoPopUpDialog(
     })
 }
 
-fun showSuccessPopUpDialog(
+fun showSuccessSnackbar(
     context: Context,
     message: String?,
     onDialogDismissed: () -> Unit = {},
@@ -597,6 +597,21 @@ fun showSuccessPopUpDialog(
     })
 }
 
+fun showSuccessSnackbar(
+    container: View,
+    message: String?,
+    onDialogDismissed: () -> Unit = {},
+    durationMillis: Int = Snackbar.LENGTH_SHORT
+) {
+    showSuccessSnackbar(
+        context = container.context,
+        message = message,
+        onDialogDismissed = onDialogDismissed,
+        durationMillis = durationMillis,
+        container = container
+    )
+}
+
 fun showErrorSnackbar(
     context: Context,
     message: String?,
@@ -639,33 +654,13 @@ fun showErrorSnackbar(
     onDialogDismissed: () -> Unit = {},
     durationMillis: Int = Snackbar.LENGTH_SHORT
 ) {
-    showCustomSnackbar(
-        context = container.context,
+    showErrorSnackbar(
+        message = message,
         container = container,
-        durationMillis = durationMillis,
-        layout = R.layout.custom_error_snackbar_layout,
-        paddingTop = 0,
-        paddingBottom = 16.dp,
-        paddingStart = 0,
-        paddingEnd = 0,
-        initViews = { view: View, snackbar: Snackbar ->
-            view.apply {
-                findViewById<TextView>(R.id.inform_message).text = message
-                findViewById<View>(R.id.cross).setOnClickListener {
-                    snackbar.dismiss()
-                }
-            }
-        }
-    ).addCallback(object : Snackbar.Callback() {
-        override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
-            super.onDismissed(transientBottomBar, event)
-            onDialogDismissed()
-        }
-
-        override fun onShown(sb: Snackbar?) {
-            super.onShown(sb)
-        }
-    })
+        context = container.context,
+        onDialogDismissed = onDialogDismissed,
+        durationMillis = durationMillis
+    )
 }
 
 fun Context.showSnackbar(
@@ -710,4 +705,22 @@ fun TextView.setSpan(
 
     movementMethod = LinkMovementMethod.getInstance()
     text = spannableString
+}
+
+
+fun Uri.copyTo(file : File,context: Context) {
+    val inputStream = context.contentResolver?.openInputStream(this)
+    val outputStream = file.outputStream()
+    inputStream?.copyTo(outputStream)
+    inputStream?.close()
+}
+
+fun File.createIfNotExist() {
+    if (!exists()) {
+        createNewFile()
+    }
+}
+
+fun File.toUrlString(): String {
+    return toURI().toURL().toString()
 }
