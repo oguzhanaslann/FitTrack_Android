@@ -39,11 +39,11 @@ interface UserDao : BaseDao<UserEntity> {
     //UserProfile
     @Transaction
     @Query("SELECT * FROM user WHERE user_id = :userId")
-    suspend fun getUserProfileSuspend(userId: Int): UserProfile?
+    suspend fun getUserProfileSuspend(userId: Int): UserProfileEntity?
 
     @Transaction
     @Query("SELECT * FROM user WHERE user_id = :userId")
-    fun getUserProfile(userId: Int): Flow<UserProfile>
+    fun getUserProfile(userId: Int): Flow<UserProfileEntity>
 }
 
 @Dao

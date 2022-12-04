@@ -7,14 +7,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.github.mikephil.charting.data.Entry
+import com.oguzhanaslann.common.Height
 import com.oguzhanaslann.common.State
+import com.oguzhanaslann.common.Weight
 import com.oguzhanaslann.common.data
+import com.oguzhanaslann.common.orDefault
 import com.oguzhanaslann.common.toState
 import com.oguzhanaslann.feature_profile.domain.model.ActiveWorkoutPlan
 import com.oguzhanaslann.feature_profile.domain.model.FavoriteRecipe
 import com.oguzhanaslann.feature_profile.domain.usecase.LocalPhotosUseCase
 import com.oguzhanaslann.feature_profile.domain.model.OldWorkoutPlanOverView
-import com.oguzhanaslann.feature_profile.domain.model.ProfileRepository
+import com.oguzhanaslann.feature_profile.domain.ProfileRepository
 import com.oguzhanaslann.feature_profile.domain.model.ProgressPhoto
 import com.oguzhanaslann.feature_profile.domain.model.WeightProgress
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,16 +26,21 @@ import javax.inject.Inject
 
 fun WeightProgress.toEntry() = Entry(date.toFloat(), weight.toFloat())
 
-data class User(
+
+data class UserProfile(
     val id: Int,
     val name: String,
     val profilePhotoUrl: String?,
+    val weight : Weight,
+    val height : Height,
+    val age: Int
+
 )
 
 data class ProfileUIState(
-    val user: User,
+    val userProfile: UserProfile,
     val progressPhotos: List<ProgressPhoto> = emptyList(),
-    val weight: List<WeightProgress> = emptyList(),
+    val weightProgresses: List<WeightProgress> = emptyList(),
     val favoriteRecipes: List<FavoriteRecipe> = emptyList(),
     val activeWorkoutPlan: ActiveWorkoutPlan? = null,
     val oldWorkouts: List<OldWorkoutPlanOverView> = emptyList()
@@ -47,8 +55,41 @@ class ProfileViewModel @Inject constructor(
     val profileUIState: LiveData<State<ProfileUIState>> get() = _profileUIState
 
     val profilePhoto = _profileUIState.map {
-        it.data()?.user?.profilePhotoUrl ?: ""
+        it.data()?.userProfile?.profilePhotoUrl ?: ""
     }
+
+    val userName = _profileUIState.map {
+        it.data()?.userProfile?.name ?: ""
+    }
+
+    val userWeight = _profileUIState.map {
+        it.data()?.userProfile?.weight?.orDefault()
+    }
+
+    val userHeight = _profileUIState.map {
+        it.data()?.userProfile?.height.orDefault()
+    }
+
+    val userAge = _profileUIState.map {
+        it.data()?.userProfile?.age ?: 0
+    }
+
+    val oldWorkouts = _profileUIState.map {
+        it.data()?.oldWorkouts ?: emptyList()
+    }
+
+    val favoriteRecipes = _profileUIState.map {
+        it.data()?.favoriteRecipes ?: emptyList()
+    }
+
+    val activeWorkoutPlan = _profileUIState.map {
+        it.data()?.activeWorkoutPlan
+    }
+
+    val weightProgresses = _profileUIState.map {
+        it.data()?.weightProgresses ?: emptyList()
+    }
+
 
     fun getProfileUIState() {
         _profileUIState.value = State.Loading

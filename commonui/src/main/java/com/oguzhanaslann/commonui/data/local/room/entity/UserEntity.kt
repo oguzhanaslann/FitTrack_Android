@@ -14,6 +14,7 @@ data class UserEntity(
     val name: String? = null,
     val surname: String? = null,
     val height: Double? = null,
+    val measurementUnit: String? = null,
     val yearOfBirth: Int? = null,
     @ColumnInfo(name = "active_workout_plan_id")
     val activeWorkoutPlanId: Int? = null,
@@ -78,7 +79,6 @@ data class UserWithFavoriteRecipes(
 @Entity(tableName = "weight_record_entity")
 data class WeightRecordEntity(
     val weight: Double,
-    val weightUnit: String,
     val date: Long,
     @ColumnInfo(name = "user_id")
     val userId: Int
@@ -88,7 +88,7 @@ data class WeightRecordEntity(
     var id: Int? = null
 }
 
-data class UserProfile(
+data class UserProfileEntity(
     @Embedded val user: UserEntity,
 
     @Relation(

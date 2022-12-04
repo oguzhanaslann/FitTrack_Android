@@ -1,18 +1,21 @@
-package com.oguzhanaslann.feature_profile.domain.model
+package com.oguzhanaslann.feature_profile.domain
 
 import android.util.Log
-import com.oguzhanaslann.common.DateHelper
-import com.oguzhanaslann.common.Mapper
-import com.oguzhanaslann.common.mapBy
+import com.oguzhanaslann.common.*
 import com.oguzhanaslann.commonui.data.local.room.entity.ProgressionPhotoEntity
 import com.oguzhanaslann.commonui.data.local.room.entity.RecipeEntity
-import com.oguzhanaslann.commonui.data.local.room.entity.UserProfile
+import com.oguzhanaslann.commonui.data.local.room.entity.UserProfileEntity
 import com.oguzhanaslann.commonui.data.local.room.entity.UserWorkoutWithDailyPlans
 import com.oguzhanaslann.commonui.data.local.room.entity.WeightRecordEntity
 import com.oguzhanaslann.feature_profile.data.local.ProfileLocalDataSource
+import com.oguzhanaslann.feature_profile.domain.model.ActiveWorkoutPlan
+import com.oguzhanaslann.feature_profile.domain.model.FavoriteRecipe
+import com.oguzhanaslann.feature_profile.domain.model.OldWorkoutPlanOverView
+import com.oguzhanaslann.feature_profile.domain.model.ProgressPhoto
+import com.oguzhanaslann.feature_profile.domain.model.WeightProgress
 import com.oguzhanaslann.feature_profile.domain.usecase.PhotoUrlAndLastEditDate
 import com.oguzhanaslann.feature_profile.ui.ProfileUIState
-import com.oguzhanaslann.feature_profile.ui.User
+import com.oguzhanaslann.feature_profile.ui.UserProfile
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import java.util.*
@@ -25,18 +28,13 @@ interface ProfileRepository {
 
 fun ProfileRepository(
     profileLocalDataSource: ProfileLocalDataSource,
-    mapper: Mapper<UserProfile, ProfileUIState>
+    mapper: Mapper<UserProfileEntity, ProfileUIState>,
 ): ProfileRepository = object : ProfileRepository {
     override suspend fun getProfileUIState(): Flow<Result<ProfileUIState>> {
         val userId = profileLocalDataSource.getUserId()
         return profileLocalDataSource.getUserProfile(userId).map { userProfile ->
-            Log.e("TAG", "getProfileUIState: $userProfile")
-            if (userProfile != null) {
-                val profileUIState = mapper.map(userProfile)
-                Result.success(profileUIState)
-            } else {
-                Result.failure(Exception("User not found"))
-            }
+            val profileUIState = mapper.map(userProfile)
+            Result.success(profileUIState)
         }
     }
 
@@ -48,7 +46,7 @@ fun ProfileRepository(
 
     override suspend fun updateProgressPhotos(progressPhotoUrls: List<PhotoUrlAndLastEditDate>) {
         val userId = profileLocalDataSource.getUserId()
-        profileLocalDataSource.updateProgressPhotosOfUser(progressPhotoUrls,userId)
+        profileLocalDataSource.updateProgressPhotosOfUser(progressPhotoUrls, userId)
     }
 }
 
@@ -57,22 +55,41 @@ class UserProfileToProfileUIStateMapper(
     private val weightMapper: Mapper<WeightRecordEntity, WeightProgress>,
     private val recipeMapper: Mapper<RecipeEntity, FavoriteRecipe>,
     private val workoutMapper: Mapper<UserWorkoutWithDailyPlans, ActiveWorkoutPlan>,
-    private val oldWorkoutMapper: Mapper<UserWorkoutWithDailyPlans, OldWorkoutPlanOverView>
-) : Mapper<UserProfile, ProfileUIState> {
-    override suspend fun map(input: UserProfile): ProfileUIState {
+    private val oldWorkoutMapper: Mapper<UserWorkoutWithDailyPlans, OldWorkoutPlanOverView>,
+) : Mapper<UserProfileEntity, ProfileUIState> {
+    override suspend fun map(input: UserProfileEntity): ProfileUIState {
 
         val activePLan = input.workoutPlans.find { it.userDailyPlanEntity.isActive }
         val oldPlans =
             input.workoutPlans.filter { it.userDailyPlanEntity.isActive.not() && it.userDailyPlanEntity.isCompleted }
 
+        val weight =
+            if (input.weightRecords.lastOrNull() != null && input.user.measurementUnit.isNotNullOrEmpty()) {
+                Weight.from(input.weightRecords.last().weight.toFloat(),
+                    MeasurementUnit.parseFrom(input.user.measurementUnit!!).orDefault()).orEmpty()
+            } else {
+                Weight.empty
+            }
+
+        val height =
+            if (input.user.height != null && input.user.measurementUnit.isNotNullOrEmpty()) {
+                Height.from(input.user.height!!.toFloat(),
+                    MeasurementUnit.parseFrom(input.user.measurementUnit!!).orDefault()).orEmpty()
+            } else {
+                Height.empty
+            }
+
         return ProfileUIState(
-            user = User(
+            userProfile = UserProfile(
                 id = input.user.id ?: 0,
                 name = "${input.user.name} ${input.user.surname}",
                 profilePhotoUrl = input.user.profilePhotoUrl,
+                weight = weight,
+                height = height,
+                age = input.user.yearOfBirth?.let { DateHelper.getCurrentYear() - it }.orZero(),
             ),
             progressPhotos = input.progressionPhotos.mapBy(progressionMapper),
-            weight = input.weightRecords.mapBy(weightMapper),
+            weightProgresses = input.weightRecords.mapBy(weightMapper),
             favoriteRecipes = input.favoriteRecipes.mapBy(recipeMapper),
             activeWorkoutPlan = activePLan?.let { workoutMapper.map(it) },
             oldWorkouts = oldPlans.mapBy(oldWorkoutMapper)
@@ -101,7 +118,7 @@ class ProgressionPhotoToProgressPhotoMapper : Mapper<ProgressionPhotoEntity, Pro
 class WeightRecordToWeightProgressMapper : Mapper<WeightRecordEntity, WeightProgress> {
     override suspend fun map(input: WeightRecordEntity): WeightProgress {
         return WeightProgress(
-            weight = "${input.weight} ${input.weightUnit}",
+            weight = "${input.weight}",// todo
             date = run {
                 val dateMillis = input.date
                 val date = Date(dateMillis)

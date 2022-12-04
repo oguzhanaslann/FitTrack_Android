@@ -77,4 +77,8 @@ object DateHelper {
             ""
         }
     }
+
+    fun getCurrentYear(): Int {
+        return Calendar.getInstance().get(Calendar.YEAR)
+    }
 }

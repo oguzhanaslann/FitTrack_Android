@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.oguzhanaslann.feature_profile.R
 import com.oguzhanaslann.feature_profile.databinding.ItemAddGalleryLayoutBinding
 import com.oguzhanaslann.feature_profile.databinding.ItemGalleryLayoutBinding
@@ -61,6 +62,7 @@ class ProgressPhotoAdapter(
         fun onBind(currentItem: ProgressPhoto, position: Int) = binding.run {
             addPaddingToFirstItem(position)
             galleryItemDescription.text = currentItem.description
+            galleryImage.load(currentItem.url)
         }
 
         private fun ItemGalleryLayoutBinding.addPaddingToFirstItem(

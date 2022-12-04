@@ -6,7 +6,7 @@ import androidx.core.content.FileProvider
 import com.oguzhanaslann.commonui.copyTo
 import com.oguzhanaslann.commonui.createIfNotExist
 import com.oguzhanaslann.commonui.toUrlString
-import com.oguzhanaslann.feature_profile.domain.model.ProfileRepository
+import com.oguzhanaslann.feature_profile.domain.ProfileRepository
 import java.io.File
 import java.util.*
 

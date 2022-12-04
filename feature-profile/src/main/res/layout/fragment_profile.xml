@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.oguzhanaslann.feature_profile.ui.ProfileViewModel" />
@@ -46,6 +47,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:text="@{viewModel.userName}"
                 android:textAlignment="center"
                 android:textColor="?attr/colorOnBackground"
                 android:textSize="24sp"
@@ -118,7 +120,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:alpha="0.5"
-                            android:text="Height"
+                            android:text="@string/height"
                             android:textAlignment="center"
                             android:textAppearance="?attr/textAppearanceBodyMedium"
                             android:textColor="?attr/colorOnBackground"
@@ -136,7 +138,7 @@
                             android:layout_marginStart="8dp"
                             android:layout_marginEnd="8dp"
                             android:layout_marginBottom="8dp"
-                            android:text="180 cm"
+                            android:text="@{viewModel.userHeight.toString()}"
                             android:textAlignment="center"
                             android:textAppearance="?attr/textAppearanceBodyLarge"
                             android:textColor="?attr/colorOnBackground"
@@ -181,7 +183,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:alpha="0.5"
-                            android:text="Height"
+                            android:text="@string/weight"
                             android:textAlignment="center"
                             android:textAppearance="?attr/textAppearanceBodyMedium"
                             android:textColor="?attr/colorOnBackground"
@@ -197,7 +199,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="8dp"
-                            android:text="180 cm"
+                            android:text="@{viewModel.userWeight.toString()}"
                             android:textAlignment="center"
                             android:textAppearance="?attr/textAppearanceBodyLarge"
                             android:textColor="?attr/colorOnBackground"
@@ -241,7 +243,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:alpha="0.5"
-                            android:text="Height"
+                            android:text="@string/age"
                             android:textAlignment="center"
                             android:textAppearance="?attr/textAppearanceBodyMedium"
                             android:textColor="?attr/colorOnBackground"
@@ -257,7 +259,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="8dp"
-                            android:text="180 cm"
+                            android:text="@{viewModel.userAge.toString()}"
                             android:textAlignment="center"
                             android:textAppearance="?attr/textAppearanceBodyLarge"
                             android:textColor="?attr/colorOnBackground"
@@ -314,7 +316,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginBottom="21dp"
-                    android:text="My body"
+                    android:text="@string/my_body"
                     android:textAppearance="?attr/textAppearanceTitleSmall"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/linearLayout2" />
@@ -373,7 +375,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginBottom="21dp"
-                    android:text="Notifications"
+                    android:text="@string/notifications"
                     android:textAppearance="?attr/textAppearanceTitleSmall"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/linearLayout3" />
@@ -432,7 +434,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginBottom="21dp"
-                    android:text="Logout"
+                    android:text="@string/logout"
                     android:textAppearance="?attr/textAppearanceTitleSmall"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/linearLayout4" />
@@ -450,7 +452,6 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.5" />
 
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <com.google.android.material.textview.MaterialTextView
@@ -459,7 +460,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:text="Galery"
+                android:text="@string/gallery"
                 android:textAppearance="?attr/textAppearanceTitleMedium"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout6" />
@@ -490,8 +491,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:text="Weight"
+                android:text="@string/weight"
                 android:textAppearance="?attr/textAppearanceTitleMedium"
+                app:hideIf="@{viewModel.weightProgresses.isEmpty()}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rv_gallery" />
 
@@ -503,6 +505,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:minHeight="180dp"
+                app:hideIf="@{viewModel.weightProgresses.isEmpty()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/weight_header" />
@@ -515,6 +518,7 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/active_plan"
                 android:textAppearance="?attr/textAppearanceTitleMedium"
+                app:hideIf="@{viewModel.activeWorkoutPlan == null}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/weight_line_chart" />
 
@@ -525,6 +529,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="16dp"
                 android:orientation="horizontal"
+                app:hideIf="@{viewModel.activeWorkoutPlan == null}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/active_plan_header">
@@ -545,6 +550,7 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/favorite_recipes"
                 android:textAppearance="?attr/textAppearanceTitleMedium"
+                app:hideIf="@{viewModel.favoriteRecipes.isEmpty()}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/active_plan_container" />
 
@@ -560,6 +566,7 @@
                 android:paddingTop="6dp"
                 android:paddingEnd="16dp"
                 android:paddingBottom="6dp"
+                app:hideIf="@{viewModel.favoriteRecipes.isEmpty()}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -575,6 +582,7 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/old_workout_plans"
                 android:textAppearance="?attr/textAppearanceTitleMedium"
+                app:hideIf="@{viewModel.oldWorkouts.isEmpty()}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/favorite_recipes_rv" />
 
@@ -591,6 +599,7 @@
                 android:paddingTop="6dp"
                 android:paddingEnd="16dp"
                 android:paddingBottom="6dp"
+                app:hideIf="@{viewModel.oldWorkouts.isEmpty()}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

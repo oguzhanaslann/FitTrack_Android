@@ -5,7 +5,7 @@ import com.oguzhanaslann.commonui.data.local.room.dao.ProgressionPhotoDao
 import com.oguzhanaslann.commonui.data.local.room.dao.UserDao
 import com.oguzhanaslann.commonui.data.local.room.entity.ProgressionPhotoEntity
 import com.oguzhanaslann.commonui.data.local.room.entity.UserEntity
-import com.oguzhanaslann.commonui.data.local.room.entity.UserProfile
+import com.oguzhanaslann.commonui.data.local.room.entity.UserProfileEntity
 import com.oguzhanaslann.feature_profile.domain.usecase.PhotoUrlAndLastEditDate
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.first
 interface ProfileLocalDataSource {
     suspend fun getUserId(): Int
     fun getUser(userId: Int): Flow<UserEntity>
-    fun getUserProfile(userId: Int): Flow<UserProfile>
+    fun getUserProfile(userId: Int): Flow<UserProfileEntity>
     suspend fun setUserProfilePhoto(userId: Int, url: String): Result<Unit>
     suspend fun updateProgressPhotosOfUser(progressPhotoUrls: List<PhotoUrlAndLastEditDate>, userId: Int)
 }
@@ -31,7 +31,7 @@ fun ProfileLocalDataSource(
         return userDao.getUserById(userId)
     }
 
-    override fun getUserProfile(userId: Int): Flow<UserProfile> {
+    override fun getUserProfile(userId: Int): Flow<UserProfileEntity> {
         return userDao.getUserProfile(userId)
     }
 

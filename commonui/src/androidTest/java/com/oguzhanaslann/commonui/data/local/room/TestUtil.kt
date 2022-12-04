@@ -30,7 +30,6 @@ fun createWeightRecordEntity(userId: Int) = WeightRecordEntity(
     weight = 0.0,
     date = 0,
     userId = userId,
-    weightUnit = "kg"
 )
 
 @VisibleForTesting

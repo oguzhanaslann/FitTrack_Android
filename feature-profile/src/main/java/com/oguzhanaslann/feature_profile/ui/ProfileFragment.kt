@@ -26,7 +26,6 @@ import com.oguzhanaslann.feature_profile.R
 import com.oguzhanaslann.feature_profile.databinding.FragmentProfileBinding
 import com.oguzhanaslann.feature_profile.domain.model.OldWorkoutPlanOverView
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
 
 val Fragment.TAG get() = this::class.java.simpleName
 
@@ -80,6 +79,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = profileViewModel
+        binding.lifecycleOwner = viewLifecycleOwner
         initUI()
         profileViewModel.getProfileUIState()
         subscribeObservers()
@@ -140,8 +140,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private fun subscribeObservers() {
         profileViewModel.profileUIState.observe(viewLifecycleOwner) {
             it.onSuccess {
-                binding.userNameText.text = it.user.name
-                loadProfilePhoto(it.user.profilePhotoUrl)
+                loadProfilePhoto(it.userProfile.profilePhotoUrl)
                 progressPhotoAdapter.submitList(it.progressPhotos)
                 setWeightProgressChart(it)
                 oldWorkoutPlanAdapter.submitList(it.oldWorkouts)
@@ -168,7 +167,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     }
 
     private fun setWeightProgressChart(it: ProfileUIState) {
-        val entries = it.weight.map { it.toEntry() }
+        val entries = it.weightProgresses.map { it.toEntry() }
         val dataSet = LineDataSet(entries, "")
         dataSet.apply {
             this.color = binding.root.context.themeColor(R.attr.colorPrimaryProfile)
