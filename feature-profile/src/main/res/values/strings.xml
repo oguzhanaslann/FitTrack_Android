@@ -15,4 +15,6 @@
     <string name="notifications">Notifications</string>
     <string name="logout">Logout</string>
     <string name="gallery">Gallery</string>
+    <string name="photo_added_successfully">Photo added successfully</string>
+    <string name="photo_adding_failed">Photo adding failed</string>
 </resources>

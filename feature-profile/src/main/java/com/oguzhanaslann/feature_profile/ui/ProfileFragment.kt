@@ -25,9 +25,8 @@ import com.oguzhanaslann.commonui.viewBinding
 import com.oguzhanaslann.feature_profile.R
 import com.oguzhanaslann.feature_profile.databinding.FragmentProfileBinding
 import com.oguzhanaslann.feature_profile.domain.model.OldWorkoutPlanOverView
+import com.oguzhanaslann.feature_profile.domain.model.ProgressPhotoAdapter
 import dagger.hilt.android.AndroidEntryPoint
-
-val Fragment.TAG get() = this::class.java.simpleName
 
 @AndroidEntryPoint
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
@@ -47,15 +46,13 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             if (it.isTrue()) {
                 showSuccessSnackbar(
                     container = binding.root,
-                    message = "Photo added successfully",
-                    onDialogDismissed = {}
+                    message = getString(R.string.photo_added_successfully)
                 )
                 profileViewModel.updateProgressPhotos()
             } else {
                 showErrorSnackbar(
                     container = binding.root,
-                    message = "Photo adding failed",
-                    onDialogDismissed = {}
+                    message = getString(R.string.photo_adding_failed)
                 )
             }
         }

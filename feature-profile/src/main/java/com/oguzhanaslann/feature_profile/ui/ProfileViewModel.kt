@@ -7,35 +7,22 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.github.mikephil.charting.data.Entry
-import com.oguzhanaslann.common.Height
 import com.oguzhanaslann.common.State
-import com.oguzhanaslann.common.Weight
 import com.oguzhanaslann.common.data
 import com.oguzhanaslann.common.orDefault
 import com.oguzhanaslann.common.toState
+import com.oguzhanaslann.feature_profile.domain.ProfileRepository
 import com.oguzhanaslann.feature_profile.domain.model.ActiveWorkoutPlan
 import com.oguzhanaslann.feature_profile.domain.model.FavoriteRecipe
-import com.oguzhanaslann.feature_profile.domain.usecase.LocalPhotosUseCase
 import com.oguzhanaslann.feature_profile.domain.model.OldWorkoutPlanOverView
-import com.oguzhanaslann.feature_profile.domain.ProfileRepository
 import com.oguzhanaslann.feature_profile.domain.model.ProgressPhoto
 import com.oguzhanaslann.feature_profile.domain.model.WeightProgress
+import com.oguzhanaslann.feature_profile.domain.usecase.LocalPhotosUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 fun WeightProgress.toEntry() = Entry(date.toFloat(), weight.toFloat())
-
-
-data class UserProfile(
-    val id: Int,
-    val name: String,
-    val profilePhotoUrl: String?,
-    val weight : Weight,
-    val height : Height,
-    val age: Int
-
-)
 
 data class ProfileUIState(
     val userProfile: UserProfile,
