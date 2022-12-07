@@ -1,5 +1,7 @@
 package com.oguzhanaslann.common
 
+import android.provider.ContactsContract.Data
+
 sealed class State<out T> {
     object Loading : State<Nothing>()
     object Initial : State<Nothing>()
@@ -56,22 +58,37 @@ inline fun <T> State<T>.isFinalized(crossinline block: () -> Unit): State<T> {
     return this
 }
 
-//inline fun <reified T, reified R> State<T>.mapByState(
-//    crossinline block: (T) -> R?
-//): State<R> {
-//    return when (this) {
-//        is State.Error -> State.Error(this.exception)
-//        State.Initial -> State.Initial
-//        State.Loading -> State.Loading
-//        is State.Success -> {
-//            val r = block(this.data)
-//            when {
-//                r.isNull() -> State.Error(Constants.Errors.NullDataError)
-//                else -> State.Success(r!!)
-//            }
-//        }
-//    }
-//}
+inline fun <reified T, reified R> State<T>.mapByState(
+    nullDataError: String = "Data is null",
+    crossinline block: (T) -> R?
+): State<R> {
+    return when (this) {
+        is State.Error -> State.Error(this.exception)
+        State.Initial -> State.Initial
+        State.Loading -> State.Loading
+        is State.Success -> {
+            when (val r = block(this.data)) {
+                null -> State.Error(nullDataError)
+                else -> State.Success(r)
+            }
+        }
+    }
+}
+
+fun <T> State<T?>.reduceToNotNull(): State<T> {
+    return when (this) {
+        is State.Error -> State.Error(this.exception)
+        State.Initial -> State.Initial
+        State.Loading -> State.Loading
+        is State.Success -> {
+            when (val r = this.data) {
+                null -> State.Error("Data is null")
+                else -> State.Success(r)
+            }
+        }
+    }
+}
+
 //
 //suspend fun <T, K> State<T>.mappedBy(
 //    mapper: Mapper<T, K>
@@ -92,6 +109,16 @@ fun <T> State<T>.data(): T? {
 fun <T> Result<T>.toState(): State<T> {
     val finalState = when {
         isSuccess -> State.Success(getOrNull()!!)
+        isFailure -> State.Error(exceptionOrNull()!!.message.toString())
+        else -> State.Error("Unknown Error")
+    }
+
+    return finalState
+}
+
+fun <T> Result<T?>.toStateNullable(): State<T?> {
+    val finalState = when {
+        isSuccess -> State.Success(getOrNull())
         isFailure -> State.Error(exceptionOrNull()!!.message.toString())
         else -> State.Error("Unknown Error")
     }

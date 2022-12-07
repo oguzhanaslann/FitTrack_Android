@@ -12,9 +12,3 @@ fun ImageView.loadImage(imageUrl: String?, placeholder: Int, error: Int) {
         error(error)
     }
 }
-
-// hide if
-@BindingAdapter("app:hideIf")
-fun View.hideIf(condition: Boolean) {
-    visibility = if (condition) View.GONE else View.VISIBLE
-}
