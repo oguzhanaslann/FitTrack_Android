@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="viewModel"
             type="com.oguzhanaslann.feature_reports.ReportsViewModel" />
-
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -42,14 +38,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:textAppearance="?attr/textAppearanceTitleMedium"
-                android:textSize="16sp"
                 android:text="@{viewModel.selectedDateText}"
+                android:textAppearance="?attr/textAppearanceTitleSmall"
                 app:layout_constraintBottom_toBottomOf="@+id/move_backwards_icon"
                 app:layout_constraintEnd_toStartOf="@+id/move_forward_icon"
                 app:layout_constraintStart_toEndOf="@+id/move_backwards_icon"
                 app:layout_constraintTop_toTopOf="@+id/move_backwards_icon"
-                tools:text="@tools:sample/date/mmddyy" />
+                tools:text="@tools:sample/date/mmddyy"
+                tools:textSize="16sp" />
 
             <ImageView
                 android:id="@+id/move_forward_icon"
@@ -61,8 +57,39 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/current_past_plan_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Lorem"
+            android:textAppearance="?attr/textAppearanceTitleLarge"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/date_navigation_container"
+            tools:text="@tools:sample/lorem"
+            tools:textSize="28sp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_reports"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:nestedScrollingEnabled="true"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/current_past_plan_name"
+            tools:listitem="@layout/item_exercise_layout" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

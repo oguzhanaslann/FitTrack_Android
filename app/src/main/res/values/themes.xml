@@ -82,10 +82,6 @@
     </style>
 
     <style name="ThemeOverlay.App.BottomNavigationView" parent="">
-<!--        <item name="colorOnSurface">@color/md_theme_light_primary</item>-->
-<!--        <item name="colorSurface">@color/md_theme_light_primaryContainer</item>-->
-<!--        <item name="colorSecondaryContainer">@android:color/transparent</item>-->
-<!--        <item name="colorOnSecondaryContainer">@color/md_theme_light_primary</item>-->
         <item name="colorSecondaryContainer">@color/md_theme_light_primary</item>
         <item name="colorOnSecondaryContainer">@color/md_theme_light_onPrimary</item>
         <item name="colorOnSurface">@color/md_theme_light_primary</item>

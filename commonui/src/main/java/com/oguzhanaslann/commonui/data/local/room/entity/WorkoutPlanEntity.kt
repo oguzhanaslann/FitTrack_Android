@@ -43,16 +43,6 @@ data class ExerciseSet(
     val rest: Int? = null,
 )
 
-data class DailyPlanWithExercises(
-    @Embedded val dailyPlanEntity: DailyPlanEntity,
-    @Relation(
-        parentColumn = "daily_plan_id",
-        entityColumn = "exercise_id",
-        associateBy = Junction(DailyPlanExercise::class),
-    )
-    val exercises: List<ExerciseEntity>
-)
-
 data class WorkoutPlanDetail(
     @Embedded val workoutPlanEntity: WorkoutPlanEntity,
     @Relation(

@@ -36,7 +36,6 @@ android {
         dataBinding true
     }
 
-
     testOptions {
         unitTests.returnDefaultValues = true
     }
@@ -83,11 +82,11 @@ dependencies {
     // optional - Test helpers
     testImplementation "androidx.room:room-testing:$room_version"
 
-    api "androidx.compose.ui:ui:$versions.compose_version"
-    api "androidx.compose.material:material:$versions.compose_version"
-    api "androidx.compose.ui:ui-tooling-preview:$versions.compose_version"
-    api 'androidx.activity:activity-compose:1.6.0'
-    api 'androidx.compose.material3:material3:1.0.0-rc01'
+//    api "androidx.compose.ui:ui:$versions.compose_version"
+//    api "androidx.compose.material:material:$versions.compose_version"
+//    api "androidx.compose.ui:ui-tooling-preview:$versions.compose_version"
+//    api 'androidx.activity:activity-compose:1.6.0'
+//    api 'androidx.compose.material3:material3:1.0.0-rc01'
 
     testImplementation "junit:junit:$versions.junit"
     // Optional -- Robolectric environment
