@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity() {
                     val isSignUp = destinationId == com.oguzhanaslann.feature_auth.R.id.signUpFragment
                     val isAuthentication = isSignIn || isSignUp
                     binding.appBarLayout.isVisible = !(isOnBoard || isAuthentication)
-                    binding.bottomAppBar.isVisible = !(isOnBoard || isAuthentication)
+                    binding.bottomNavigationView.isVisible = !(isOnBoard || isAuthentication)
                     binding.addNewItemFab.isVisible = !(isOnBoard || isAuthentication)
                 }
             }, 100)
