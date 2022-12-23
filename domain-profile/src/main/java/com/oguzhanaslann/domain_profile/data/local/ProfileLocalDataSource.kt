@@ -77,7 +77,7 @@ fun ProfileLocalDataSource(
             profilePhotoUrl = profilePhotoUrl ?: user.profilePhotoUrl,
             height = userProfileEdit.heightInCm.toDouble(),
             measurementUnit = MeasurementUnit.metric,
-            yearOfBirth = DateHelper.getYearOf(userProfileEdit.birthdate),
+            birthdate =  userProfileEdit.birthdate?.time ?: user.birthdate,
         )
 
         val weight = WeightRecordEntity(

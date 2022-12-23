@@ -2,7 +2,6 @@ plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
-    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -89,9 +88,6 @@ dependencies {
 //    api "androidx.compose.ui:ui-tooling-preview:$versions.compose_version"
 //    api 'androidx.activity:activity-compose:1.6.0'
 //    api 'androidx.compose.material3:material3:1.0.0-rc01'
-
-    implementation "com.google.dagger:hilt-android:$hilt_version"
-    kapt "com.google.dagger:hilt-compiler:$hilt_version"
 
     testImplementation "junit:junit:$versions.junit"
     // Optional -- Robolectric environment

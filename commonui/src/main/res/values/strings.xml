@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="email_invalid">Email is not valid</string>
+    <string name="password_invalid">Password is not valid</string>
+    <string name="unknown_error">"something went wrong "</string>
+    <string name="email_or_password_wrong">Your email or password is wrong</string>
+    <string name="already_taken_email">This email is already taken</string>
+    <string name="name">Name</string>
+    <string name="surname">Surname</string>
+    <string name="date_of_birth">Date of birth</string>
+
+    <string name="height">height</string>
+    <string name="weight">Weight</string>
+    <string name="save">Save</string>
+    <string name="birthdate_empty_error">Please enter your birthdate</string>
+    <string name="height_empty_error">Please select enter your height</string>
+    <string name="name_empty_error">Please enter your name</string>
+    <string name="surname_empty_error">"Please enter your surname "</string>
+    <string name="weight_empty_error">Please select your weight</string>
+
+    <string name="select_date">Select Date</string>
+</resources>

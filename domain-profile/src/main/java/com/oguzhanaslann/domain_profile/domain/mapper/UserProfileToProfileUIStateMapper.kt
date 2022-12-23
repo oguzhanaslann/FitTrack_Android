@@ -10,9 +10,10 @@ import com.oguzhanaslann.domain_profile.domain.model.Profile
 import com.oguzhanaslann.domain_profile.domain.model.ProgressPhoto
 import com.oguzhanaslann.domain_profile.domain.model.UserProfile
 import com.oguzhanaslann.domain_profile.domain.model.WeightProgress
-import com.oguzhanaslann.feature_profile.domain.model.ActiveWorkoutPlan
-import com.oguzhanaslann.feature_profile.domain.model.FavoriteRecipe
-import com.oguzhanaslann.feature_profile.domain.model.OldWorkoutPlanOverView
+import com.oguzhanaslann.domain_profile.domain.model.ActiveWorkoutPlan
+import com.oguzhanaslann.domain_profile.domain.model.FavoriteRecipe
+import com.oguzhanaslann.domain_profile.domain.model.OldWorkoutPlanOverView
+import java.util.*
 
 class UserProfileToProfileUIStateMapper(
     private val progressionMapper: Mapper<ProgressionPhotoEntity, ProgressPhoto>,
@@ -46,11 +47,12 @@ class UserProfileToProfileUIStateMapper(
         return Profile(
             userProfile = UserProfile(
                 id = input.user.id ?: 0,
-                fullName = "${input.user.name} ${input.user.surname}",
+                name = input.user.name ?: "",
+                surname = input.user.surname ?: "",
                 profilePhotoUrl = input.user.profilePhotoUrl,
                 weight = weight,
                 height = height,
-                age = input.user.yearOfBirth?.let { DateHelper.getCurrentYear() - it }.orZero(),
+                birthDate = input.user.birthdate?.let { Date(it) }
             ),
             progressPhotos = input.progressionPhotos.mapBy(progressionMapper),
             weightProgresses = input.weightRecords.mapBy(weightMapper),

@@ -75,6 +75,23 @@ inline fun <reified T, reified R> State<T>.mapByState(
     }
 }
 
+suspend inline fun <reified T, reified R> State<T>.mapByStateSuspend(
+    nullDataError: String = "Data is null",
+    crossinline block: suspend (T) -> R?
+): State<R> {
+    return when (this) {
+        is State.Error -> State.Error(this.exception)
+        State.Initial -> State.Initial
+        State.Loading -> State.Loading
+        is State.Success -> {
+            when (val r = block(this.data)) {
+                null -> State.Error(nullDataError)
+                else -> State.Success(r)
+            }
+        }
+    }
+}
+
 fun <T> State<T?>.reduceToNotNull(): State<T> {
     return when (this) {
         is State.Error -> State.Error(this.exception)

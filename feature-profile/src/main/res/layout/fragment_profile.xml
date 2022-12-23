@@ -279,7 +279,7 @@
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout4"
+                android:id="@+id/my_body_container"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
@@ -345,7 +345,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout4">
+                app:layout_constraintTop_toBottomOf="@+id/my_body_container">
 
                 <LinearLayout
                     android:id="@+id/linearLayout3"

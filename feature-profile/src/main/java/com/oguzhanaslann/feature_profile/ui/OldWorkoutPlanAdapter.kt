@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.oguzhanaslann.feature_profile.databinding.OldWorkoutPlanLayoutBinding
-import com.oguzhanaslann.feature_profile.domain.model.OldWorkoutPlanOverView
+import com.oguzhanaslann.domain_profile.domain.model.OldWorkoutPlanOverView
 
 class OldWorkoutPlanAdapter(
     private inline val onSeeDetailsClick: (OldWorkoutPlanOverView) -> Unit = {}

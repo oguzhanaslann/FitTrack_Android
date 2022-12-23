@@ -15,7 +15,7 @@ data class UserEntity(
     val surname: String? = null,
     val height: Double? = null,
     val measurementUnit: String? = null,
-    val yearOfBirth: Int? = null,
+    val birthdate: Long? = null,
     @ColumnInfo(name = "active_workout_plan_id")
     val activeWorkoutPlanId: Int? = null,
 ) {

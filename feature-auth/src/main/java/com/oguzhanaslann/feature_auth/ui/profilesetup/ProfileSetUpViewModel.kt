@@ -21,15 +21,6 @@ import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
 
-data class ProfileSetupUIState(
-    val name: String = "",
-    val surname: String = "",
-    val birthdate: Date? = null,
-    val heightInCm: Int = 0,
-    val weightInKg: Int = 0,
-    val profilePhotoUri: Uri? = null,
-)
-
 @HiltViewModel
 class ProfileSetUpViewModel @Inject constructor(
     private val profileEditUseCase: ProfileEditUseCase
@@ -170,14 +161,4 @@ class ProfileSetUpViewModel @Inject constructor(
         const val DEFAULT_HEIGHT = 170
         const val DEFAULT_WEIGHT = 70
     }
-}
-
-
-sealed class ProfileSetupEvent {
-    object NameEmpty : ProfileSetupEvent()
-    object SurnameEmpty : ProfileSetupEvent()
-    object BirthdateEmpty : ProfileSetupEvent()
-    object HeightEmpty : ProfileSetupEvent()
-    object WeightEmpty : ProfileSetupEvent()
-    object ProfileSaved : ProfileSetupEvent()
 }

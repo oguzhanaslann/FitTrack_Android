@@ -66,14 +66,14 @@ class MainActivity : AppCompatActivity() {
 
                 navController.addOnDestinationChangedListener { _, destination , _ ->
                     val destinationId = destination.id
-                    val isOnBoard = destinationId == com.oguzhanaslann.feature_onboard.R.id.onboardFragment
-                    val isSignIn = destinationId == com.oguzhanaslann.feature_auth.R.id.signInFragment
-                    val isSignUp = destinationId == com.oguzhanaslann.feature_auth.R.id.signUpFragment
-                    val isProfileSetup = destinationId == com.oguzhanaslann.feature_auth.R.id.profileSetUpFragment
-                    val isAuthentication = isSignIn || isSignUp || isProfileSetup
-                    binding.appBarLayout.isVisible = !(isOnBoard || isAuthentication)
-                    binding.bottomNavigationView.isVisible = !(isOnBoard || isAuthentication)
-                    binding.addNewItemFab.isVisible = !(isOnBoard || isAuthentication)
+                    val isNavigationPage = destinationId == com.oguzhanaslann.feature_home.R.id.homepageFragment
+                            || destinationId == com.oguzhanaslann.feature_workouts.R.id.workoutsFragment
+                            || destinationId == com.oguzhanaslann.feature_reports.R.id.reportsFragment
+                            || destinationId == com.oguzhanaslann.feature_profile.R.id.profileFragment
+
+                    binding.appBarLayout.isVisible = isNavigationPage
+                    binding.bottomNavigationView.isVisible = isNavigationPage
+                    binding.addNewItemFab.isVisible = isNavigationPage
                 }
             }, 100)
         }

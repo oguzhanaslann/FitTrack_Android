@@ -8,7 +8,7 @@ import java.util.*
 class WeightRecordToWeightProgressMapper : Mapper<WeightRecordEntity, WeightProgress> {
     override suspend fun map(input: WeightRecordEntity): WeightProgress {
         return WeightProgress(
-            weight = "${input.weight}",
+            weight = input.weight,
             date = run {
                 val dateMillis = input.date
                 Date(dateMillis)

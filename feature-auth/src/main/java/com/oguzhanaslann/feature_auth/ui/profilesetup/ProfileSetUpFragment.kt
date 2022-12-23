@@ -13,6 +13,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
 import coil.load
 import com.google.android.material.datepicker.DateValidatorPointBackward
+import com.oguzhanaslann.common.MINIMUM_HEIGHT
+import com.oguzhanaslann.common.MINIMUM_WEIGHT
 import com.oguzhanaslann.commonui.Navigator
 import com.oguzhanaslann.commonui.navController
 import com.oguzhanaslann.commonui.showDatePicker
@@ -21,7 +23,6 @@ import com.oguzhanaslann.commonui.viewBinding
 import com.oguzhanaslann.feature_auth.R
 import com.oguzhanaslann.feature_auth.databinding.FragmentProfileSetUpBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -60,25 +61,25 @@ class ProfileSetUpFragment : Fragment(R.layout.fragment_profile_set_up) {
             viewModel.profileSetupEvents
                 .flowWithLifecycle(lifecycle)
                 .collect {
-                    when(it) {
+                    when (it) {
                         ProfileSetupEvent.BirthdateEmpty -> showErrorSnackbar(
-                            message = getString(R.string.birthdate_empty_error),
+                            message = getString(com.oguzhanaslann.commonui.R.string.birthdate_empty_error),
                             container = binding.root
                         )
                         ProfileSetupEvent.HeightEmpty -> showErrorSnackbar(
-                            message = getString(R.string.height_empty_error),
+                            message = getString(com.oguzhanaslann.commonui.R.string.height_empty_error),
                             container = binding.root
                         )
                         ProfileSetupEvent.NameEmpty -> showErrorSnackbar(
-                            message = getString(R.string.name_empty_error),
+                            message = getString(com.oguzhanaslann.commonui.R.string.name_empty_error),
                             container = binding.root
                         )
                         ProfileSetupEvent.SurnameEmpty -> showErrorSnackbar(
-                            message = getString(R.string.surname_empty_error),
+                            message = getString(com.oguzhanaslann.commonui.R.string.surname_empty_error),
                             container = binding.root
                         )
                         ProfileSetupEvent.WeightEmpty -> showErrorSnackbar(
-                            message = getString(R.string.weight_empty_error),
+                            message = getString(com.oguzhanaslann.commonui.R.string.weight_empty_error),
                             container = binding.root
                         )
                         ProfileSetupEvent.ProfileSaved -> {
@@ -168,13 +169,8 @@ class ProfileSetUpFragment : Fragment(R.layout.fragment_profile_set_up) {
                 viewModel.setBirthdate(it)
             },
             datePickerBuilder = {
-                setTitleText("Select Date")
+                setTitleText(getString(com.oguzhanaslann.commonui.R.string.select_date))
             }
         )
-    }
-
-    companion object {
-        const val MINIMUM_HEIGHT = 50
-        const val MINIMUM_WEIGHT = 20
     }
 }

@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.oguzhanaslann.feature_profile.domain.model.FavoriteRecipe
+import com.oguzhanaslann.domain_profile.domain.model.FavoriteRecipe
 import com.oguzhanaslann.feature_profile.databinding.FavoriteRecipesLayoutBinding
 
 class FavoriteRecipeAdapter(

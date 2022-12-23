@@ -21,15 +21,16 @@ import com.oguzhanaslann.common.isTrue
 import com.oguzhanaslann.common.onSuccess
 import com.oguzhanaslann.commonui.dp
 import com.oguzhanaslann.commonui.horizontalLinearLayoutManaged
+import com.oguzhanaslann.commonui.navController
 import com.oguzhanaslann.commonui.showErrorSnackbar
 import com.oguzhanaslann.commonui.showSuccessSnackbar
 import com.oguzhanaslann.commonui.themeColor
 import com.oguzhanaslann.commonui.viewBinding
 import com.oguzhanaslann.feature_profile.R
 import com.oguzhanaslann.feature_profile.databinding.FragmentProfileBinding
-import com.oguzhanaslann.feature_profile.domain.model.OldWorkoutPlanOverView
+import com.oguzhanaslann.domain_profile.domain.model.OldWorkoutPlanOverView
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.Date
+import java.util.*
 
 @AndroidEntryPoint
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
@@ -98,7 +99,9 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 valueFormatter = object : ValueFormatter() {
                     override fun getAxisLabel(value: Float, axis: AxisBase?): String {
                         val day = Date(value.toLong())
-                        return DateHelper.tryFormat(day, DateHelper.DAY_MONTH_WITH_NAME_YEAR_FORMAT, autoLocale = true)
+                        return DateHelper.tryFormat(day,
+                            DateHelper.DAY_MONTH_WITH_NAME_YEAR_FORMAT,
+                            autoLocale = true)
                     }
                 }
                 //                typeface = Typeface.createFromAsset(requireContext().assets, "app/src/main/res/font/poppins_semi_bold.ttf")
@@ -122,6 +125,12 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             description = Description().apply { text = "" }
             invalidate()
         }
+
+        binding.myBodyContainer.setOnClickListener {
+            val profile = profileViewModel.getProfileOrNull() ?: return@setOnClickListener
+            navController.navigate(ProfileFragmentDirections.actionProfileFragmentToProfileEditFragment(profile))
+        }
+
         binding.profileEditPhotoButton.setOnClickListener {
             photoPicker.launch(
                 PickVisualMediaRequest(
@@ -133,7 +142,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             horizontalLinearLayoutManaged()
             adapter = progressPhotoAdapter
         }
-
     }
 
     private fun subscribeObservers() {

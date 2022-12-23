@@ -78,10 +78,10 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
 
     private fun getErrorMessageFrom(error: String): String {
         return when (error) {
-            SignInViewModel.EMAIL_INVALID -> getString(R.string.email_invalid)
-            SignInViewModel.PASSWORD_INVALID -> getString(R.string.password_invalid)
-            EMAIL_OR_PASSWORD_WRONG -> getString(R.string.email_or_password_wrong)
-            else -> getString(R.string.unknown_error)
+            SignInViewModel.EMAIL_INVALID -> getString(com.oguzhanaslann.commonui.R.string.email_invalid)
+            SignInViewModel.PASSWORD_INVALID -> getString(com.oguzhanaslann.commonui.R.string.password_invalid)
+            EMAIL_OR_PASSWORD_WRONG -> getString(com.oguzhanaslann.commonui.R.string.email_or_password_wrong)
+            else -> getString(com.oguzhanaslann.commonui.R.string.unknown_error)
         }
     }
 

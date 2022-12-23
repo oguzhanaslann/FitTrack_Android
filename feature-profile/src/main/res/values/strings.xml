@@ -17,4 +17,6 @@
     <string name="gallery">Gallery</string>
     <string name="photo_added_successfully">Photo added successfully</string>
     <string name="photo_adding_failed">Photo adding failed</string>
+    <string name="profile_info_updated_description">Profile information updated</string>
+    <string name="profile_edit">Edit your profile</string>
 </resources>

@@ -2,7 +2,7 @@ package com.oguzhanaslann.domain_profile.domain.mapper
 
 import com.oguzhanaslann.common.Mapper
 import com.oguzhanaslann.commonui.data.local.room.entity.UserWorkoutWithDailyPlans
-import com.oguzhanaslann.feature_profile.domain.model.ActiveWorkoutPlan
+import com.oguzhanaslann.domain_profile.domain.model.ActiveWorkoutPlan
 
 class UserWorkoutWithDailyPlansToActiveWorkoutPlanMapper :
     Mapper<UserWorkoutWithDailyPlans, ActiveWorkoutPlan> {

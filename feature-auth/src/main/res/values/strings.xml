@@ -11,22 +11,6 @@
     <string name="don_t_have_an_account_sign_up_span_text">Sign up</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="user_agreement">User Agreement</string>
-    <string name="email_invalid">Email is not valid</string>
-    <string name="password_invalid">Password is not valid</string>
-    <string name="unknown_error">"something went wrong "</string>
-    <string name="email_or_password_wrong">Your email or password is wrong</string>
-    <string name="already_taken_email">This email is already taken</string>
-    <string name="name">Name</string>
-    <string name="surname">Surname</string>
-    <string name="date_of_birth">Date of birth</string>
     <string name="tell_us_about_yourself">Tell us about yourself</string>
     <string name="enter_your_profile_information">Enter your profile information</string>
-    <string name="height">height</string>
-    <string name="weight">Weight</string>
-    <string name="save">Save</string>
-    <string name="birthdate_empty_error">Please enter your birthdate</string>
-    <string name="height_empty_error">Please select enter your height</string>
-    <string name="name_empty_error">Please enter your name</string>
-    <string name="surname_empty_error">"Please enter your surname "</string>
-    <string name="weight_empty_error">Please select your weight</string>
 </resources>
