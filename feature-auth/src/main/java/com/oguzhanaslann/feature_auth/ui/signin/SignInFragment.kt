@@ -23,7 +23,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class SignInFragment : Fragment(R.layout.fragment_sign_in) {
 
-    // binder
     private var binder: FragmentSignInBinding? = null
     private val binding get() = binder!!
 

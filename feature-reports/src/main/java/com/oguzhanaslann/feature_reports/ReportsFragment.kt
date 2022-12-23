@@ -71,16 +71,16 @@ class ReportsFragment : Fragment(R.layout.fragment_reports) {
     }
 
     private fun showDateSelectionFragment() {
-        val date = reportsViewModel.getSelectedDateOrNow()
+        val startDate = reportsViewModel.getSelectedDateOrNow()
         val now = Date()
         val constraintsBuilder = CalendarConstraints.Builder()
-            .setOpenAt(date.time)
+            .setOpenAt(startDate.time)
             .setEnd(now.time)
             .setValidator(DateValidatorPointBackward.now())
 
         MaterialDatePicker.Builder.datePicker()
             .setTitleText(getString(R.string.select_a_date))
-            .setSelection(date.time)
+            .setSelection(startDate.time)
             .setCalendarConstraints(constraintsBuilder.build())
             .build()
             .apply {

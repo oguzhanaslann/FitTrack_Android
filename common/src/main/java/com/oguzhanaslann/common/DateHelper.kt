@@ -81,4 +81,12 @@ object DateHelper {
     fun getCurrentYear(): Int {
         return Calendar.getInstance().get(Calendar.YEAR)
     }
+
+    fun getYearOf(birthdate: Date?): Int? {
+        return birthdate?.let {
+            val calendar = Calendar.getInstance()
+            calendar.time = it
+            calendar.get(Calendar.YEAR)
+        }
+    }
 }

@@ -1,4 +1,4 @@
-package com.oguzhanaslann.feature_profile.domain.model
+package com.oguzhanaslann.feature_profile.ui
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.oguzhanaslann.domain_profile.domain.model.ProgressPhoto
 import com.oguzhanaslann.feature_profile.R
 import com.oguzhanaslann.feature_profile.databinding.ItemAddGalleryLayoutBinding
 import com.oguzhanaslann.feature_profile.databinding.ItemGalleryLayoutBinding

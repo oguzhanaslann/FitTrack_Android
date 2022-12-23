@@ -42,10 +42,10 @@ dependencies {
 
     implementation project(":commonui")
     implementation project(":common")
+    implementation project(":domain-profile")
 
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
-    api 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
 

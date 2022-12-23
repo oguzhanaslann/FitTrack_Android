@@ -8,12 +8,15 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.formatter.ValueFormatter
+import com.oguzhanaslann.common.DateHelper
 import com.oguzhanaslann.common.isTrue
 import com.oguzhanaslann.common.onSuccess
 import com.oguzhanaslann.commonui.dp
@@ -25,8 +28,8 @@ import com.oguzhanaslann.commonui.viewBinding
 import com.oguzhanaslann.feature_profile.R
 import com.oguzhanaslann.feature_profile.databinding.FragmentProfileBinding
 import com.oguzhanaslann.feature_profile.domain.model.OldWorkoutPlanOverView
-import com.oguzhanaslann.feature_profile.domain.model.ProgressPhotoAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.Date
 
 @AndroidEntryPoint
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
@@ -92,12 +95,12 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 setAvoidFirstLastClipping(true)
                 setDrawLimitLinesBehindData(true)
 
-                //                valueFormatter = object : ValueFormatter() {
-                //                    override fun getAxisLabel(value: Float, axis: AxisBase?): String {
-                //                        val day = stats[value.toInt()].first
-                //                        return labelFactory(day)
-                //                    }
-                //                }
+                valueFormatter = object : ValueFormatter() {
+                    override fun getAxisLabel(value: Float, axis: AxisBase?): String {
+                        val day = Date(value.toLong())
+                        return DateHelper.tryFormat(day, DateHelper.DAY_MONTH_WITH_NAME_YEAR_FORMAT, autoLocale = true)
+                    }
+                }
                 //                typeface = Typeface.createFromAsset(requireContext().assets, "app/src/main/res/font/poppins_semi_bold.ttf")
             }
 
@@ -108,7 +111,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 setDrawGridLines(false)
                 setDrawLabels(true)
                 setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART)
-                //                axisMinimum = 0f
             }
             axisRight.isEnabled = false
 

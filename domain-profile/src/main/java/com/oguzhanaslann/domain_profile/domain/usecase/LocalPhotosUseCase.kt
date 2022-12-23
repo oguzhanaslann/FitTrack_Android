@@ -6,7 +6,7 @@ import androidx.core.content.FileProvider
 import com.oguzhanaslann.commonui.copyTo
 import com.oguzhanaslann.commonui.createIfNotExist
 import com.oguzhanaslann.commonui.toUrlString
-import com.oguzhanaslann.feature_profile.domain.ProfileRepository
+import com.oguzhanaslann.domain_profile.domain.ProfileRepository
 import java.io.File
 import java.util.*
 
@@ -22,6 +22,14 @@ class LocalPhotosUseCase(
         uri.copyTo(profilePhotoFile, applicationContext)
         val url = profilePhotoFile.toUrlString()
         profileRepository.setUserProfilePhoto(url)
+    }
+
+    suspend fun saveProfilePhoto(uri: Uri): String {
+        val profilePhotoFile = File(applicationContext.filesDir, PROFILE_PHOTO_FILE_NAME)
+        profilePhotoFile.createIfNotExist()
+        uri.copyTo(profilePhotoFile, applicationContext)
+        val url = profilePhotoFile.toUrlString()
+        return url
     }
 
     fun getNewProgressPhotoUri(): Uri {

@@ -69,7 +69,8 @@ class MainActivity : AppCompatActivity() {
                     val isOnBoard = destinationId == com.oguzhanaslann.feature_onboard.R.id.onboardFragment
                     val isSignIn = destinationId == com.oguzhanaslann.feature_auth.R.id.signInFragment
                     val isSignUp = destinationId == com.oguzhanaslann.feature_auth.R.id.signUpFragment
-                    val isAuthentication = isSignIn || isSignUp
+                    val isProfileSetup = destinationId == com.oguzhanaslann.feature_auth.R.id.profileSetUpFragment
+                    val isAuthentication = isSignIn || isSignUp || isProfileSetup
                     binding.appBarLayout.isVisible = !(isOnBoard || isAuthentication)
                     binding.bottomNavigationView.isVisible = !(isOnBoard || isAuthentication)
                     binding.addNewItemFab.isVisible = !(isOnBoard || isAuthentication)

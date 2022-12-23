@@ -48,6 +48,8 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import kotlinx.coroutines.CoroutineScope
@@ -723,4 +725,29 @@ fun File.createIfNotExist() {
 
 fun File.toUrlString(): String {
     return toURI().toURL().toString()
+}
+
+fun Fragment.showDatePicker(
+    constraintBuilder : CalendarConstraints.Builder.() -> Unit = {},
+    onDateSelected : (Long) -> Unit,
+    datePickerBuilder : MaterialDatePicker.Builder<Long>.() -> Unit = {},
+    tag : String = "DATE_PICKER"
+) {
+
+    val constraintsBuilder = CalendarConstraints.Builder()
+    constraintsBuilder.constraintBuilder()
+
+    MaterialDatePicker.Builder.datePicker()
+        .setCalendarConstraints(constraintsBuilder.build())
+        .apply {
+            datePickerBuilder()
+        }
+        .build()
+        .apply {
+            addOnPositiveButtonClickListener {
+                onDateSelected(it)
+            }
+        }
+        .show(childFragmentManager, tag)
+
 }

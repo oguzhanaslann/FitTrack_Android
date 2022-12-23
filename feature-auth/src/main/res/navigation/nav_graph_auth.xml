@@ -22,5 +22,17 @@
         android:id="@+id/signUpFragment"
         android:name="com.oguzhanaslann.feature_auth.ui.signup.SignUpFragment"
         android:label="fragment_sign_up"
-        tools:layout="@layout/fragment_sign_up" />
+        tools:layout="@layout/fragment_sign_up" >
+        <action
+            android:id="@+id/action_signUpFragment_to_profileSetUpFragment"
+            app:destination="@id/profileSetUpFragment"
+            app:popUpTo="@id/signInFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileSetUpFragment"
+        android:name="com.oguzhanaslann.feature_auth.ui.profilesetup.ProfileSetUpFragment"
+        android:label="fragment_profile_set_up"
+        tools:layout="@layout/fragment_profile_set_up"
+        />
 </navigation>
