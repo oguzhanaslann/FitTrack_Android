@@ -82,7 +82,7 @@ fun ProfileLocalDataSource(
 
         val weight = WeightRecordEntity(
             weight = userProfileEdit.weightInKg.toDouble(),
-            date = Date().time,
+            date = DateHelper.nowAsLong(),
             userId = userId
         )
 

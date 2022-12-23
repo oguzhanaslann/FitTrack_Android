@@ -1,4 +1,4 @@
-package com.oguzhanaslann.feature_reports
+package com.oguzhanaslann.feature_reports.ui
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,9 +10,10 @@ import com.oguzhanaslann.common.DateHelper
 import com.oguzhanaslann.common.State
 import com.oguzhanaslann.common.isLoading
 import com.oguzhanaslann.common.reduceToNotNull
-import com.oguzhanaslann.common.toState
 import com.oguzhanaslann.common.toStateNullable
+import com.oguzhanaslann.commonui.withAtLeastDurationOf
 import com.oguzhanaslann.feature_reports.data.ReportsRepository
+import com.oguzhanaslann.feature_reports.domain.Report
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -20,8 +21,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
-import kotlin.time.DurationUnit
-import kotlin.time.toDuration
 
 @HiltViewModel
 class ReportsViewModel @Inject constructor(
@@ -44,12 +43,18 @@ class ReportsViewModel @Inject constructor(
         viewModelScope.launch {
             _selectedDate.collectLatest {
                 _reports.postValue(State.Loading)
-                val result = reportsRepository.getReportOnDate(it)
-                val resultState = result.toStateNullable().reduceToNotNull()
+                val resultState = withAtLeastDurationOf(ONE_AND_HALF_SECONDS) {
+                    val result = reportsRepository.getReportOnDate(it)
+                    result.toStateNullable()
+                        .reduceToNotNull(NOT_FOUND_EXCEPTION)
+                }
+
                 _reports.postValue(resultState)
             }
         }
     }
+
+
 
     fun setSelectedDate(date: Long) {
         _selectedDate.value = Date(date)
@@ -60,10 +65,9 @@ class ReportsViewModel @Inject constructor(
     }
 
     fun moveNextDayIfPossible() {
-        val now = Date()
-        val oneDay = 1.toDuration(DurationUnit.DAYS).inWholeMilliseconds
         val selectionDate = getSelectedDateOrNow()
-        val nextDay = Date(selectionDate.time + oneDay)
+        val nextDay = DateHelper.nextDay(selectionDate)
+        val now = Date()
         if (nextDay.before(now)) {
             setSelectedDate(nextDay)
         }
@@ -74,9 +78,13 @@ class ReportsViewModel @Inject constructor(
     }
 
     fun movePreviousDay() {
-        val oneDay = 1.toDuration(DurationUnit.DAYS).inWholeMilliseconds
         val selectionDate = getSelectedDateOrNow()
-        val previousDay = Date(selectionDate.time - oneDay)
+        val previousDay = DateHelper.previousDay(selectionDate)
         setSelectedDate(previousDay)
+    }
+
+    companion object {
+        const val NOT_FOUND_EXCEPTION = "Not found exception"
+        private const val ONE_AND_HALF_SECONDS = 1500L
     }
 }

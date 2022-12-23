@@ -92,14 +92,14 @@ suspend inline fun <reified T, reified R> State<T>.mapByStateSuspend(
     }
 }
 
-fun <T> State<T?>.reduceToNotNull(): State<T> {
+fun <T> State<T?>.reduceToNotNull(nullException : String): State<T> {
     return when (this) {
         is State.Error -> State.Error(this.exception)
         State.Initial -> State.Initial
         State.Loading -> State.Loading
         is State.Success -> {
             when (val r = this.data) {
-                null -> State.Error("Data is null")
+                null -> State.Error(nullException)
                 else -> State.Success(r)
             }
         }

@@ -1,4 +1,4 @@
-package com.oguzhanaslann.feature_reports
+package com.oguzhanaslann.feature_reports.ui
 
 import android.os.Bundle
 import android.view.View
@@ -7,30 +7,14 @@ import androidx.fragment.app.viewModels
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointBackward
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.oguzhanaslann.common.onError
 import com.oguzhanaslann.common.onSuccess
 import com.oguzhanaslann.commonui.verticalLinearLayoutManaged
 import com.oguzhanaslann.commonui.viewBinding
+import com.oguzhanaslann.feature_reports.R
 import com.oguzhanaslann.feature_reports.databinding.FragmentReportsBinding
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
-
-data class ReportExercise(
-    val id: Int,
-    val name: String,
-    val description: String,
-    val image: String,
-    val isDone: Boolean,
-)
-
-data class ReportDailyPlan(
-    val name: String,
-    val exercises: List<ReportExercise>,
-)
-
-data class Report(
-    val date: Date,
-    val dailyPlan: ReportDailyPlan?,
-)
 
 @AndroidEntryPoint
 class ReportsFragment : Fragment(R.layout.fragment_reports) {
@@ -95,6 +79,13 @@ class ReportsFragment : Fragment(R.layout.fragment_reports) {
         reportsViewModel.reports.observe(viewLifecycleOwner) {
             it.onSuccess {
                 reportsAdapter.submitList(it.dailyPlan?.exercises)
+            }.onError {
+                when (it) {
+                    ReportsViewModel.NOT_FOUND_EXCEPTION ->
+                        binding.errorMessage.text = getString(R.string.no_report_found)
+                    else ->
+                        binding.errorMessage.text = getString(R.string.we_couldn_t_load_your_report)
+                }
             }
         }
     }

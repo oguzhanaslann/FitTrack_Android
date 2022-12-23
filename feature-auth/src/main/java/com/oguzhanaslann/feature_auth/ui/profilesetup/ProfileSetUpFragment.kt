@@ -13,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
 import coil.load
 import com.google.android.material.datepicker.DateValidatorPointBackward
+import com.oguzhanaslann.common.DateHelper
 import com.oguzhanaslann.common.MINIMUM_HEIGHT
 import com.oguzhanaslann.common.MINIMUM_WEIGHT
 import com.oguzhanaslann.commonui.Navigator
@@ -161,8 +162,8 @@ class ProfileSetUpFragment : Fragment(R.layout.fragment_profile_set_up) {
     private fun showDatePickerDialog() {
         showDatePicker(
             constraintBuilder = {
-                setOpenAt(Date().time)
-                setEnd(Date().time)
+                setOpenAt(DateHelper.nowAsLong())
+                setEnd(DateHelper.nowAsLong())
                 setValidator(DateValidatorPointBackward.now())
             },
             onDateSelected = {

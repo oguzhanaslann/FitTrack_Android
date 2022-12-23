@@ -3,6 +3,8 @@ package com.oguzhanaslann.common
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
 
 object DateHelper {
 
@@ -38,7 +40,6 @@ object DateHelper {
         return getDateFormatter(format).format(date)
     }
 
-    // localised format
     fun format(date: Date, format: String, locale: Locale): String {
         return getDateFormatter(format, locale).format(date)
     }
@@ -60,7 +61,6 @@ object DateHelper {
         }
     }
 
-    // localised tryFormat
     fun tryFormat(date: Date?, format: String, locale: Locale): String {
         return try {
             date?.let { format(it, format, locale) } ?: ""
@@ -69,7 +69,6 @@ object DateHelper {
         }
     }
 
-    // auto localised tryFormat
     fun tryFormat(date: Date?, format: String, autoLocale: Boolean): String {
         return try {
             date?.let { format(it, format, autoLocale) } ?: ""
@@ -96,5 +95,36 @@ object DateHelper {
 
     fun calculateAgeOf(birthdate: Date?): Int {
         return getCurrentYear() - getYearOf(birthdate)
+    }
+
+    fun nextDay(selectionDate: Date): Date {
+        val oneDay = 1.toDuration(DurationUnit.DAYS).inWholeMilliseconds
+        return Date(selectionDate.time + oneDay)
+    }
+
+    fun previousDay(selectionDate: Date): Date {
+        val oneDay = 1.toDuration(DurationUnit.DAYS).inWholeMilliseconds
+        return Date(selectionDate.time - oneDay)
+    }
+
+    fun now(): Date  {
+        return Calendar.getInstance().time
+    }
+
+    fun nowAsLong() = now().time
+
+    /**
+     *  returns the date as 00:00:00.000 clock. Simply forget about the clock time
+     * @param date Date
+     * @return Date
+     */
+    fun getStartDateOf(date: Date): Date {
+        val calendar = Calendar.getInstance()
+        calendar.time = date
+        calendar.set(Calendar.HOUR_OF_DAY, 0)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.SECOND, 0)
+        calendar.set(Calendar.MILLISECOND, 0)
+        return calendar.time
     }
 }

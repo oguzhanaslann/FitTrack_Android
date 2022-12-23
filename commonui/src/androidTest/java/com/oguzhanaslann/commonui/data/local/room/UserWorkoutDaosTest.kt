@@ -425,7 +425,6 @@ class UserWorkoutDaosTest {
         val planFromDb = plansFromDb.first()
 
         val now = Date().time
-        val yesterday = now - 86400000
 
         val dailyPlan = UserDailyPlanEntity(
             activeWorkoutPlanId = planFromDb.id!!,

@@ -7,13 +7,13 @@
 
         <variable
             name="viewModel"
-            type="com.oguzhanaslann.feature_reports.ReportsViewModel" />
+            type="com.oguzhanaslann.feature_reports.ui.ReportsViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ReportsFragment">
+        tools:context=".ui.ReportsFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/date_navigation_container"

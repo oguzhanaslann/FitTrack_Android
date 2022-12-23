@@ -131,6 +131,10 @@ class ProfileEditViewModel @Inject constructor(
         return profileEditUIState.value.surname
     }
 
+    fun getBirthdateAsLongOrNow(): Long {
+        return profileEditUIState.value.birthdate?.time ?: DateHelper.nowAsLong()
+    }
+
     companion object {
         const val DEFAULT_HEIGHT = 170
         const val DEFAULT_WEIGHT = 70

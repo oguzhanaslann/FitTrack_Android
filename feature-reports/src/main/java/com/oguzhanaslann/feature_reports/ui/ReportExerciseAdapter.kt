@@ -1,4 +1,4 @@
-package com.oguzhanaslann.feature_reports
+package com.oguzhanaslann.feature_reports.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.oguzhanaslann.feature_reports.databinding.ItemExerciseLayoutBinding
+import com.oguzhanaslann.feature_reports.domain.ReportExercise
 
 class ReportExerciseAdapter :
     ListAdapter<ReportExercise, ReportExerciseAdapter.Holder>(DiffCallBack()) {

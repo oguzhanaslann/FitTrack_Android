@@ -2,7 +2,7 @@ package com.oguzhanaslann.feature_reports.di
 
 import com.oguzhanaslann.commonui.data.local.FitTrackDataStore
 import com.oguzhanaslann.commonui.data.local.room.FitTrackDatabase
-import com.oguzhanaslann.feature_reports.data.ReportMapper
+import com.oguzhanaslann.feature_reports.domain.mapper.ReportMapper
 import com.oguzhanaslann.feature_reports.data.ReportsRepository
 import dagger.Module
 import dagger.Provides

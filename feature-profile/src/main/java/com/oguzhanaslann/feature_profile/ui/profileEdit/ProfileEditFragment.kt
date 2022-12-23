@@ -1,16 +1,12 @@
 package com.oguzhanaslann.feature_profile.ui.profileEdit
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavOptions
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
@@ -86,7 +82,7 @@ class ProfileEditFragment : Fragment(R.layout.fragment_profile_edit) {
     private fun showDatePickerDialog() {
         showDatePicker(
             constraintBuilder = {
-                setOpenAt(Date().time)
+                setOpenAt(viewModel.getBirthdateAsLongOrNow())
                 setEnd(Date().time)
                 setValidator(DateValidatorPointBackward.now())
             },
