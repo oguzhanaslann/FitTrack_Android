@@ -31,23 +31,23 @@ class WorkoutsFragment : Fragment(R.layout.fragment_workouts) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
         initViews()
         subscribeObservers()
     }
 
     private fun initViews() {
-        binding.run {
+        binding.workoutSearchEditText.setText(viewModel.currentQuery())
 
-            workoutSearchEditText.setText(viewModel.currentQuery())
-            workoutSearchEditText.doAfterTextChanged {
-                val query = it?.toString() ?: ""
-                viewModel.search(query)
-            }
+        binding.workoutSearchEditText.doAfterTextChanged {
+            val query = it?.toString() ?: ""
+            viewModel.search(query)
+        }
 
-            rvWorkouts.apply {
-                verticalLinearLayoutManaged()
-                adapter = workoutSearchAdapter
-            }
+        binding.rvWorkouts.apply {
+            verticalLinearLayoutManaged()
+            adapter = workoutSearchAdapter
         }
     }
 

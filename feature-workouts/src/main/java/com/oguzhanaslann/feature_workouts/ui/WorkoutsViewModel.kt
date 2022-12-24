@@ -12,6 +12,7 @@ import com.oguzhanaslann.feature_workouts.domain.model.Workout
 import com.oguzhanaslann.feature_workouts.domain.repository.WorkoutsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.map
@@ -34,6 +35,9 @@ class WorkoutsViewModel @Inject constructor(
 
     private val _searchQuery = MutableStateFlow("")
 
+    val isLoading = _workouts.map { it is State.Loading }.asLiveData()
+    val isError = _workouts.map { it is State.Error }.asLiveData()
+
     init {
         viewModelScope.launch {
             _searchQuery
@@ -50,6 +54,7 @@ class WorkoutsViewModel @Inject constructor(
     private suspend fun doEmptySearch() {
         _workouts.update { State.Loading }
         repository.getWorkouts(10)
+            .catch { _workouts.emit(State.Error(it.localizedMessage ?: "")) }
             .collectLatest {
                 _workouts.emit(State.Success(it))
             }
@@ -59,6 +64,7 @@ class WorkoutsViewModel @Inject constructor(
         viewModelScope.launch {
             _workouts.update { State.Loading }
             repository.searchWorkouts(query)
+                .catch { _workouts.emit(State.Error(it.localizedMessage ?: "")) }
                 .collectLatest {
                     _workouts.emit(State.Success(it))
                 }
