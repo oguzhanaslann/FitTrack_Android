@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
 import com.oguzhanaslann.commonui.data.local.room.entity.*
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface WorkoutPlanDao : BaseDao<WorkoutPlanEntity> {
@@ -14,21 +15,23 @@ interface WorkoutPlanDao : BaseDao<WorkoutPlanEntity> {
     @Query("SELECT * FROM workout_plan WHERE workout_plan_id = :id")
     suspend fun getWorkoutPlanById(id: Int): WorkoutPlanEntity?
 
-    // by name
     @Query("SELECT * FROM workout_plan WHERE name = :name")
     suspend fun getWorkoutPlanByName(name: String): WorkoutPlanEntity?
 
-    // workout plan with tags
+    @Query("SELECT * FROM workout_plan WHERE name LIKE '%' || :query || '%'")
+    fun searchWorkoutPlanByName(query: String): Flow<List<WorkoutPlanEntity>>
+
+    @Query("SELECT * FROM workout_plan LIMIT :first")
+    fun getWorkoutPlans(first: Int): Flow<List<WorkoutPlanEntity>>
+
     @Transaction
     @Query("SELECT * FROM workout_plan WHERE workout_plan_id = :id")
     suspend fun getWorkoutPlanWithTags(id: Int): WorkoutPlanWithTags?
 
-    // workout plan with daily plans
     @Transaction
     @Query("SELECT * FROM workout_plan WHERE workout_plan_id = :id")
     suspend fun getWorkoutPlanWithDailyPlans(id: Int): WorkoutPlanWithDailyPlans?
 
-    //WorkoutPlanDetail
     @Query("SELECT * FROM workout_plan WHERE workout_plan_id = :id")
     suspend fun getWorkoutPlanDetail(id: Int): WorkoutPlanDetail?
 }

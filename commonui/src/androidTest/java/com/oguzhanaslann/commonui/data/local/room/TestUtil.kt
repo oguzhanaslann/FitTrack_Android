@@ -12,8 +12,10 @@ import com.oguzhanaslann.commonui.data.local.room.entity.WeightRecordEntity
 import com.oguzhanaslann.commonui.data.local.room.entity.WorkoutPlanEntity
 
 @VisibleForTesting
-fun createWorkoutPlanEntity() = WorkoutPlanEntity(
-    name = "Workout Plan 1",
+fun createWorkoutPlanEntity(
+    name: String = "Workout Plan 1",
+) = WorkoutPlanEntity(
+    name = name,
     imageUrl = "",
     description = "Lorem ipsum"
 )
@@ -83,7 +85,7 @@ fun createUserWorkoutPlanEntity(userId: Int) = UserWorkoutPlanEntity(
 @VisibleForTesting
 fun createUserDailyPlanEntity(
     activeWorkoutPlanId: Int,
-    userId: Int
+    userId: Int,
 ) = UserDailyPlanEntity(
     activeWorkoutPlanId = activeWorkoutPlanId,
     name = "",

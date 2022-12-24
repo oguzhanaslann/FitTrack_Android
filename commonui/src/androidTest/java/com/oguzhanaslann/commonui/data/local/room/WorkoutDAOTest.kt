@@ -16,6 +16,7 @@ import com.oguzhanaslann.commonui.data.local.room.dao.WorkoutPlanTagCrossRefDao
 import com.oguzhanaslann.commonui.data.local.room.entity.DailyPlanExercise
 import com.oguzhanaslann.commonui.data.local.room.entity.WorkoutPlanTagCrossRef
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
@@ -130,6 +131,24 @@ class WorkoutDAOTest {
         assertThat(workoutPlanDetail).isNotNull()
     }
 
+    // test searchWorkoutPlanByName by similar name
+    @Test
+    fun test_search_workout_plan_by_name() = runTest {
+        val workoutPlanEntity = createWorkoutPlanEntity(name = "test")
+        workoutPlanDao.insert(workoutPlanEntity)
+        val workoutPlanList = workoutPlanDao.searchWorkoutPlanByName("tes")
+        val workoutPlan = workoutPlanList.first()
+        assertThat(workoutPlan).isNotEmpty()
+    }
 
+    // test searchWorkoutPlanByName by different name
+    @Test
+    fun test_search_workout_plan_by_name_different() = runTest {
+        val workoutPlanEntity = createWorkoutPlanEntity(name = "test")
+        workoutPlanDao.insert(workoutPlanEntity)
+        val workoutPlanList = workoutPlanDao.searchWorkoutPlanByName("test2")
+        val workoutPlan = workoutPlanList.first()
+        assertThat(workoutPlan).isEmpty()
+    }
 
 }

@@ -17,15 +17,18 @@ object ViewModelModule {
     @Provides
     @ViewModelScoped
     @ProfileUIStateMapper
-    fun provideProfileUIStateMapper(): Mapper<Profile, ProfileUIState> =
-        Mapper {
-            ProfileUIState(
-                userProfile = it.userProfile,
-                progressPhotos = it.progressPhotos,
-                weightProgresses = it.weightProgresses,
-                favoriteRecipes = it.favoriteRecipes,
-                activeWorkoutPlan = it.activeWorkoutPlan,
-                oldWorkouts = it.oldWorkouts
-            )
-        }
+    fun provideProfileUIStateMapper(): Mapper<Profile, ProfileUIState> = ProfileMapper()
+}
+
+class ProfileMapper : Mapper<Profile, ProfileUIState> {
+    override suspend fun map(input: Profile): ProfileUIState {
+        return ProfileUIState(
+            userProfile = input.userProfile,
+            progressPhotos = input.progressPhotos,
+            weightProgresses = input.weightProgresses,
+            favoriteRecipes = input.favoriteRecipes,
+            activeWorkoutPlan = input.activeWorkoutPlan,
+            oldWorkouts = input.oldWorkouts
+        )
+    }
 }

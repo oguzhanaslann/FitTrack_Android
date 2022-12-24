@@ -14,6 +14,7 @@ import com.oguzhanaslann.common.orDefault
 import com.oguzhanaslann.common.toState
 import com.oguzhanaslann.domain_profile.domain.ProfileRepository
 import com.oguzhanaslann.domain_profile.domain.model.Profile
+import com.oguzhanaslann.feature_profile.di.ProfileMapper
 import com.oguzhanaslann.feature_profile.domain.usecase.LocalPhotosUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -70,17 +71,7 @@ class ProfileViewModel @Inject constructor(
     private val _profileEventChannel = Channel<ProfileEvent>()
     val profileEvent = _profileEventChannel.receiveAsFlow()
 
-    private val mapper: Mapper<Profile, ProfileUIState> = Mapper {
-        ProfileUIState(
-            userProfile = it.userProfile,
-            progressPhotos = it.progressPhotos,
-            weightProgresses = it.weightProgresses,
-            favoriteRecipes = it.favoriteRecipes,
-            activeWorkoutPlan = it.activeWorkoutPlan,
-            oldWorkouts = it.oldWorkouts
-        )
-    }
-
+    private val mapper: Mapper<Profile, ProfileUIState> = ProfileMapper()
     fun getProfileUIState() {
         _profileUIState.value = State.Loading
         viewModelScope.launch {

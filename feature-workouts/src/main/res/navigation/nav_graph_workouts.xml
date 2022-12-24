@@ -7,6 +7,6 @@
 
     <fragment
         android:id="@+id/workoutsFragment"
-        android:name="com.oguzhanaslann.feature_workouts.WorkoutsFragment"
+        android:name="com.oguzhanaslann.feature_workouts.ui.WorkoutsFragment"
         tools:layout="@layout/fragment_workouts" />
 </navigation>
