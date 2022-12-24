@@ -21,7 +21,7 @@
     <fragment
         android:id="@+id/signUpFragment"
         android:name="com.oguzhanaslann.feature_auth.ui.signup.SignUpFragment"
-        android:label="fragment_sign_up"
+        android:label="@string/sign_in_instead"
         tools:layout="@layout/fragment_sign_up" >
         <action
             android:id="@+id/action_signUpFragment_to_profileSetUpFragment"

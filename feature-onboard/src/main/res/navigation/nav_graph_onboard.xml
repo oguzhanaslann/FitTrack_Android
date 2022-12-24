@@ -8,7 +8,6 @@
     <fragment
         android:id="@+id/onboardFragment"
         android:name="com.oguzhanaslann.feature_onboard.OnboardFragment"
-        android:label="fragment_onboard"
         tools:layout="@layout/fragment_onboard" />
 
     <deepLink

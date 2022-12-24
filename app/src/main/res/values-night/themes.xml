@@ -30,6 +30,8 @@
         <item name="colorPrimaryInverse">@color/md_theme_dark_inversePrimary</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="colorPrimaryProfile">?attr/colorPrimary</item>
+        <item name="colorPrimaryAuth">?attr/colorPrimary</item>
+        <item name="colorOnPrimaryAuth">?attr/colorOnPrimary</item>
 
         <item name="materialCardViewStyle">@style/Widget.App.CardView</item>
     </style>

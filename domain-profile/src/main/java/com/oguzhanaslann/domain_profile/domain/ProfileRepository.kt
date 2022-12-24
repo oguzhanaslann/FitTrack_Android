@@ -15,6 +15,7 @@ interface ProfileRepository {
     suspend fun setUserProfilePhoto(url: String)
     suspend fun updateProgressPhotos(progressPhotoUrls: List<PhotoUrlAndLastEditDate>)
     suspend fun editUserProfile(userProfileEdit: UserProfileEdit, profilePhotoUrl: String?)
+    suspend fun logout()
 }
 
 fun ProfileRepository(
@@ -46,5 +47,9 @@ fun ProfileRepository(
     ) {
         val userId = profileLocalDataSource.getUserId()
         profileLocalDataSource.editUserProfile(userId, userProfileEdit, profilePhotoUrl)
+    }
+
+    override suspend fun logout() {
+        profileLocalDataSource.logout()
     }
 }

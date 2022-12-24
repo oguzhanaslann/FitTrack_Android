@@ -2,8 +2,8 @@ package com.oguzhanaslann.feature_auth.di
 
 import com.oguzhanaslann.commonui.data.local.FitTrackDataStore
 import com.oguzhanaslann.commonui.data.local.room.FitTrackDatabase
-import com.oguzhanaslann.feature_auth.domain.AuthenticationLocalSource
-import com.oguzhanaslann.feature_auth.domain.AuthenticationLocalSourceImpl
+import com.oguzhanaslann.feature_auth.data.local.AuthenticationLocalSource
+import com.oguzhanaslann.feature_auth.data.local.AuthenticationLocalSourceImpl
 import com.oguzhanaslann.feature_auth.domain.AuthenticationRepository
 import com.oguzhanaslann.feature_auth.domain.Authenticator
 import dagger.Module

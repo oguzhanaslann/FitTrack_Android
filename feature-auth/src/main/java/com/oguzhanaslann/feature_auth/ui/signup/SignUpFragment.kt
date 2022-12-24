@@ -1,18 +1,20 @@
 package com.oguzhanaslann.feature_auth.ui.signup
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
-import androidx.navigation.NavOptions
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import com.oguzhanaslann.common.onError
 import com.oguzhanaslann.common.onSuccess
-import com.oguzhanaslann.commonui.Navigator
 import com.oguzhanaslann.commonui.launchOnViewLifecycleOwnerScope
 import com.oguzhanaslann.commonui.navController
 import com.oguzhanaslann.commonui.showErrorSnackbar
+import com.oguzhanaslann.commonui.themeColor
 import com.oguzhanaslann.commonui.viewBinding
 import com.oguzhanaslann.feature_auth.R
 import com.oguzhanaslann.feature_auth.databinding.FragmentSignUpBinding
@@ -26,11 +28,16 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
     private val binding: FragmentSignUpBinding by viewBinding { FragmentSignUpBinding.bind(it) }
     private val signUpViewModel: SignUpViewModel by viewModels()
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
+        val appBarConfiguration = AppBarConfiguration(navController.graph)
+        binding.toolbar.setupWithNavController(navController, appBarConfiguration)
+        context?.themeColor(R.attr.colorOnPrimaryAuth)
+            ?.let {
+                Log.e("TAG", "onViewCreated: $it")
+                binding.toolbar.setNavigationIconTint(it)
+            }
 
         binding.signUpEmailInput.editText?.setText(signUpViewModel.uiState.value.email)
         binding.signUpEmailInput.editText?.doAfterTextChanged {

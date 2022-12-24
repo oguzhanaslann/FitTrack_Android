@@ -526,43 +526,6 @@ fun showCustomSnackbar(
     return snackbar
 }
 
-fun showInfoPopUpDialog(
-    context: Context,
-    message: String?,
-    durationMillis: Int = Snackbar.LENGTH_SHORT,
-    container: View,
-    onDialogDismissed: () -> Unit = {},
-) {
-
-    showCustomSnackbar(
-        context = context,
-        container = container,
-        durationMillis = durationMillis,
-        layout = R.layout.custom_snackbar_layout,
-        paddingTop = 0,
-        paddingBottom = 16.dp,
-        paddingStart = 0,
-        paddingEnd = 0,
-        initViews = { view: View, snackbar: Snackbar ->
-            view.apply {
-                findViewById<TextView>(R.id.inform_message).text = message
-                findViewById<View>(R.id.cross).setOnClickListener {
-                    snackbar.dismiss()
-                }
-            }
-        }
-    ).addCallback(object : Snackbar.Callback() {
-        override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
-            super.onDismissed(transientBottomBar, event)
-            onDialogDismissed()
-        }
-
-        override fun onShown(sb: Snackbar?) {
-            super.onShown(sb)
-        }
-    })
-}
-
 fun showSuccessSnackbar(
     context: Context,
     message: String?,

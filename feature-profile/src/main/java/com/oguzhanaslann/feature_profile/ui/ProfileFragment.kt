@@ -4,8 +4,11 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.github.mikephil.charting.components.AxisBase
@@ -19,6 +22,7 @@ import com.github.mikephil.charting.formatter.ValueFormatter
 import com.oguzhanaslann.common.DateHelper
 import com.oguzhanaslann.common.isTrue
 import com.oguzhanaslann.common.onSuccess
+import com.oguzhanaslann.commonui.Navigator
 import com.oguzhanaslann.commonui.dp
 import com.oguzhanaslann.commonui.horizontalLinearLayoutManaged
 import com.oguzhanaslann.commonui.navController
@@ -26,10 +30,12 @@ import com.oguzhanaslann.commonui.showErrorSnackbar
 import com.oguzhanaslann.commonui.showSuccessSnackbar
 import com.oguzhanaslann.commonui.themeColor
 import com.oguzhanaslann.commonui.viewBinding
+import com.oguzhanaslann.domain_profile.domain.model.OldWorkoutPlanOverView
 import com.oguzhanaslann.feature_profile.R
 import com.oguzhanaslann.feature_profile.databinding.FragmentProfileBinding
-import com.oguzhanaslann.domain_profile.domain.model.OldWorkoutPlanOverView
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.util.*
 
 @AndroidEntryPoint
@@ -37,6 +43,8 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     private val binding by viewBinding(FragmentProfileBinding::bind)
     private val profileViewModel: ProfileViewModel by viewModels()
+
+    private val navigator by lazy { Navigator() }
 
     private val progressPhotoAdapter by lazy {
         ProgressPhotoAdapter(
@@ -128,7 +136,21 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
         binding.myBodyContainer.setOnClickListener {
             val profile = profileViewModel.getProfileOrNull() ?: return@setOnClickListener
-            navController.navigate(ProfileFragmentDirections.actionProfileFragmentToProfileEditFragment(profile))
+            navController.navigate(ProfileFragmentDirections.actionProfileFragmentToProfileEditFragment(
+                profile))
+        }
+
+        binding.logoutContainer.setOnClickListener {
+            AlertDialog.Builder(requireContext())
+                .setTitle(getString(R.string.logout))
+                .setMessage(getString(R.string.are_you_sure_to_logout))
+                .setPositiveButton(getString(R.string.yes)) { _, _ ->
+                    profileViewModel.logout()
+                }
+                .setNegativeButton(getString(R.string.no)) { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .show()
         }
 
         binding.profileEditPhotoButton.setOnClickListener {
@@ -145,6 +167,11 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     }
 
     private fun subscribeObservers() {
+        observeProfileUIState()
+        collectProfileEvents()
+    }
+
+    private fun observeProfileUIState() {
         profileViewModel.profileUIState.observe(viewLifecycleOwner) {
             it.onSuccess {
                 loadProfilePhoto(it.userProfile.profilePhotoUrl)
@@ -154,6 +181,27 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 favoriteRecipeAdapter.submitList(it.favoriteRecipes)
                 setActiveWorkoutPlan(it)
             }
+        }
+    }
+
+    private fun collectProfileEvents() {
+        lifecycleScope.launch {
+            profileViewModel.profileEvent
+                .flowWithLifecycle(lifecycle)
+                .collect {
+                    when (it) {
+                        ProfileEvent.Logout -> navigateAuthentication()
+                    }
+                }
+        }
+    }
+
+    private fun navigateAuthentication() {
+        navigator.navigateToAuthentication(
+            navController = navController,
+            clearBackStack = true,
+        ) {
+            Timber.e("Navigation to OnBoard failed")
         }
     }
 

@@ -8,6 +8,5 @@
     <fragment
         android:id="@+id/reportsFragment"
         android:name="com.oguzhanaslann.feature_reports.ui.ReportsFragment"
-        android:label="fragment_reports"
         tools:layout="@layout/fragment_reports" />
 </navigation>

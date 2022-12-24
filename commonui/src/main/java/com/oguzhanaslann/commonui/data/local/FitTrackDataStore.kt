@@ -9,25 +9,29 @@ import androidx.datastore.preferences.core.intPreferencesKey
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 
-val preferencesUserHasSeenOnboardingKey = booleanPreferencesKey("com.oguzhanaslann.fittrack.user_has_seen_onboarding")
-val preferencesUserIsLoggedInKey = booleanPreferencesKey("com.oguzhanaslann.fittrack.user_is_logged_in")
+val preferencesUserHasSeenOnboardingKey =
+    booleanPreferencesKey("com.oguzhanaslann.fittrack.user_has_seen_onboarding")
+val preferencesUserIsLoggedInKey =
+    booleanPreferencesKey("com.oguzhanaslann.fittrack.user_is_logged_in")
 val preferencesUserIdKey = intPreferencesKey("com.oguzhanaslann.fittrack.user_id")
 
 class FitTrackDataStore(
-    private val dataStore: DataStore<Preferences>
+    private val dataStore: DataStore<Preferences>,
 ) {
 
-    suspend fun setUserSeenOnboarding(hasSeen: Boolean) =  runSafeSetOperation {
+    suspend fun setUserSeenOnboarding(hasSeen: Boolean) = runSafeSetOperation {
         dataStore.edit { it[preferencesUserHasSeenOnboardingKey] = hasSeen }
     }
 
-    suspend fun getUserSeenOnboarding() = dataStore.safeData.map { it[preferencesUserHasSeenOnboardingKey] ?: false }
+    suspend fun getUserSeenOnboarding() =
+        dataStore.safeData.map { it[preferencesUserHasSeenOnboardingKey] ?: false }
 
     suspend fun setUserLoggedIn(isLoggedIn: Boolean) = runSafeSetOperation {
         dataStore.edit { it[preferencesUserIsLoggedInKey] = isLoggedIn }
     }
 
-    suspend fun getUserLoggedIn() = dataStore.safeData.map { it[preferencesUserIsLoggedInKey] ?: false }
+    suspend fun getUserLoggedIn() =
+        dataStore.safeData.map { it[preferencesUserIsLoggedInKey] ?: false }
 
     private val DataStore<Preferences>.safeData
         get() = data.catch {
@@ -40,9 +44,13 @@ class FitTrackDataStore(
         }
     }
 
-   suspend fun setUserId(id: Int) {
+    suspend fun setUserId(id: Int) {
         runSafeSetOperation { dataStore.edit { it[preferencesUserIdKey] = id } }
     }
 
-    suspend fun getUserId() = dataStore.safeData.map { it[preferencesUserIdKey] ?: 0 }
+    suspend fun getUserId() = dataStore.safeData.map { it[preferencesUserIdKey] ?: NONE }
+
+    companion object {
+        const val NONE = -1
+    }
 }

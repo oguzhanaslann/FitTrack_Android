@@ -1,20 +1,16 @@
 package com.oguzhanaslann.fittrack.ui
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
-import android.view.View
-import android.view.ViewTreeObserver
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.core.view.WindowCompat
 import androidx.core.view.isVisible
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.NavController
 import androidx.navigation.NavOptions
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.oguzhanaslann.commonui.Navigator
 import com.oguzhanaslann.commonui.activityViewBinding
@@ -22,7 +18,6 @@ import com.oguzhanaslann.fittrack.R
 import com.oguzhanaslann.fittrack.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
-
 
 private const val TAG = "MainActivity"
 
@@ -33,8 +28,7 @@ class MainActivity : AppCompatActivity() {
 
     private val mainViewModel: MainViewModel by viewModels()
 
-    private val navController
-        get() = findNavController(R.id.nav_host_fragment_content_main)
+    private lateinit var navController: NavController
 
     private val navigator = Navigator()
 
@@ -52,6 +46,18 @@ class MainActivity : AppCompatActivity() {
         val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
         mainViewModel.initializeApp()
+        setUpSplashScreen(splashScreen)
+        setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)
+        initNavController()
+        setUpNavigationListener()
+        setUpBottomNavigation()
+        setUpDrawerNavigation()
+
+        onBackPressedDispatcher.addCallback(onBackPressedCallback)
+    }
+
+    private fun setUpSplashScreen(splashScreen: SplashScreen) {
         splashScreen.setKeepOnScreenCondition { mainViewModel.appUiState.value.isInitializing }
         splashScreen.setOnExitAnimationListener {
             when {
@@ -60,33 +66,59 @@ class MainActivity : AppCompatActivity() {
                 else -> Unit // navigateHome()
             }
 
-            Handler(Looper.getMainLooper()).postDelayed({
-                it.remove()
-                binding.bottomNavigationView.setupWithNavController(navController)
-
-                navController.addOnDestinationChangedListener { _, destination , _ ->
-                    val destinationId = destination.id
-                    val isNavigationPage = destinationId == com.oguzhanaslann.feature_home.R.id.homepageFragment
-                            || destinationId == com.oguzhanaslann.feature_workouts.R.id.workoutsFragment
-                            || destinationId == com.oguzhanaslann.feature_reports.R.id.reportsFragment
-                            || destinationId == com.oguzhanaslann.feature_profile.R.id.profileFragment
-
-                    binding.appBarLayout.isVisible = isNavigationPage
-                    binding.bottomNavigationView.isVisible = isNavigationPage
-                    binding.addNewItemFab.isVisible = isNavigationPage
-                }
-            }, 100)
+            it.remove()
         }
-
-        setContentView(binding.root)
-        setUpBottomNavigation()
-        onBackPressedDispatcher.addCallback(onBackPressedCallback)
     }
 
+    private fun setUpNavigationListener() {
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            val destinationId = destination.id
+            val isNavigationPage =
+                destinationId == com.oguzhanaslann.feature_home.R.id.homepageFragment
+                        || destinationId == com.oguzhanaslann.feature_workouts.R.id.workoutsFragment
+                        || destinationId == com.oguzhanaslann.feature_reports.R.id.reportsFragment
+                        || destinationId == com.oguzhanaslann.feature_profile.R.id.profileFragment
 
-    private fun setUpBottomNavigation() = binding.bottomNavigationView.run {
-        background = null
-        menu.getItem(MIDDLE_ELEMENT_INDEX).isEnabled = false
+            binding.appBarLayout.isVisible = isNavigationPage
+            binding.bottomNavigationView?.isVisible = isNavigationPage
+            binding.addNewItemFab?.isVisible = isNavigationPage
+            if (isNavigationPage) {
+                binding.toolbar.title = ""
+            }
+        }
+    }
+
+    private fun initNavController() {
+        val host = supportFragmentManager
+            .findFragmentById(R.id.nav_host_fragment_content_main) as NavHostFragment? ?: return
+        navController = host.navController
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        /**
+         * a work around to prevent default label from showing on toolbar
+         * */
+        binding.toolbar.title = ""
+    }
+
+    private fun setUpBottomNavigation(){
+        binding.bottomNavigationView?.run {
+            background = null
+            menu.getItem(MIDDLE_ELEMENT_INDEX).isEnabled = false
+            setupWithNavController(navController)
+        }
+    }
+
+    private fun setUpDrawerNavigation() {
+        binding.navView?.setupWithNavController(navController)
+        val drawerLayout = binding.root as? DrawerLayout
+        drawerLayout?.let {
+            binding.toolbar.setNavigationOnClickListener {
+                drawerLayout.open()
+            }
+        }
     }
 
 
@@ -99,7 +131,6 @@ class MainActivity : AppCompatActivity() {
         ) {
             Timber.e("Navigation to OnBoard failed")
         }
-
     }
 
     private fun navigateAuthentication() {

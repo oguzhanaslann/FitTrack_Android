@@ -19,4 +19,7 @@
     <string name="photo_adding_failed">Photo adding failed</string>
     <string name="profile_info_updated_description">Profile information updated</string>
     <string name="profile_edit">Edit your profile</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="are_you_sure_to_logout">Are you sure to Logout</string>
 </resources>

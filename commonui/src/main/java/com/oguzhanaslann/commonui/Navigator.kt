@@ -14,6 +14,7 @@ interface Navigator {
     fun navigateToAuthentication(
         navController: NavController,
         navOptions: NavOptions? = null,
+        clearBackStack: Boolean = false,
         onErrorAction: () -> Unit = {}
     )
 
@@ -42,8 +43,15 @@ fun Navigator(): Navigator {
         override fun navigateToAuthentication(
             navController: NavController,
             navOptions: NavOptions?,
+            clearBackStack: Boolean,
             onErrorAction: () -> Unit
         ) {
+
+            if (clearBackStack) {
+                navController.popBackStack(navController.graph.startDestinationId, true)
+            }
+
+
             navigateSafe(
                 navController = navController,
                 deeplinkUri = DeeplinkBuilder.asUri(DeeplinkBuilder.AUTHENTICATION_DEEPLINK),

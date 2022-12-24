@@ -13,4 +13,5 @@
     <string name="user_agreement">User Agreement</string>
     <string name="tell_us_about_yourself">Tell us about yourself</string>
     <string name="enter_your_profile_information">Enter your profile information</string>
+    <string name="sign_in_instead">Sign in instead</string>
 </resources>

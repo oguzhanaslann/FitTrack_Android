@@ -23,6 +23,7 @@ interface ProfileLocalDataSource {
     suspend fun setUserProfilePhoto(userId: Int, url: String): Result<Unit>
     suspend fun updateProgressPhotosOfUser(progressPhotoUrls: List<PhotoUrlAndLastEditDate>, userId: Int)
     suspend fun editUserProfile(userId: Int, userProfileEdit: UserProfileEdit, profilePhotoUrl: String?)
+    suspend fun logout()
 }
 
 fun ProfileLocalDataSource(
@@ -90,5 +91,10 @@ fun ProfileLocalDataSource(
 
         userEntity.id = user.id
         userDao.update(userEntity)
+    }
+
+    override suspend fun logout() {
+        fitTrackDataStore.setUserId(FitTrackDataStore.NONE)
+        fitTrackDataStore.setUserLoggedIn(false)
     }
 }

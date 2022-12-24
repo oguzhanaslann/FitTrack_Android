@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.github.mikephil.charting.data.Entry
 import com.oguzhanaslann.common.DateHelper
 import com.oguzhanaslann.common.Mapper
 import com.oguzhanaslann.common.State
@@ -14,30 +13,15 @@ import com.oguzhanaslann.common.mapByStateSuspend
 import com.oguzhanaslann.common.orDefault
 import com.oguzhanaslann.common.toState
 import com.oguzhanaslann.domain_profile.domain.ProfileRepository
-import com.oguzhanaslann.domain_profile.domain.model.ActiveWorkoutPlan
-import com.oguzhanaslann.domain_profile.domain.model.FavoriteRecipe
-import com.oguzhanaslann.domain_profile.domain.model.OldWorkoutPlanOverView
 import com.oguzhanaslann.domain_profile.domain.model.Profile
-import com.oguzhanaslann.domain_profile.domain.model.ProgressPhoto
-import com.oguzhanaslann.domain_profile.domain.model.UserProfile
-import com.oguzhanaslann.domain_profile.domain.model.WeightProgress
 import com.oguzhanaslann.feature_profile.domain.usecase.LocalPhotosUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
-fun WeightProgress.toEntry() = Entry(date.time.toFloat(), weight.toFloat())
-
-data class ProfileUIState(
-    val userProfile: UserProfile,
-    val progressPhotos: List<ProgressPhoto> = emptyList(),
-    val weightProgresses: List<WeightProgress> = emptyList(),
-    val favoriteRecipes: List<FavoriteRecipe> = emptyList(),
-    val activeWorkoutPlan: ActiveWorkoutPlan? = null,
-    val oldWorkouts: List<OldWorkoutPlanOverView> = emptyList(),
-)
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
@@ -83,6 +67,9 @@ class ProfileViewModel @Inject constructor(
         it.data()?.weightProgresses ?: emptyList()
     }.asLiveData()
 
+    private val _profileEventChannel = Channel<ProfileEvent>()
+    val profileEvent = _profileEventChannel.receiveAsFlow()
+
     private val mapper: Mapper<Profile, ProfileUIState> = Mapper {
         ProfileUIState(
             userProfile = it.userProfile,
@@ -121,4 +108,15 @@ class ProfileViewModel @Inject constructor(
     fun getProfileOrNull(): Profile? {
         return _profileUIState.value.data()
     }
+
+    fun logout() {
+        viewModelScope.launch {
+            profileRepository.logout()
+            _profileEventChannel.send(ProfileEvent.Logout)
+        }
+    }
+}
+
+sealed class ProfileEvent {
+    object Logout : ProfileEvent()
 }
