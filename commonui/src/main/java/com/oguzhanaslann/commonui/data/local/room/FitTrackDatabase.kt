@@ -25,7 +25,7 @@ import com.oguzhanaslann.commonui.data.local.room.entity.*
         UserDailyPlanEntity::class,
         UserExerciseEntity::class,
     ],
-    version = DATABASE_VERSION
+    version = DATABASE_VERSION,
 )
 abstract class FitTrackDatabase : RoomDatabase() {
 

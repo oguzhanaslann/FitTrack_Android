@@ -10,9 +10,6 @@ import com.google.common.truth.Truth.assertThat
 import com.oguzhanaslann.commonui.data.local.room.dao.UserDailyPlanDao
 import com.oguzhanaslann.commonui.data.local.room.dao.UserExerciseDao
 import com.oguzhanaslann.commonui.data.local.room.dao.UserWorkoutPlanDao
-import com.oguzhanaslann.commonui.data.local.room.entity.UserDailyPlanEntity
-import com.oguzhanaslann.commonui.data.local.room.entity.UserExerciseEntity
-import com.oguzhanaslann.commonui.data.local.room.entity.UserWorkoutPlanEntity
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.After
@@ -21,7 +18,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.io.IOException
-import java.util.Date
+import java.util.*
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(AndroidJUnit4::class)
@@ -70,7 +67,7 @@ class UserWorkoutDaosTest {
         assertThat(plansFromDb).hasSize(1)
         val planFromDb = plansFromDb.first()
 
-        val dailyPlan =  createUserDailyPlanEntity(planFromDb.id!!, anyUserId)
+        val dailyPlan = createUserDailyPlanEntity(planFromDb.id!!, anyUserId)
 
         userDailyPlanDao.insert(dailyPlan)
 
@@ -85,17 +82,8 @@ class UserWorkoutDaosTest {
     @Test
     fun test_active_workout_plan() = runTest {
         val anyUserId = 1001010
-        val plan = UserWorkoutPlanEntity(
-            name = "",
-            imageUrl = "",
-            description = "",
-            userId = anyUserId,
-            startDate = 0,
-            endDate = 0,
-            isCompleted = false,
-            isActive = true
-        )
-
+        val plan =
+            createUserWorkoutPlanEntity(userId = anyUserId, isActive = false, isCompleted = true)
         userWorkoutPlanDao.insert(plan)
         val plansFromDb = userWorkoutPlanDao.getUserWorkoutPlanByUserId(anyUserId)
         assertThat(plansFromDb).hasSize(1)
@@ -109,23 +97,16 @@ class UserWorkoutDaosTest {
     @Test
     fun test_past_completed_workout_with_daily_plans() = runTest {
         val anyUserId = 1001010
-        val plan = UserWorkoutPlanEntity(
-            name = "",
-            imageUrl = "",
-            description = "",
-            userId = anyUserId,
-            startDate = 0,
-            endDate = 0,
-            isCompleted = true,
-            isActive = false
-        )
+        val plan =
+            createUserWorkoutPlanEntity(userId = anyUserId, isActive = false, isCompleted = true)
 
         userWorkoutPlanDao.insert(plan)
         val plansFromDb = userWorkoutPlanDao.getUserWorkoutPlanByUserId(anyUserId)
         assertThat(plansFromDb).hasSize(1)
         val planFromDb = plansFromDb.first()
 
-        val pastCompletedWorkoutPlans = userWorkoutPlanDao.getPastCompletedUserWorkoutWithDailyPlans(anyUserId)
+        val pastCompletedWorkoutPlans =
+            userWorkoutPlanDao.getPastCompletedUserWorkoutWithDailyPlans(anyUserId)
         assertThat(pastCompletedWorkoutPlans).isNotNull()
         assertThat(pastCompletedWorkoutPlans).hasSize(1)
     }
@@ -148,16 +129,8 @@ class UserWorkoutDaosTest {
     @Test
     fun test_active_workout_with_daily_plans_and_exercises() = runTest {
         val anyUserId = 1001010
-        val plan = UserWorkoutPlanEntity(
-            name = "",
-            imageUrl = "",
-            description = "",
-            userId = anyUserId,
-            startDate = 0,
-            endDate = 0,
-            isCompleted = false,
-            isActive = true
-        )
+        val plan =
+            createUserWorkoutPlanEntity(userId = anyUserId, isActive = true, isCompleted = false)
 
         userWorkoutPlanDao.insert(plan)
         val plansFromDb = userWorkoutPlanDao.getUserWorkoutPlanByUserId(anyUserId)
@@ -166,17 +139,10 @@ class UserWorkoutDaosTest {
 
         val planFromDb = plansFromDb.first()
 
-        val dailyPlan = UserDailyPlanEntity(
-            activeWorkoutPlanId = planFromDb.id!!,
-            name = "",
-            imageUrl = "",
-            description = "",
-            startDate = 0,
-            endDate = 0,
+        val dailyPlan = createUserDailyPlanEntity(activeWorkoutPlanId = planFromDb.id!!,
+            userId = anyUserId,
             isCompleted = true,
-            isActive = false,
-            order = 0,
-            userId = anyUserId
+            isActive = false
         )
 
         userDailyPlanDao.insert(dailyPlan)
@@ -190,13 +156,9 @@ class UserWorkoutDaosTest {
         assertThat(dailyPlanFromDb).isNotNull()
         assertThat(dailyPlanFromDb?.id).isNotNull()
 
-        val exercise = UserExerciseEntity(
-            name = "",
-            imageUrl = "",
-            description = "",
-            isCompleted = false,
-            activeDailyPlanId = dailyPlanFromDb!!.id!!,
-        )
+        val exercise =
+            createUserExerciseEntity(activeDailyPlanId = dailyPlanFromDb!!.id!!,
+                isCompleted = false)
 
         userExerciseDao.insert(exercise)
 
@@ -212,16 +174,8 @@ class UserWorkoutDaosTest {
     @Test
     fun test_user_daily_plans_and_exercises_by_date_on_exact_date() = runTest {
         val anyUserId = 1001010
-        val plan = UserWorkoutPlanEntity(
-            name = "",
-            imageUrl = "",
-            description = "",
-            userId = anyUserId,
-            startDate = 0,
-            endDate = 0,
-            isCompleted = false,
-            isActive = true
-        )
+        val plan =
+            createUserWorkoutPlanEntity(userId = anyUserId, isActive = true, isCompleted = false)
 
         userWorkoutPlanDao.insert(plan)
         val plansFromDb = userWorkoutPlanDao.getUserWorkoutPlanByUserId(anyUserId)
@@ -230,22 +184,19 @@ class UserWorkoutDaosTest {
 
         val planFromDb = plansFromDb.first()
 
-
         val now = Date().time
         val yesterday = now - 86400000
 
-        val dailyPlan = UserDailyPlanEntity(
+        val dailyPlan = createUserDailyPlanEntity(
             activeWorkoutPlanId = planFromDb.id!!,
-            name = "",
-            imageUrl = "",
-            description = "",
-            startDate = 0,
-            endDate = yesterday,
+            userId = anyUserId,
             isCompleted = true,
             isActive = false,
-            order = 0,
-            userId = anyUserId
+            startDate = 0,
+            endDate = yesterday
         )
+
+
 
         userDailyPlanDao.insert(dailyPlan)
 
@@ -258,35 +209,29 @@ class UserWorkoutDaosTest {
         assertThat(dailyPlanFromDb).isNotNull()
         assertThat(dailyPlanFromDb?.id).isNotNull()
 
-        val exercise = UserExerciseEntity(
-            name = "",
-            imageUrl = "",
-            description = "",
-            isCompleted = false,
+        val exercise = createUserExerciseEntity(
             activeDailyPlanId = dailyPlanFromDb!!.id!!,
+            isCompleted = false
         )
 
         userExerciseDao.insert(exercise)
 
-        val userDailyPlanWithExercises = userDailyPlanDao.getPastCompletedUserDailyPlanWithExercises(anyUserId, yesterday)
+        val userDailyPlanWithExercises =
+            userDailyPlanDao.getPastCompletedUserDailyPlanWithExercises(anyUserId, yesterday)
         assertThat(userDailyPlanWithExercises).isNotNull()
         assertThat(userDailyPlanWithExercises).hasSize(1)
-        assertThat(userDailyPlanWithExercises!!.first().userDailyPlanEntity.id).isEqualTo(dailyPlanFromDb.id)
+        assertThat(userDailyPlanWithExercises!!.first().userDailyPlanEntity.id).isEqualTo(
+            dailyPlanFromDb.id)
         assertThat(userDailyPlanWithExercises.first().exercises).hasSize(1)
     }
 
     @Test
     fun test_user_daily_plans_and_exercises_by_date_by_past_date() = runTest {
         val anyUserId = 1001010
-        val plan = UserWorkoutPlanEntity(
-            name = "",
-            imageUrl = "",
-            description = "",
+        val plan = createUserWorkoutPlanEntity(
             userId = anyUserId,
-            startDate = 0,
-            endDate = 0,
-            isCompleted = false,
-            isActive = true
+            isActive = true,
+            isCompleted = false
         )
 
         userWorkoutPlanDao.insert(plan)
@@ -300,17 +245,13 @@ class UserWorkoutDaosTest {
         val yesterday = now - 86400000
         val dayBeforeYesterday = yesterday - 86400000
 
-        val dailyPlan = UserDailyPlanEntity(
+        val dailyPlan = createUserDailyPlanEntity(
             activeWorkoutPlanId = planFromDb.id!!,
-            name = "",
-            imageUrl = "",
-            description = "",
-            startDate = 0,
-            endDate = dayBeforeYesterday,
+            userId = anyUserId,
             isCompleted = true,
             isActive = false,
-            order = 0,
-            userId = anyUserId
+            startDate = 0,
+            endDate = dayBeforeYesterday
         )
 
         userDailyPlanDao.insert(dailyPlan)
@@ -324,35 +265,29 @@ class UserWorkoutDaosTest {
         assertThat(dailyPlanFromDb).isNotNull()
         assertThat(dailyPlanFromDb?.id).isNotNull()
 
-        val exercise = UserExerciseEntity(
-            name = "",
-            imageUrl = "",
-            description = "",
-            isCompleted = false,
+        val exercise = createUserExerciseEntity(
             activeDailyPlanId = dailyPlanFromDb!!.id!!,
+            isCompleted = false
         )
 
         userExerciseDao.insert(exercise)
 
-        val userDailyPlanWithExercises = userDailyPlanDao.getPastCompletedUserDailyPlanWithExercises(anyUserId, yesterday)
+        val userDailyPlanWithExercises =
+            userDailyPlanDao.getPastCompletedUserDailyPlanWithExercises(anyUserId, yesterday)
         assertThat(userDailyPlanWithExercises).isNotNull()
         assertThat(userDailyPlanWithExercises).hasSize(1)
-        assertThat(userDailyPlanWithExercises!!.first().userDailyPlanEntity.id).isEqualTo(dailyPlanFromDb.id)
+        assertThat(userDailyPlanWithExercises!!.first().userDailyPlanEntity.id).isEqualTo(
+            dailyPlanFromDb.id)
         assertThat(userDailyPlanWithExercises.first().exercises).hasSize(1)
     }
 
     @Test
     fun test_user_daily_plans_and_exercises_by_date_by_future_date() = runTest {
         val anyUserId = 1001010
-        val plan = UserWorkoutPlanEntity(
-            name = "",
-            imageUrl = "",
-            description = "",
+        val plan = createUserWorkoutPlanEntity(
             userId = anyUserId,
-            startDate = 0,
-            endDate = 0,
-            isCompleted = false,
-            isActive = true
+            isActive = true,
+            isCompleted = false
         )
 
         userWorkoutPlanDao.insert(plan)
@@ -365,17 +300,13 @@ class UserWorkoutDaosTest {
         val now = Date().time
         val yesterday = now - 86400000
 
-        val dailyPlan = UserDailyPlanEntity(
+        val dailyPlan = createUserDailyPlanEntity(
             activeWorkoutPlanId = planFromDb.id!!,
-            name = "",
-            imageUrl = "",
-            description = "",
-            startDate = 0,
-            endDate = now,
+            userId = anyUserId,
             isCompleted = true,
             isActive = false,
-            order = 0,
-            userId = anyUserId
+            startDate = 0,
+            endDate = now
         )
 
         userDailyPlanDao.insert(dailyPlan)
@@ -389,32 +320,25 @@ class UserWorkoutDaosTest {
         assertThat(dailyPlanFromDb).isNotNull()
         assertThat(dailyPlanFromDb?.id).isNotNull()
 
-        val exercise = UserExerciseEntity(
-            name = "",
-            imageUrl = "",
-            description = "",
-            isCompleted = false,
+        val exercise = createUserExerciseEntity(
             activeDailyPlanId = dailyPlanFromDb!!.id!!,
+            isCompleted = false
         )
 
         userExerciseDao.insert(exercise)
 
-        val userDailyPlanWithExercises = userDailyPlanDao.getPastCompletedUserDailyPlanWithExercises(anyUserId, yesterday)
+        val userDailyPlanWithExercises =
+            userDailyPlanDao.getPastCompletedUserDailyPlanWithExercises(anyUserId, yesterday)
         assertThat(userDailyPlanWithExercises).isEmpty()
     }
 
     @Test
     fun test_completed_dpwe_by_date_matching_date() = runTest {
         val anyUserId = 1001010
-        val plan = UserWorkoutPlanEntity(
-            name = "",
-            imageUrl = "",
-            description = "",
+        val plan = createUserWorkoutPlanEntity(
             userId = anyUserId,
-            startDate = 0,
-            endDate = 0,
-            isCompleted = false,
-            isActive = true
+            isActive = true,
+            isCompleted = false
         )
 
         userWorkoutPlanDao.insert(plan)
@@ -426,17 +350,13 @@ class UserWorkoutDaosTest {
 
         val now = Date().time
 
-        val dailyPlan = UserDailyPlanEntity(
+        val dailyPlan = createUserDailyPlanEntity(
             activeWorkoutPlanId = planFromDb.id!!,
-            name = "",
-            imageUrl = "",
-            description = "",
-            startDate = 0,
-            endDate = now,
+            userId = anyUserId,
             isCompleted = true,
             isActive = false,
-            order = 0,
-            userId = anyUserId
+            startDate = 0,
+            endDate = now
         )
 
         userDailyPlanDao.insert(dailyPlan)
@@ -450,35 +370,29 @@ class UserWorkoutDaosTest {
         assertThat(dailyPlanFromDb).isNotNull()
         assertThat(dailyPlanFromDb?.id).isNotNull()
 
-        val exercise = UserExerciseEntity(
-            name = "",
-            imageUrl = "",
-            description = "",
-            isCompleted = false,
+        val exercise = createUserExerciseEntity(
             activeDailyPlanId = dailyPlanFromDb!!.id!!,
+            isCompleted = false
         )
 
         userExerciseDao.insert(exercise)
 
-        val userDailyPlanWithExercises = userDailyPlanDao.getCompletedUserDailyPlanWithExercisesByDate(anyUserId, now)
+        val userDailyPlanWithExercises =
+            userDailyPlanDao.getCompletedUserDailyPlanWithExercisesByDate(anyUserId, now)
         assertThat(userDailyPlanWithExercises).isNotNull()
         assertThat(userDailyPlanWithExercises).hasSize(1)
-        assertThat(userDailyPlanWithExercises!!.first().userDailyPlanEntity.id).isEqualTo(dailyPlanFromDb.id)
+        assertThat(userDailyPlanWithExercises!!.first().userDailyPlanEntity.id).isEqualTo(
+            dailyPlanFromDb.id)
         assertThat(userDailyPlanWithExercises.first().exercises).hasSize(1)
     }
 
     @Test
     fun test_completed_dpwe_by_date_not_matching_past_date() = runTest {
         val anyUserId = 1001010
-        val plan = UserWorkoutPlanEntity(
-            name = "",
-            imageUrl = "",
-            description = "",
+        val plan = createUserWorkoutPlanEntity(
             userId = anyUserId,
-            startDate = 0,
-            endDate = 0,
-            isCompleted = false,
-            isActive = true
+            isActive = true,
+            isCompleted = false
         )
 
         userWorkoutPlanDao.insert(plan)
@@ -491,17 +405,13 @@ class UserWorkoutDaosTest {
         val now = Date().time
         val yesterday = now - 86400000
 
-        val dailyPlan = UserDailyPlanEntity(
+        val dailyPlan = createUserDailyPlanEntity(
             activeWorkoutPlanId = planFromDb.id!!,
-            name = "",
-            imageUrl = "",
-            description = "",
-            startDate = 0,
-            endDate = now,
+            userId = anyUserId,
             isCompleted = true,
             isActive = false,
-            order = 0,
-            userId = anyUserId
+            startDate = 0,
+            endDate = now
         )
 
         userDailyPlanDao.insert(dailyPlan)
@@ -515,32 +425,25 @@ class UserWorkoutDaosTest {
         assertThat(dailyPlanFromDb).isNotNull()
         assertThat(dailyPlanFromDb?.id).isNotNull()
 
-        val exercise = UserExerciseEntity(
-            name = "",
-            imageUrl = "",
-            description = "",
-            isCompleted = false,
+        val exercise = createUserExerciseEntity(
             activeDailyPlanId = dailyPlanFromDb!!.id!!,
+            isCompleted = false
         )
 
         userExerciseDao.insert(exercise)
 
-        val userDailyPlanWithExercises = userDailyPlanDao.getCompletedUserDailyPlanWithExercisesByDate(anyUserId, yesterday)
+        val userDailyPlanWithExercises =
+            userDailyPlanDao.getCompletedUserDailyPlanWithExercisesByDate(anyUserId, yesterday)
         assertThat(userDailyPlanWithExercises).isEmpty()
     }
 
     @Test
     fun test_completed_dpwe_by_date_not_matching_future_date() = runTest {
         val anyUserId = 1001010
-        val plan = UserWorkoutPlanEntity(
-            name = "",
-            imageUrl = "",
-            description = "",
+        val plan = createUserWorkoutPlanEntity(
             userId = anyUserId,
-            startDate = 0,
-            endDate = 0,
-            isCompleted = false,
-            isActive = true
+            isActive = true,
+            isCompleted = false
         )
 
         userWorkoutPlanDao.insert(plan)
@@ -553,17 +456,13 @@ class UserWorkoutDaosTest {
         val now = Date().time
         val tomorrow = now + 86400000
 
-        val dailyPlan = UserDailyPlanEntity(
+        val dailyPlan = createUserDailyPlanEntity(
             activeWorkoutPlanId = planFromDb.id!!,
-            name = "",
-            imageUrl = "",
-            description = "",
-            startDate = 0,
-            endDate = now,
+            userId = anyUserId,
             isCompleted = true,
             isActive = false,
-            order = 0,
-            userId = anyUserId
+            startDate = 0,
+            endDate = now
         )
 
         userDailyPlanDao.insert(dailyPlan)
@@ -577,32 +476,25 @@ class UserWorkoutDaosTest {
         assertThat(dailyPlanFromDb).isNotNull()
         assertThat(dailyPlanFromDb?.id).isNotNull()
 
-        val exercise = UserExerciseEntity(
-            name = "",
-            imageUrl = "",
-            description = "",
-            isCompleted = false,
+        val exercise = createUserExerciseEntity(
             activeDailyPlanId = dailyPlanFromDb!!.id!!,
+            isCompleted = false
         )
 
         userExerciseDao.insert(exercise)
 
-        val userDailyPlanWithExercises = userDailyPlanDao.getCompletedUserDailyPlanWithExercisesByDate(anyUserId, tomorrow)
+        val userDailyPlanWithExercises =
+            userDailyPlanDao.getCompletedUserDailyPlanWithExercisesByDate(anyUserId, tomorrow)
         assertThat(userDailyPlanWithExercises).isEmpty()
     }
 
     @Test
     fun test_completed_dpwe_by_date_not_completed() = runTest {
         val anyUserId = 1001010
-        val plan = UserWorkoutPlanEntity(
-            name = "",
-            imageUrl = "",
-            description = "",
+        val plan = createUserWorkoutPlanEntity(
             userId = anyUserId,
-            startDate = 0,
-            endDate = 0,
-            isCompleted = false,
-            isActive = true
+            isActive = true,
+            isCompleted = false
         )
 
         userWorkoutPlanDao.insert(plan)
@@ -615,17 +507,13 @@ class UserWorkoutDaosTest {
         val now = Date().time
         val tomorrow = now + 86400000
 
-        val dailyPlan = UserDailyPlanEntity(
+        val dailyPlan = createUserDailyPlanEntity(
             activeWorkoutPlanId = planFromDb.id!!,
-            name = "",
-            imageUrl = "",
-            description = "",
-            startDate = 0,
-            endDate = now,
+            userId = anyUserId,
             isCompleted = false,
             isActive = false,
-            order = 0,
-            userId = anyUserId
+            startDate = 0,
+            endDate = now
         )
 
         userDailyPlanDao.insert(dailyPlan)
@@ -639,20 +527,15 @@ class UserWorkoutDaosTest {
         assertThat(dailyPlanFromDb).isNotNull()
         assertThat(dailyPlanFromDb?.id).isNotNull()
 
-        val exercise = UserExerciseEntity(
-            name = "",
-            imageUrl = "",
-            description = "",
+        val exercise = createUserExerciseEntity(
             isCompleted = false,
             activeDailyPlanId = dailyPlanFromDb!!.id!!,
         )
 
         userExerciseDao.insert(exercise)
 
-        val userDailyPlanWithExercises = userDailyPlanDao.getCompletedUserDailyPlanWithExercisesByDate(anyUserId, tomorrow)
+        val userDailyPlanWithExercises =
+            userDailyPlanDao.getCompletedUserDailyPlanWithExercisesByDate(anyUserId, tomorrow)
         assertThat(userDailyPlanWithExercises).isEmpty()
     }
-
-
-
 }

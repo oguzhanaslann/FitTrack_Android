@@ -26,7 +26,7 @@ class WorkoutsRepositoryImpl(
 ) : WorkoutsRepository {
     override fun getWorkouts(first: Int): Flow<List<Workout>> {
         return flow {
-            val workPlanEntities = workoutPlanDao.getWorkoutPlans(first = first)
+            val workPlanEntities = workoutPlanDao.getWorkoutPlans(first = first, languageCode = "en")
             emitAll(
                 workPlanEntities.map {
                     it.mapBy(workoutFromEntityMapper)

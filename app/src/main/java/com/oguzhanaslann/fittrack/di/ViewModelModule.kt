@@ -1,5 +1,7 @@
 package com.oguzhanaslann.fittrack.di
 
+import com.oguzhanaslann.common_data.MemorySource
+import com.oguzhanaslann.common_domain.AppLanguageUseCase
 import com.oguzhanaslann.commonui.data.local.FitTrackDataStore
 import com.oguzhanaslann.fittrack.data.AppInitRepository
 import com.oguzhanaslann.fittrack.domain.usecase.InitializeAppUseCase
@@ -16,8 +18,17 @@ object ViewModelModule {
     @Provides
     @ViewModelScoped
     fun provideInitializeAppUseCase(
-        fitTrackDataStore: FitTrackDataStore
+        fitTrackDataStore: FitTrackDataStore,
+        appLanguageUseCase: AppLanguageUseCase,
     ) = InitializeAppUseCase(
-        appInitRepository = AppInitRepository(fitTrackDataStore)
+        appInitRepository = AppInitRepository(fitTrackDataStore),
+        appLanguageUseCase = appLanguageUseCase
     )
+
+   @Provides
+    @ViewModelScoped
+    fun provideAppInitRepository(
+       memorySource: MemorySource
+    ) = AppLanguageUseCase(memorySource)
+
 }

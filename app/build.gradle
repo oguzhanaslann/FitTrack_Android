@@ -16,6 +16,9 @@ android {
         versionName build_versions.version_name
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+
+        resConfigs "en", "tr"
     }
 
     buildTypes {
@@ -43,6 +46,8 @@ dependencies {
 
     implementation project(":commonui")
     implementation project(":common")
+    implementation project(":common-data")
+    implementation project(":common-domain")
     implementation project(":feature-onboard")
     implementation project(":feature-auth")
     implementation project(":feature-home")

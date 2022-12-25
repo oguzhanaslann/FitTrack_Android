@@ -8,6 +8,8 @@ import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.preferencesDataStoreFile
+import com.oguzhanaslann.common_data.FitTrackMemorySource
+import com.oguzhanaslann.common_data.MemorySource
 import com.oguzhanaslann.commonui.data.local.FitTrackDataStore
 import dagger.Module
 import dagger.Provides
@@ -40,4 +42,8 @@ object LocalModule {
     fun provideFitTrackDataStore(
         dataStore: DataStore<Preferences>
     ): FitTrackDataStore = FitTrackDataStore(dataStore)
+
+    @Provides
+    @Singleton
+    fun provideMemorySource(): MemorySource = FitTrackMemorySource
 }

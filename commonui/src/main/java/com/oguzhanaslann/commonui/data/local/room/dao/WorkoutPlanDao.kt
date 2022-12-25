@@ -21,8 +21,14 @@ interface WorkoutPlanDao : BaseDao<WorkoutPlanEntity> {
     @Query("SELECT * FROM workout_plan WHERE name LIKE '%' || :query || '%'")
     fun searchWorkoutPlanByName(query: String): Flow<List<WorkoutPlanEntity>>
 
+    @Query("SELECT * FROM workout_plan WHERE name LIKE '%' || :query || '%' AND language_code = :languageCode")
+    fun searchWorkoutPlanByName(query: String, languageCode: String): Flow<List<WorkoutPlanEntity>>
+
     @Query("SELECT * FROM workout_plan LIMIT :first")
     fun getWorkoutPlans(first: Int): Flow<List<WorkoutPlanEntity>>
+
+    @Query("SELECT * FROM workout_plan WHERE language_code = :languageCode LIMIT :first")
+    fun getWorkoutPlans(first: Int, languageCode: String): Flow<List<WorkoutPlanEntity>>
 
     @Transaction
     @Query("SELECT * FROM workout_plan WHERE workout_plan_id = :id")
@@ -40,6 +46,7 @@ interface WorkoutPlanDao : BaseDao<WorkoutPlanEntity> {
     @Transaction
     @Query("SELECT * FROM workout_plan WHERE workout_plan_id = :id")
     fun getWorkoutPlanDetailStream(id: Int): Flow<WorkoutPlanDetail?>
+
 }
 
 @Dao

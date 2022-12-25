@@ -1,9 +1,11 @@
 package com.oguzhanaslann.fittrack.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.isVisible
@@ -18,6 +20,7 @@ import com.oguzhanaslann.fittrack.R
 import com.oguzhanaslann.fittrack.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
+import java.util.Locale
 
 private const val TAG = "MainActivity"
 

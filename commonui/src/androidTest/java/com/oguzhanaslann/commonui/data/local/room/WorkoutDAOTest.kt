@@ -89,7 +89,6 @@ class WorkoutDAOTest {
         assertThat(workoutPlanWithTags).isNotNull()
     }
 
-    //getWorkoutPlanWithDailyPlans test
     @Test
     fun test_get_workout_plan_with_daily_plans() = runTest {
         val workoutPlanEntity = createWorkoutPlanEntity()
@@ -131,7 +130,6 @@ class WorkoutDAOTest {
         assertThat(workoutPlanDetail).isNotNull()
     }
 
-    // test searchWorkoutPlanByName by similar name
     @Test
     fun test_search_workout_plan_by_name() = runTest {
         val workoutPlanEntity = createWorkoutPlanEntity(name = "test")
@@ -141,7 +139,6 @@ class WorkoutDAOTest {
         assertThat(workoutPlan).isNotEmpty()
     }
 
-    // test searchWorkoutPlanByName by different name
     @Test
     fun test_search_workout_plan_by_name_different() = runTest {
         val workoutPlanEntity = createWorkoutPlanEntity(name = "test")
@@ -151,4 +148,64 @@ class WorkoutDAOTest {
         assertThat(workoutPlan).isEmpty()
     }
 
+
+    // test search workout plan name and language code
+    @Test
+    fun test_search_workout_plan_by_name_and_language_code() = runTest {
+        val name = "test"
+        val languageCode = "en"
+        val workoutPlanEntity = createWorkoutPlanEntity(name = name, languageCode = languageCode)
+        workoutPlanDao.insert(workoutPlanEntity)
+        val workoutPlanList = workoutPlanDao.searchWorkoutPlanByName(name, languageCode)
+        val workoutPlan = workoutPlanList.first()
+        assertThat(workoutPlan).isNotEmpty()
+    }
+
+    // test search workout plan name and language code different
+    @Test
+    fun test_search_workout_plan_by_name_and_language_code_different() = runTest {
+        val name = "test"
+        val languageCode = "en"
+        val workoutPlanEntity = createWorkoutPlanEntity(name = name, languageCode = languageCode)
+        workoutPlanDao.insert(workoutPlanEntity)
+        val workoutPlanList = workoutPlanDao.searchWorkoutPlanByName(name, "tr")
+        val workoutPlan = workoutPlanList.first()
+        assertThat(workoutPlan).isEmpty()
+    }
+
+    // test search workout plan name and language code 2 different language code
+    @Test
+    fun test_search_workout_plan_by_name_and_language_code_2_different_language_code() = runTest {
+        val name = "test"
+        val languageCode = "en"
+        val workoutPlanEntityEN = createWorkoutPlanEntity(name = name, languageCode = languageCode)
+        workoutPlanDao.insert(workoutPlanEntityEN)
+
+        val nameTR = "testTR"
+        val languageCodeTR = "tr"
+        val workoutPlanEntityTR = createWorkoutPlanEntity(name = nameTR, languageCode = languageCodeTR)
+        workoutPlanDao.insert(workoutPlanEntityTR)
+
+        val workoutPlanList = workoutPlanDao.searchWorkoutPlanByName(name, languageCode)
+        val workoutPlan = workoutPlanList.first()
+        assertThat(workoutPlan).isNotEmpty()
+        assertThat(workoutPlan).hasSize(1)
+        assertThat(workoutPlan.first().name).isEqualTo(name)
+        assertThat(workoutPlan.first().languageCode).isEqualTo(languageCode)
+    }
+
+    // test search workout plan name and language code similar name
+    @Test
+    fun test_search_workout_plan_by_name_and_language_code_similar_name() = runTest {
+        val name = "test"
+        val languageCode = "en"
+        val workoutPlanEntityEN = createWorkoutPlanEntity(name = name, languageCode = languageCode)
+        workoutPlanDao.insert(workoutPlanEntityEN)
+
+        val nameSubstr = name.substring(0, 2)
+        val workoutPlanList = workoutPlanDao.searchWorkoutPlanByName(nameSubstr, languageCode)
+        val workoutPlan = workoutPlanList.first()
+        assertThat(workoutPlan).isNotEmpty()
+        assertThat(workoutPlan).hasSize(1)
+    }
 }

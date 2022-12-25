@@ -11,6 +11,8 @@ data class WorkoutPlanEntity(
     val name: String,
     val imageUrl: String,
     val description: String,
+    @ColumnInfo(name = "language_code")
+    val languageCode: String,
 ) {
     @androidx.room.PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "workout_plan_id")
@@ -36,12 +38,6 @@ data class WorkoutPlanWithDailyPlans(
     val dailyPlans: List<DailyPlanEntity>
 )
 
-data class ExerciseSet(
-    val order: Int,
-    val reps: Int? = null,
-    val weight: Int? = null,
-    val rest: Int? = null,
-)
 
 data class WorkoutPlanDetail(
     @Embedded val workoutPlanEntity: WorkoutPlanEntity,

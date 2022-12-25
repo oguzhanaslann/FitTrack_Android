@@ -13,3 +13,10 @@ data class DailyPlanExercise(
     @Embedded
     val exerciseSet: ExerciseSet
 )
+
+data class ExerciseSet(
+    val order: Int,
+    val reps: Int? = null,
+    val weight: Int? = null,
+    val rest: Int? = null,
+)

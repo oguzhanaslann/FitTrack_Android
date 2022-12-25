@@ -51,6 +51,8 @@ data class RecipeEntity(
     val title : String,
     val imageUrl : String,
     val descriptionJson : String,
+    @ColumnInfo(name = "language_code")
+    val languageCode: String
 ) {
     @androidx.room.PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "recipe_id")

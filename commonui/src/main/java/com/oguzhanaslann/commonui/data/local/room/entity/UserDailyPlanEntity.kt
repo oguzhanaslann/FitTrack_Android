@@ -33,6 +33,9 @@ data class UserDailyPlanEntity(
 
     @ColumnInfo(name = "is_active")
     val isActive: Boolean,
+
+    @ColumnInfo(name = "language_code")
+    val languageCode: String
 ) {
     @androidx.room.PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "user_daily_plan_id")

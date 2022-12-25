@@ -23,6 +23,10 @@ data class UserWorkoutPlanEntity(
 
     @ColumnInfo(name = "is_active")
     val isActive: Boolean,
+
+
+    @ColumnInfo(name = "language_code")
+    val languageCode: String
 ) {
     @androidx.room.PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "user_workout_plan_id")

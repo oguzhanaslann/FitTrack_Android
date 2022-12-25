@@ -13,6 +13,9 @@ data class UserExerciseEntity(
 
     @ColumnInfo(name = "is_completed")
     val isCompleted: Boolean = false,
+
+    @ColumnInfo(name = "language_code")
+    val languageCode: String
 ) {
     @androidx.room.PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "user_exercise_id")
