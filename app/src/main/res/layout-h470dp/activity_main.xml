@@ -21,9 +21,8 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:labelVisibilityMode="unlabeled"
             android:background="?android:colorBackground"
-            app:menu="@menu/settings_menu">
+            app:labelVisibilityMode="unlabeled">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -57,6 +56,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="?attr/colorSecondary"
+        android:tint="?attr/colorOnSecondary"
         app:borderWidth="0dp"
         app:fabSize="mini"
         app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
@@ -73,11 +73,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:labelVisibilityMode="auto"
-        app:menu="@menu/main_bottom_nav_menu"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        />
+        app:menu="@menu/main_bottom_nav_menu" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,8 @@
 package com.oguzhanaslann.fittrack.ui
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +13,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
 import com.oguzhanaslann.commonui.Navigator
 import com.oguzhanaslann.commonui.activityViewBinding
@@ -114,15 +117,6 @@ class MainActivity : AppCompatActivity() {
         navController = host.navController
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        /**
-         * a work around to prevent default label from showing on toolbar
-         * */
-        binding.toolbar.title = ""
-    }
-
     private fun setUpBottomNavigation() {
         binding.bottomNavigationView?.run {
             background = null
@@ -161,6 +155,25 @@ class MainActivity : AppCompatActivity() {
         ) {
             Timber.e("Navigation to authentication failed")
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val createResult =  super.onCreateOptionsMenu(menu)
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return createResult
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(item)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        /**
+         * a work around to prevent default label from showing on toolbar
+         * */
+        binding.toolbar.title = ""
     }
 
     companion object {

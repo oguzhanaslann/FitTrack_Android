@@ -18,5 +18,15 @@
     <include app:graph="@navigation/nav_graph_profile" />
 
     <include app:graph="@navigation/nav_create_workout" />
+    <fragment
+        android:id="@+id/privacyPolicyFragment"
+        tools:layout="@layout/fragment_privacy_policy"
+        android:name="com.oguzhanaslann.fittrack.ui.privacy.PrivacyPolicyFragment"
+        android:label="PrivacyPolicyFragment" />
+    <fragment
+        android:id="@+id/termsOfUseFragment"
+        tools:layout="@layout/fragment_terms_of_use"
+        android:name="com.oguzhanaslann.fittrack.ui.termsofuse.TermsOfUseFragment"
+        android:label="TermsOfUseFragment" />
 
 </navigation>
