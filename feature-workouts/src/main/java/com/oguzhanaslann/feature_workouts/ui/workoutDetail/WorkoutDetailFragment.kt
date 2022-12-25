@@ -50,6 +50,10 @@ class WorkoutDetailFragment : Fragment(R.layout.fragment_workout_detail) {
             navController.popBackStack()
         }
 
+        binding.startWorkoutButton.setOnClickListener {
+            // TODO("Not yet implemented")
+        }
+
         binding.rvPrograms.apply {
             verticalLinearLayoutManaged()
             adapter = programAdapter
