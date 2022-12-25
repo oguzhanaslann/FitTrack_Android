@@ -6,6 +6,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.oguzhanaslann.common.onSuccess
+import com.oguzhanaslann.commonui.navController
 import com.oguzhanaslann.commonui.verticalLinearLayoutManaged
 import com.oguzhanaslann.commonui.viewBinding
 import com.oguzhanaslann.feature_workouts.R
@@ -26,7 +27,11 @@ class WorkoutsFragment : Fragment(R.layout.fragment_workouts) {
     }
 
     private fun onWorkoutClicked(workoutSearchItem: WorkoutSearchItem) {
-        //TODO("Not yet implemented")
+        navController.navigate(
+            WorkoutsFragmentDirections.actionWorkoutsFragmentToWorkoutDetailFragment(
+                workoutSearchItem.id
+            )
+        )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

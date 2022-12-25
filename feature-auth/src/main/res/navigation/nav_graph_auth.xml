@@ -9,7 +9,7 @@
         android:id="@+id/signInFragment"
         android:name="com.oguzhanaslann.feature_auth.ui.signin.SignInFragment"
         android:label="fragment_sign_in"
-        tools:layout="@layout/fragment_sign_in" >
+        tools:layout="@layout/fragment_sign_in">
         <action
             android:id="@+id/action_signInFragment_to_signUpFragment"
             app:destination="@id/signUpFragment" />
@@ -22,7 +22,7 @@
         android:id="@+id/signUpFragment"
         android:name="com.oguzhanaslann.feature_auth.ui.signup.SignUpFragment"
         android:label="@string/sign_in_instead"
-        tools:layout="@layout/fragment_sign_up" >
+        tools:layout="@layout/fragment_sign_up">
         <action
             android:id="@+id/action_signUpFragment_to_profileSetUpFragment"
             app:destination="@id/profileSetUpFragment"
@@ -33,6 +33,5 @@
         android:id="@+id/profileSetUpFragment"
         android:name="com.oguzhanaslann.feature_auth.ui.profilesetup.ProfileSetUpFragment"
         android:label="fragment_profile_set_up"
-        tools:layout="@layout/fragment_profile_set_up"
-        />
+        tools:layout="@layout/fragment_profile_set_up" />
 </navigation>

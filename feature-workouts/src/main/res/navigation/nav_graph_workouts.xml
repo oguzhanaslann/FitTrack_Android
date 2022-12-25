@@ -8,5 +8,22 @@
     <fragment
         android:id="@+id/workoutsFragment"
         android:name="com.oguzhanaslann.feature_workouts.ui.WorkoutsFragment"
-        tools:layout="@layout/fragment_workouts" />
+        tools:layout="@layout/fragment_workouts" >
+        <action
+            android:id="@+id/action_workoutsFragment_to_workoutDetailFragment"
+            app:destination="@id/workoutDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/workoutDetailFragment"
+        android:name="com.oguzhanaslann.feature_workouts.ui.workoutDetail.WorkoutDetailFragment"
+        android:label="@string/workout_detail"
+        tools:layout="@layout/fragment_workout_detail">
+        <deepLink
+            android:id="@+id/deepLink"
+            android:autoVerify="true"
+            app:uri="https://com.oguzhanaslann.fittrack/workoutDetail" />
+        <argument
+            android:name="workoutId"
+            app:argType="integer" />
+    </fragment>
 </navigation>

@@ -9,6 +9,7 @@ data class DailyPlanEntity(
     val workoutPlanId: Int,
     val name: String,
     val imageUrl: String,
+    val calories: Int,
 ) {
     @androidx.room.PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "daily_plan_id")

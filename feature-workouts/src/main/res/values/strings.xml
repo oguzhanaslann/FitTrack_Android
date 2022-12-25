@@ -4,4 +4,12 @@
     <string name="workout">Workout</string>
     <string name="see_more">See More</string>
     <string name="an_error_occurred">An Error Occurred</string>
+    <string name="workout_detail_transition_name" translatable="false">book_list_transition_name</string>
+    <string name="workout_detail">Workout Detail</string>
+    <string name="program">Program</string>
+    <string name="workout_daily_day">Day - %d</string>
+    <string name="kcal_value_text">%d kcal</string>
+    <string name="description">Description</string>
+    <string name="kcal">Kcal</string>
+    <string name="days">Days</string>
 </resources>

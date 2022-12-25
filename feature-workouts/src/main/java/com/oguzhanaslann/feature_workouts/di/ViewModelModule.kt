@@ -2,6 +2,8 @@ package com.oguzhanaslann.feature_workouts.di
 
 import com.oguzhanaslann.commonui.data.local.room.FitTrackDatabase
 import com.oguzhanaslann.feature_workouts.domain.mapper.WorkoutFromEntityMapper
+import com.oguzhanaslann.feature_workouts.domain.mapper.DailyPlanShortMapper
+import com.oguzhanaslann.feature_workouts.domain.mapper.WorkoutDetailMapper
 import com.oguzhanaslann.feature_workouts.domain.repository.WorkoutsRepository
 import com.oguzhanaslann.feature_workouts.domain.repository.WorkoutsRepositoryImpl
 import dagger.Module
@@ -20,6 +22,9 @@ object ViewModelModule {
         fitTrackDatabase: FitTrackDatabase
     ): WorkoutsRepository = WorkoutsRepositoryImpl(
         workoutPlanDao = fitTrackDatabase.workoutPlanDao(),
-        workoutFromEntityMapper = WorkoutFromEntityMapper()
+        workoutFromEntityMapper = WorkoutFromEntityMapper(),
+        workoutDetailMapper = WorkoutDetailMapper(
+            dailyPlanShortMapper = DailyPlanShortMapper()
+        )
     )
 }

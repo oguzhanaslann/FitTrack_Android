@@ -32,8 +32,14 @@ interface WorkoutPlanDao : BaseDao<WorkoutPlanEntity> {
     @Query("SELECT * FROM workout_plan WHERE workout_plan_id = :id")
     suspend fun getWorkoutPlanWithDailyPlans(id: Int): WorkoutPlanWithDailyPlans?
 
+    @Transaction
     @Query("SELECT * FROM workout_plan WHERE workout_plan_id = :id")
     suspend fun getWorkoutPlanDetail(id: Int): WorkoutPlanDetail?
+
+    // getWorkoutPlanDetail flow
+    @Transaction
+    @Query("SELECT * FROM workout_plan WHERE workout_plan_id = :id")
+    fun getWorkoutPlanDetailStream(id: Int): Flow<WorkoutPlanDetail?>
 }
 
 @Dao
