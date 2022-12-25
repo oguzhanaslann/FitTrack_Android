@@ -1,18 +1,21 @@
 package com.oguzhanaslann.common_domain
 
-import android.util.Log
 import com.oguzhanaslann.common_data.MemorySource
 
 class AppLanguageUseCase(
-    private val memorySource: MemorySource
+    private val memorySource: MemorySource,
 ) {
 
     fun saveAppLanguageIntoMemory(appLanguage: AppLanguage) {
         memorySource.set(APP_LANGUAGE_KEY, appLanguage)
     }
 
-    fun getAppLanguageFromMemory(): AppLanguage {
+    fun getAppLanguage(): AppLanguage {
         return memorySource.get(APP_LANGUAGE_KEY) ?: AppLanguage.English
+    }
+
+    fun getAppLanguageCode(): String {
+        return getAppLanguage().code
     }
 
     companion object {

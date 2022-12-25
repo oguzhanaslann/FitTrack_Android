@@ -2,6 +2,7 @@ package com.oguzhanaslann.feature_workouts.domain.repository
 
 import com.oguzhanaslann.common.Mapper
 import com.oguzhanaslann.common.mapBy
+import com.oguzhanaslann.common_domain.AppLanguageUseCase
 import com.oguzhanaslann.commonui.data.local.room.dao.WorkoutPlanDao
 import com.oguzhanaslann.commonui.data.local.room.entity.WorkoutPlanDetail
 import com.oguzhanaslann.commonui.data.local.room.entity.WorkoutPlanEntity
@@ -21,12 +22,16 @@ interface WorkoutsRepository {
 
 class WorkoutsRepositoryImpl(
     private val workoutPlanDao: WorkoutPlanDao,
+    private val appLanguageUseCase: AppLanguageUseCase,
     private val workoutFromEntityMapper: Mapper<WorkoutPlanEntity, Workout>,
     private val workoutDetailMapper: Mapper<WorkoutPlanDetail, WorkoutDetail>,
 ) : WorkoutsRepository {
     override fun getWorkouts(first: Int): Flow<List<Workout>> {
         return flow {
-            val workPlanEntities = workoutPlanDao.getWorkoutPlans(first = first, languageCode = "en")
+            val workPlanEntities = workoutPlanDao.getWorkoutPlans(
+                first = first,
+                languageCode = appLanguageUseCase.getAppLanguageCode()
+            )
             emitAll(
                 workPlanEntities.map {
                     it.mapBy(workoutFromEntityMapper)
@@ -38,7 +43,10 @@ class WorkoutsRepositoryImpl(
     // TODO: Add pagination later on
     override fun searchWorkouts(query: String): Flow<List<Workout>> {
         return flow {
-            val workPlanEntities = workoutPlanDao.searchWorkoutPlanByName(query = query)
+            val workPlanEntities = workoutPlanDao.searchWorkoutPlanByName(
+                query = query,
+                languageCode = appLanguageUseCase.getAppLanguageCode()
+            )
             emitAll(
                 workPlanEntities.map {
                     it.mapBy(workoutFromEntityMapper)

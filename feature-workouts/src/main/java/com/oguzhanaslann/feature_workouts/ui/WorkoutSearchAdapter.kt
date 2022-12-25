@@ -32,7 +32,9 @@ class WorkoutSearchAdapter(
         fun onBind(currentItem: WorkoutSearchItem) = binding.run {
             binding.workoutTitleText.text = currentItem.name
             binding.workoutDescriptionText.text = currentItem.description
-            binding.workoutImage.load(currentItem.image)
+            binding.workoutImage.load(currentItem.image) {
+                error(com.oguzhanaslann.commonui.R.drawable.placeholder_thumbnail)
+            }
 
             root.setOnClickListener {
                 onClick(currentItem)

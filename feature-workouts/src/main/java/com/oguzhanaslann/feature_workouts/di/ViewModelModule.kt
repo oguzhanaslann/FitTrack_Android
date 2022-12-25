@@ -1,5 +1,6 @@
 package com.oguzhanaslann.feature_workouts.di
 
+import com.oguzhanaslann.common_domain.AppLanguageUseCase
 import com.oguzhanaslann.commonui.data.local.room.FitTrackDatabase
 import com.oguzhanaslann.feature_workouts.domain.mapper.WorkoutFromEntityMapper
 import com.oguzhanaslann.feature_workouts.domain.mapper.DailyPlanShortMapper
@@ -19,12 +20,14 @@ object ViewModelModule {
     @Provides
     @ViewModelScoped
     fun provideWorkoutsRepository(
-        fitTrackDatabase: FitTrackDatabase
+        fitTrackDatabase: FitTrackDatabase,
+        appLanguageUseCase: AppLanguageUseCase
     ): WorkoutsRepository = WorkoutsRepositoryImpl(
         workoutPlanDao = fitTrackDatabase.workoutPlanDao(),
         workoutFromEntityMapper = WorkoutFromEntityMapper(),
         workoutDetailMapper = WorkoutDetailMapper(
             dailyPlanShortMapper = DailyPlanShortMapper()
-        )
+        ),
+        appLanguageUseCase = appLanguageUseCase
     )
 }

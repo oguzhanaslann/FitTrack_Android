@@ -33,7 +33,9 @@ fun ReportsRepository(
 
         val userDailyPlanWithExercisesList =
             userDailyPlanDao.getCompletedUserDailyPlanWithExercisesByDate(userId, startOfTheDate.time).orEmpty()
+
         val userDailyPlanWithExercises = userDailyPlanWithExercisesList.firstOrNull()
+
         return userDailyPlanWithExercises?.let { reportMapper.map(it) }?.let { Result.success(it) }
             ?: Result.success(null)
     }
