@@ -1,11 +1,9 @@
 package com.oguzhanaslann.fittrack.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.isVisible
@@ -20,7 +18,6 @@ import com.oguzhanaslann.fittrack.R
 import com.oguzhanaslann.fittrack.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
-import java.util.Locale
 
 private const val TAG = "MainActivity"
 
@@ -57,6 +54,10 @@ class MainActivity : AppCompatActivity() {
         setUpBottomNavigation()
         setUpDrawerNavigation()
 
+        binding.addNewItemFab?.setOnClickListener {
+            navigator.navigateToCreateWorkout(navController)
+        }
+
         onBackPressedDispatcher.addCallback(onBackPressedCallback)
     }
 
@@ -76,18 +77,34 @@ class MainActivity : AppCompatActivity() {
     private fun setUpNavigationListener() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             val destinationId = destination.id
-            val isNavigationPage =
-                destinationId == com.oguzhanaslann.feature_home.R.id.homepageFragment
-                        || destinationId == com.oguzhanaslann.feature_workouts.R.id.workoutsFragment
-                        || destinationId == com.oguzhanaslann.feature_reports.R.id.reportsFragment
-                        || destinationId == com.oguzhanaslann.feature_profile.R.id.profileFragment
-
-            binding.appBarLayout.isVisible = isNavigationPage
+            val isNavigationPage = isNavigationPage(destinationId)
+            val shouldShowAppBar = shouldShowAppBar(isNavigationPage, destinationId)
+            binding.appBarLayout.isVisible = shouldShowAppBar
             binding.bottomNavigationView?.isVisible = isNavigationPage
             binding.addNewItemFab?.isVisible = isNavigationPage
-            if (isNavigationPage) {
-                binding.toolbar.title = ""
-            }
+            setToolbarTitleBy(isNavigationPage)
+        }
+    }
+
+    private fun isNavigationPage(destinationId: Int) =
+        (destinationId == com.oguzhanaslann.feature_home.R.id.homepageFragment
+                || destinationId == com.oguzhanaslann.feature_workouts.R.id.workoutsFragment
+                || destinationId == com.oguzhanaslann.feature_reports.R.id.reportsFragment
+                || destinationId == com.oguzhanaslann.feature_profile.R.id.profileFragment)
+
+    private fun shouldShowAppBar(
+        isNavigationPage: Boolean,
+        destinationId: Int,
+    ): Boolean {
+        val createWorkoutDestinationId =
+            com.oguzhanaslann.feature_create_workout.R.id.createWorkoutFragment
+
+        return isNavigationPage || destinationId == createWorkoutDestinationId
+    }
+
+    private fun setToolbarTitleBy(isNavigationPage: Boolean) {
+        if (isNavigationPage) {
+            binding.toolbar.title = ""
         }
     }
 
@@ -106,7 +123,7 @@ class MainActivity : AppCompatActivity() {
         binding.toolbar.title = ""
     }
 
-    private fun setUpBottomNavigation(){
+    private fun setUpBottomNavigation() {
         binding.bottomNavigationView?.run {
             background = null
             menu.getItem(MIDDLE_ELEMENT_INDEX).isEnabled = false
@@ -123,7 +140,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
 
     private fun navigateOnboard() {
         navigator.navigateToOnBoard(

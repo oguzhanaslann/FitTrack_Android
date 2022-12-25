@@ -3,16 +3,16 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
 android {
-    namespace 'com.oguzhanaslann.feature_onboard'
+    namespace 'com.oguzhanaslann.feature_create_workout'
     compileSdk build_versions.compile_sdk
 
     defaultConfig {
         minSdk build_versions.min_sdk
         targetSdk build_versions.target_sdk
-
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -31,19 +31,17 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-
-    buildFeatures {
-        viewBinding true
-        dataBinding true
-    }
 }
 
 dependencies {
+
     implementation project(":commonui")
     implementation project(":common")
+    implementation project(":domain-profile")
 
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
+
 
     testImplementation "junit:junit:$versions.junit"
     androidTestImplementation "androidx.test.ext:junit:$versions.androidx_junit"

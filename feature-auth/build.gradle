@@ -21,7 +21,6 @@ android {
     buildTypes {
         release {
             minifyEnabled shouldMinify
-            shrinkResources shouldShrinkResources
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }

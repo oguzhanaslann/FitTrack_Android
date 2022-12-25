@@ -23,6 +23,13 @@ interface Navigator {
         navOptions: NavOptions? = null,
         onErrorAction: () -> Unit = {}
     )
+
+    // navigate crete workout
+    fun navigateToCreateWorkout(
+        navController: NavController,
+        navOptions: NavOptions? = null,
+        onErrorAction: () -> Unit = {}
+    )
 }
 
 fun Navigator(): Navigator {
@@ -85,6 +92,19 @@ fun Navigator(): Navigator {
             } catch (navException: IllegalArgumentException) {
                 onErrorAction()
             }
+        }
+
+        override fun navigateToCreateWorkout(
+            navController: NavController,
+            navOptions: NavOptions?,
+            onErrorAction: () -> Unit
+        ) {
+            navigateSafe(
+                navController = navController,
+                deeplinkUri = DeeplinkBuilder.asUri(DeeplinkBuilder.CREATE_WORKOUT_DEEPLINK),
+                navOptions = navOptions,
+                onErrorAction = onErrorAction
+            )
         }
     }
 }

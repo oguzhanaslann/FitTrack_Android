@@ -52,6 +52,7 @@ dependencies {
     implementation project(":feature-auth")
     implementation project(":feature-home")
     implementation project(":feature-workouts")
+    implementation project(":feature-create-workout")
     implementation project(":feature-reports")
     implementation project(":feature-profile")
 
