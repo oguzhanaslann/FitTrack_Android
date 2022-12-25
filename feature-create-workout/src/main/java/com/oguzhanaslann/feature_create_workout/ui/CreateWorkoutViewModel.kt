@@ -1,28 +1,22 @@
 package com.oguzhanaslann.feature_create_workout.ui
 
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
+import com.oguzhanaslann.feature_create_workout.domain.DailyPlan
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
-
-data class DailyPlanUIModel(
-    val id: Int,
-    val name: String,
-    val calories: Int,
-    val exerciseCount: Int
-)
-
-data class CreateWorkoutUIState(
-    val name: String = "",
-    val description: String = "",
-    val workoutPhotoUri: Uri? = null,
-    val planList: List<DailyPlanUIModel> = emptyList()
-)
 
 @HiltViewModel
 class CreateWorkoutViewModel @Inject constructor(
@@ -31,24 +25,45 @@ class CreateWorkoutViewModel @Inject constructor(
 
     private val _workoutTitle = MutableStateFlow<String>("")
     private val _workoutDescription = MutableStateFlow<String>("")
-    private val _userProfilePhoto = MutableStateFlow<Uri?>(null)
-    private val _userDailyPlans = MutableStateFlow<List<DailyPlanUIModel>>(emptyList())
+    private val _coverPhoto = MutableStateFlow<Uri?>(null)
 
-    val workoutUIState = combine(
+    private val addPlans = MutableStateFlow<List<DailyPlan>>(emptyList())
+
+    private val _userDailyPlans = addPlans.map {
+        it.map { dailyPlan ->
+            Log.e("TAG", "mapping")
+            DailyPlanUIModel(
+                name = dailyPlan.name,
+                calories = dailyPlan.calories,
+                exerciseCount = dailyPlan.exerciseList.size
+            )
+        }
+    }
+
+    private val _workoutUIState = combine(
         _workoutTitle,
         _workoutDescription,
-        _userProfilePhoto,
+        _coverPhoto,
         _userDailyPlans
-    ) { title, description, photo , plans ->
+    ) { title, description, photo, plans ->
         CreateWorkoutUIState(
             name = title,
             description = description,
             workoutPhotoUri = photo,
             planList = plans
         )
-    }.asLiveData()
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = CreateWorkoutUIState()
+    )
+
+    val workoutUIState = _workoutUIState.asLiveData()
 
     val descriptionLength = _workoutDescription.map { it.length }.asLiveData()
+
+    private val _createWorkoutEventsChannel = Channel<CreateWorkoutEvent>()
+    val createWorkoutEvents = _createWorkoutEventsChannel.receiveAsFlow()
 
     fun onDescriptionChanged(description: String) {
         _workoutDescription.update { description }
@@ -59,11 +74,30 @@ class CreateWorkoutViewModel @Inject constructor(
     }
 
     fun onPhotoSelected(uri: Uri) {
-        _userProfilePhoto.update { uri }
+        _coverPhoto.update { uri }
     }
 
     fun onPublishClicked() {
-        //TODO("Not yet implemented")
+        viewModelScope.launch {
+            val currentState = _workoutUIState.value
+            when {
+                currentState.name.isEmpty() ->
+                    _createWorkoutEventsChannel.send(CreateWorkoutEvent.WorkoutNameEmpty)
+
+                currentState.description.isEmpty() ->
+                    _createWorkoutEventsChannel.send(CreateWorkoutEvent.WorkoutDescriptionEmpty)
+
+                currentState.planList.isEmpty() ->
+                    _createWorkoutEventsChannel.send(CreateWorkoutEvent.WorkoutPlanEmpty)
+
+                else -> createWorkout()
+            }
+        }
+    }
+
+    private suspend fun createWorkout() {
+
+        _createWorkoutEventsChannel.send(CreateWorkoutEvent.WorkoutCreated)
     }
 
     fun getCurrentTitle(): String {
@@ -74,7 +108,18 @@ class CreateWorkoutViewModel @Inject constructor(
         return _workoutDescription.value
     }
 
+    fun onDailyPlanCreated(plan: DailyPlan) {
+        addPlans.value = addPlans.value + plan
+    }
+
     companion object {
         const val MAX_DESCRIPTION_LENGTH = 200
     }
+}
+
+sealed class CreateWorkoutEvent {
+    object WorkoutNameEmpty : CreateWorkoutEvent()
+    object WorkoutDescriptionEmpty : CreateWorkoutEvent()
+    object WorkoutPlanEmpty : CreateWorkoutEvent()
+    object WorkoutCreated : CreateWorkoutEvent()
 }

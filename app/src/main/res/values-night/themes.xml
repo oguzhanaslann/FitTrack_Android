@@ -35,6 +35,8 @@
 
         <item name="materialCardViewStyle">@style/Widget.App.CardView</item>
         <item name="chipStyle">@style/Widget.App.Chip</item>
+        <item name="sliderStyle">@style/Widget.App.Slider</item>
+
     </style>
 
 

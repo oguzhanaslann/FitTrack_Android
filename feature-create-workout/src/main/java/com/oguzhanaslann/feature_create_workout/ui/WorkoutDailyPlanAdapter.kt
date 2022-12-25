@@ -45,7 +45,7 @@ class WorkoutDailyPlanAdapter(
 
     override fun getItemViewType(position: Int): Int {
         val item = getItem(position)
-        return when (item.id) {
+        return when (item.name) {
             ADD_WORKOUT_DAILY_PLAN -> ADD_WORKOUT_DAILY_PLAN_TYPE
             else -> WORKOUT_DAILY_PLAN_TYPE
         }
@@ -84,7 +84,7 @@ class WorkoutDailyPlanAdapter(
     override fun submitList(list: List<DailyPlanUIModel>?) {
         val newList = mutableListOf<DailyPlanUIModel>()
         newList.addAll(list ?: emptyList())
-        newList.add(DailyPlanUIModel(ADD_WORKOUT_DAILY_PLAN, "", 0, 0))
+        newList.add(DailyPlanUIModel(ADD_WORKOUT_DAILY_PLAN, 0, 0))
         super.submitList(newList)
     }
 
@@ -92,7 +92,7 @@ class WorkoutDailyPlanAdapter(
         override fun areItemsTheSame(
             oldItem: DailyPlanUIModel,
             newItem: DailyPlanUIModel,
-        ): Boolean = oldItem.id == newItem.id
+        ): Boolean = oldItem == newItem
 
         override fun areContentsTheSame(
             oldItem: DailyPlanUIModel,
@@ -101,7 +101,7 @@ class WorkoutDailyPlanAdapter(
     }
 
     companion object {
-        private const val ADD_WORKOUT_DAILY_PLAN = 78301
+        private const val ADD_WORKOUT_DAILY_PLAN = "p9v5RGFa8j"
 
         const val ADD_WORKOUT_DAILY_PLAN_TYPE = 0
         const val WORKOUT_DAILY_PLAN_TYPE = 1

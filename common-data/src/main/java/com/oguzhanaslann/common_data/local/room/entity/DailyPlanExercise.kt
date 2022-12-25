@@ -17,6 +17,7 @@ data class DailyPlanExercise(
 data class ExerciseSet(
     val order: Int,
     val reps: Int? = null,
+    val set : Int? = null,
     val weight: Int? = null,
     val rest: Int? = null,
 )

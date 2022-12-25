@@ -9,9 +9,18 @@
         android:id="@+id/createWorkoutFragment"
         android:name="com.oguzhanaslann.feature_create_workout.ui.CreateWorkoutFragment"
         android:label="fragment_create_workout"
-        tools:layout="@layout/fragment_create_workout" />
+        tools:layout="@layout/fragment_create_workout" >
+        <action
+            android:id="@+id/action_createWorkoutFragment_to_createDailyPlanFragment"
+            app:destination="@id/createDailyPlanFragment" />
+    </fragment>
 
     <deepLink
         android:id="@+id/deepLink"
         app:uri="https://com.oguzhanaslann.fittrack/feature_create_workout" />
+    <fragment
+        android:id="@+id/createDailyPlanFragment"
+        tools:layout="@layout/fragment_create_daily_plan"
+        android:name="com.oguzhanaslann.feature_create_workout.ui.createDailyPlan.CreateDailyPlanFragment"
+        android:label="CreateDailyPlanFragment" />
 </navigation>

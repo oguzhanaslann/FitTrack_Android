@@ -34,4 +34,21 @@
         <item name="android:textColor">?attr/colorSecondary</item>
     </style>
 
+    <style name="Widget.App.Slider" parent="Widget.Material3.Slider">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.Slider</item>
+        <item name="labelStyle">@style/Widget.App.Tooltip</item>
+    </style>
+
+    <style name="ThemeOverlay.App.Slider" parent="">
+        <item name="colorPrimary">?attr/colorPrimary</item>
+        <item name="colorOnPrimary">?attr/colorOnPrimary</item>
+        <item name="colorOnSurface">?attr/colorOnSurface</item>
+    </style>
+
+    <style name="Widget.App.Tooltip" parent="Widget.Material3.Tooltip">
+        <item name="android:textAppearance">?attr/textAppearanceLabelSmall</item>
+        <item name="backgroundTint">?attr/colorOnPrimary</item>
+    </style>
+
+
 </resources>

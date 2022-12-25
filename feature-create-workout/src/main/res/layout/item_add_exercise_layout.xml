@@ -18,7 +18,7 @@
             android:layout_height="48dp"
             android:layout_marginTop="16dp"
             android:src="@drawable/ic_baseline_add_circle_outline_24"
-            app:layout_constraintBottom_toTopOf="@+id/add_list_element"
+            app:layout_constraintBottom_toTopOf="@+id/add_list_element_exercise"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -27,12 +27,12 @@
             app:tint="?attr/colorOutline" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/add_list_element"
+            android:id="@+id/add_list_element_exercise"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:layout_marginBottom="16dp"
-            android:text="@string/add_daily_plan"
+            android:text="@string/add_exercise"
             android:textAppearance="?attr/textAppearanceTitleLarge"
             android:textColor="?attr/colorOutline"
             app:layout_constraintBottom_toBottomOf="parent"

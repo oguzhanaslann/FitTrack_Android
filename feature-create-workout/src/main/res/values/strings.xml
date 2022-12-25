@@ -12,6 +12,17 @@
     <string name="add_daily_plan">Add daily plan</string>
     <string name="kcal_value_text">%d kcal</string>
     <string name="plans">Plans</string>
+    <string name="workout_created_successfully">Workout created successfully</string>
+    <string name="workout_description_empty">Workout description cannot be empty</string>
+    <string name="workout_title_empty">Workout workout title cannot be empty</string>
+    <string name="workout_plan_empty">Workout Daily Plan cannot be empty</string>
+    <string name="kcal">Kcal</string>
+    <string name="calories">Calories</string>
+    <string name="calories_empty_text">Calorie should be greater than 0</string>
+    <string name="exercise_empty_text">Exercises cannot be empty</string>
+    <string name="daily_plan_title_empty">Daily Plan title cannot be empty</string>
+    <string name="add_exercise">Add Exercise</string>
+
 
     <plurals name="exercises">
         <item quantity="one">%d exercise</item>

@@ -17,3 +17,18 @@ data class DailyPlanEntity(
     @ColumnInfo(name = "daily_plan_id")
     var id: Int? = null
 }
+
+fun DailyPlanEntity(
+    id : Int,
+    workoutPlanId: Int,
+    name: String,
+    imageUrl: String,
+    calories: Int,
+    languageCode: String,
+) = DailyPlanEntity(
+    workoutPlanId = workoutPlanId,
+    name = name,
+    imageUrl = imageUrl,
+    calories = calories,
+    languageCode = languageCode,
+).apply { this.id = id }
