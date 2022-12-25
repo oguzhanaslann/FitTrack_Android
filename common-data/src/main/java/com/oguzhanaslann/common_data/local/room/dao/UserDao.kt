@@ -1,9 +1,16 @@
-package com.oguzhanaslann.commonui.data.local.room.dao
+package com.oguzhanaslann.common_data.local.room.dao
 
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
-import com.oguzhanaslann.commonui.data.local.room.entity.*
+import com.oguzhanaslann.common_data.local.room.entity.ProgressionPhotoEntity
+import com.oguzhanaslann.common_data.local.room.entity.RecipeEntity
+import com.oguzhanaslann.common_data.local.room.entity.UserEntity
+import com.oguzhanaslann.common_data.local.room.entity.UserFavoriteRecipeCrossRef
+import com.oguzhanaslann.common_data.local.room.entity.UserProfileEntity
+import com.oguzhanaslann.common_data.local.room.entity.UserWithFavoriteRecipes
+import com.oguzhanaslann.common_data.local.room.entity.UserWithWorkoutPlan
+import com.oguzhanaslann.common_data.local.room.entity.WeightRecordEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

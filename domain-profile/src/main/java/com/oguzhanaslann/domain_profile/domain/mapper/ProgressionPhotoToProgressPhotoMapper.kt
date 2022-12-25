@@ -2,12 +2,12 @@ package com.oguzhanaslann.domain_profile.domain.mapper
 
 import com.oguzhanaslann.common.DateHelper
 import com.oguzhanaslann.common.Mapper
-import com.oguzhanaslann.commonui.data.local.room.entity.ProgressionPhotoEntity
+import com.oguzhanaslann.common_data.local.room.entity.ProgressionPhotoEntity
 import com.oguzhanaslann.domain_profile.domain.model.ProgressPhoto
 import java.util.*
 
-class ProgressionPhotoToProgressPhotoMapper : Mapper<ProgressionPhotoEntity, ProgressPhoto> {
-    override suspend fun map(input: ProgressionPhotoEntity): ProgressPhoto {
+class ProgressionPhotoToProgressPhotoMapper : Mapper<com.oguzhanaslann.common_data.local.room.entity.ProgressionPhotoEntity, ProgressPhoto> {
+    override suspend fun map(input: com.oguzhanaslann.common_data.local.room.entity.ProgressionPhotoEntity): ProgressPhoto {
         return ProgressPhoto(
             id = input.photoUrl,
             url = input.photoUrl,

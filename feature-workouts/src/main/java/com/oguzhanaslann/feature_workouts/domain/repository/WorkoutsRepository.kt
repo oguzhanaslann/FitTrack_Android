@@ -3,9 +3,9 @@ package com.oguzhanaslann.feature_workouts.domain.repository
 import com.oguzhanaslann.common.Mapper
 import com.oguzhanaslann.common.mapBy
 import com.oguzhanaslann.common_domain.AppLanguageUseCase
-import com.oguzhanaslann.commonui.data.local.room.dao.WorkoutPlanDao
-import com.oguzhanaslann.commonui.data.local.room.entity.WorkoutPlanDetail
-import com.oguzhanaslann.commonui.data.local.room.entity.WorkoutPlanEntity
+import com.oguzhanaslann.common_data.local.room.dao.WorkoutPlanDao
+import com.oguzhanaslann.common_data.local.room.entity.WorkoutPlanDetail
+import com.oguzhanaslann.common_data.local.room.entity.WorkoutPlanEntity
 import com.oguzhanaslann.feature_workouts.domain.model.Workout
 import com.oguzhanaslann.feature_workouts.ui.workoutDetail.WorkoutDetail
 import kotlinx.coroutines.flow.Flow
@@ -21,10 +21,10 @@ interface WorkoutsRepository {
 }
 
 class WorkoutsRepositoryImpl(
-    private val workoutPlanDao: WorkoutPlanDao,
+    private val workoutPlanDao: com.oguzhanaslann.common_data.local.room.dao.WorkoutPlanDao,
     private val appLanguageUseCase: AppLanguageUseCase,
-    private val workoutFromEntityMapper: Mapper<WorkoutPlanEntity, Workout>,
-    private val workoutDetailMapper: Mapper<WorkoutPlanDetail, WorkoutDetail>,
+    private val workoutFromEntityMapper: Mapper<com.oguzhanaslann.common_data.local.room.entity.WorkoutPlanEntity, Workout>,
+    private val workoutDetailMapper: Mapper<com.oguzhanaslann.common_data.local.room.entity.WorkoutPlanDetail, WorkoutDetail>,
 ) : WorkoutsRepository {
     override fun getWorkouts(first: Int): Flow<List<Workout>> {
         return flow {

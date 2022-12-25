@@ -1,12 +1,12 @@
-package com.oguzhanaslann.commonui.data.local.room
+package com.oguzhanaslann.common_data.local.room
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.oguzhanaslann.commonui.data.local.room.FitTrackDatabase.Companion.DATABASE_VERSION
-import com.oguzhanaslann.commonui.data.local.room.dao.*
-import com.oguzhanaslann.commonui.data.local.room.entity.*
+import com.oguzhanaslann.common_data.local.room.FitTrackDatabase.Companion.DATABASE_VERSION
+import com.oguzhanaslann.common_data.local.room.dao.*
+import com.oguzhanaslann.common_data.local.room.entity.*
 
 @Database(
     entities = [

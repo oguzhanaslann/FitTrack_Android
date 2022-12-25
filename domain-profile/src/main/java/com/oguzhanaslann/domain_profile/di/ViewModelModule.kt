@@ -1,8 +1,6 @@
 package com.oguzhanaslann.domain_profile.di
 
 import android.content.Context
-import com.oguzhanaslann.commonui.data.local.FitTrackDataStore
-import com.oguzhanaslann.commonui.data.local.room.FitTrackDatabase
 import com.oguzhanaslann.domain_profile.data.local.ProfileLocalDataSource
 import com.oguzhanaslann.domain_profile.domain.ProfileRepository
 import com.oguzhanaslann.domain_profile.domain.mapper.ProgressionPhotoToProgressPhotoMapper
@@ -12,7 +10,7 @@ import com.oguzhanaslann.domain_profile.domain.mapper.UserWorkoutWithDailyPlansT
 import com.oguzhanaslann.domain_profile.domain.mapper.UserWorkoutWithDailyPlansToOldWorkoutPlanOverViewMapper
 import com.oguzhanaslann.domain_profile.domain.mapper.WeightRecordToWeightProgressMapper
 import com.oguzhanaslann.domain_profile.domain.usecase.ProfileEditUseCase
-import com.oguzhanaslann.feature_profile.domain.usecase.LocalPhotosUseCase
+import com.oguzhanaslann.domain_profile.domain.usecase.LocalPhotosUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -44,8 +42,8 @@ object ViewModelModule {
     @Provides
     @ViewModelScoped
     fun provideProfileLocalDataSource(
-        fitTrackDatabase: FitTrackDatabase,
-        fitTrackDataStore: FitTrackDataStore
+        fitTrackDatabase: com.oguzhanaslann.common_data.local.room.FitTrackDatabase,
+        fitTrackDataStore: com.oguzhanaslann.common_data.local.FitTrackDataStore
     ): ProfileLocalDataSource {
         return ProfileLocalDataSource(
             userDao = fitTrackDatabase.userDao(),

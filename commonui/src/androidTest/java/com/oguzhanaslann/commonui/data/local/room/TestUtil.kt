@@ -7,7 +7,7 @@ import com.oguzhanaslann.commonui.data.local.room.entity.*
 fun createWorkoutPlanEntity(
     name: String = "Workout Plan 1",
     languageCode: String = "en",
-) = WorkoutPlanEntity(
+) = com.oguzhanaslann.common_data.local.room.entity.WorkoutPlanEntity(
     name = name,
     imageUrl = "",
     description = "Lorem ipsum",
@@ -18,7 +18,7 @@ fun createWorkoutPlanEntity(
 fun createRecipeEntity(
     title : String = "Recipe 1",
     languageCode: String = "en",
-) = RecipeEntity(
+) = com.oguzhanaslann.common_data.local.room.entity.RecipeEntity(
     title = title,
     imageUrl = "",
     descriptionJson = "{}",
@@ -26,15 +26,16 @@ fun createRecipeEntity(
 )
 
 @VisibleForTesting
-fun createWeightRecordEntity(userId: Int) = WeightRecordEntity(
-    weight = 0.0,
-    date = 0,
-    userId = userId,
-)
+fun createWeightRecordEntity(userId: Int) =
+    com.oguzhanaslann.common_data.local.room.entity.WeightRecordEntity(
+        weight = 0.0,
+        date = 0,
+        userId = userId,
+    )
 
 @VisibleForTesting
-fun createProgressionPhotoEntity(userId: Int): ProgressionPhotoEntity {
-    return ProgressionPhotoEntity(
+fun createProgressionPhotoEntity(userId: Int): com.oguzhanaslann.common_data.local.room.entity.ProgressionPhotoEntity {
+    return com.oguzhanaslann.common_data.local.room.entity.ProgressionPhotoEntity(
         photoUrl = "sample://photo",
         userId = userId,
         date = 0
@@ -42,7 +43,7 @@ fun createProgressionPhotoEntity(userId: Int): ProgressionPhotoEntity {
 }
 
 @VisibleForTesting
-fun createTagEntity() = TagEntity(
+fun createTagEntity() = com.oguzhanaslann.common_data.local.room.entity.TagEntity(
     name = "Tag 1"
 )
 
@@ -51,7 +52,7 @@ fun createDailyPlanEntity(
     workoutPlanId: Int,
     name : String = "Daily Plan 1",
     languageCode: String = "en",
-) = DailyPlanEntity(
+) = com.oguzhanaslann.common_data.local.room.entity.DailyPlanEntity(
     name = "Daily Plan 1",
     imageUrl = "",
     workoutPlanId = workoutPlanId,
@@ -63,7 +64,7 @@ fun createDailyPlanEntity(
 fun createExerciseEntity(
     name: String = "Exercise 1",
     languageCode: String = "en",
-) = ExerciseEntity(
+) = com.oguzhanaslann.common_data.local.room.entity.ExerciseEntity(
     name = name,
     imageUrl = "",
     description = "Lorem ipsum",
@@ -71,7 +72,7 @@ fun createExerciseEntity(
 )
 
 @VisibleForTesting
-fun createExerciseSet() = ExerciseSet(
+fun createExerciseSet() = com.oguzhanaslann.common_data.local.room.entity.ExerciseSet(
     order = 0,
     reps = null,
     weight = null,
@@ -84,7 +85,7 @@ fun createUserWorkoutPlanEntity(
     languageCode: String = "en",
     isCompleted: Boolean = false,
     isActive: Boolean = false,
-) = UserWorkoutPlanEntity(
+) = com.oguzhanaslann.common_data.local.room.entity.UserWorkoutPlanEntity(
     name = "",
     imageUrl = "",
     description = "",
@@ -105,7 +106,7 @@ fun createUserDailyPlanEntity(
     isActive: Boolean = false,
     startDate: Long = 0,
     endDate: Long = 0,
-) = UserDailyPlanEntity(
+) = com.oguzhanaslann.common_data.local.room.entity.UserDailyPlanEntity(
     activeWorkoutPlanId = activeWorkoutPlanId,
     name = "",
     imageUrl = "",
@@ -124,7 +125,7 @@ fun createUserExerciseEntity(
     activeDailyPlanId: Int,
     languageCode: String = "en",
     isCompleted: Boolean = false,
-) = UserExerciseEntity(
+) = com.oguzhanaslann.common_data.local.room.entity.UserExerciseEntity(
     name = "",
     imageUrl = "",
     description = "",

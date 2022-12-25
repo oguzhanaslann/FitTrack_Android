@@ -1,4 +1,4 @@
-package com.oguzhanaslann.commonui.data.local.room.entity
+package com.oguzhanaslann.common_data.local.room.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Embedded

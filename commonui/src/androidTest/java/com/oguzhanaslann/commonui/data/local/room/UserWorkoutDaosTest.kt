@@ -7,9 +7,9 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.google.common.truth.Truth.assertThat
-import com.oguzhanaslann.commonui.data.local.room.dao.UserDailyPlanDao
-import com.oguzhanaslann.commonui.data.local.room.dao.UserExerciseDao
-import com.oguzhanaslann.commonui.data.local.room.dao.UserWorkoutPlanDao
+import com.oguzhanaslann.common_data.local.room.dao.UserDailyPlanDao
+import com.oguzhanaslann.common_data.local.room.dao.UserExerciseDao
+import com.oguzhanaslann.common_data.local.room.dao.UserWorkoutPlanDao
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.After
@@ -27,17 +27,17 @@ class UserWorkoutDaosTest {
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    lateinit var db: FitTrackDatabase
+    lateinit var db: com.oguzhanaslann.common_data.local.room.FitTrackDatabase
 
-    lateinit var userWorkoutPlanDao: UserWorkoutPlanDao
-    lateinit var userDailyPlanDao: UserDailyPlanDao
-    lateinit var userExerciseDao: UserExerciseDao
+    lateinit var userWorkoutPlanDao: com.oguzhanaslann.common_data.local.room.dao.UserWorkoutPlanDao
+    lateinit var userDailyPlanDao: com.oguzhanaslann.common_data.local.room.dao.UserDailyPlanDao
+    lateinit var userExerciseDao: com.oguzhanaslann.common_data.local.room.dao.UserExerciseDao
 
     @Before
     fun setup() {
         val context = ApplicationProvider.getApplicationContext<Context>()
         db = Room.inMemoryDatabaseBuilder(
-            context, FitTrackDatabase::class.java
+            context, com.oguzhanaslann.common_data.local.room.FitTrackDatabase::class.java
         ).build()
         userWorkoutPlanDao = db.userWorkoutPlanDao()
         userDailyPlanDao = db.userDailyPlanDao()

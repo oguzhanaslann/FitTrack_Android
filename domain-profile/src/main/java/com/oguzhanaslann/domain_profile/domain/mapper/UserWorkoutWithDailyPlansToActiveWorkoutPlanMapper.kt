@@ -1,12 +1,12 @@
 package com.oguzhanaslann.domain_profile.domain.mapper
 
 import com.oguzhanaslann.common.Mapper
-import com.oguzhanaslann.commonui.data.local.room.entity.UserWorkoutWithDailyPlans
+import com.oguzhanaslann.common_data.local.room.entity.UserWorkoutWithDailyPlans
 import com.oguzhanaslann.domain_profile.domain.model.ActiveWorkoutPlan
 
 class UserWorkoutWithDailyPlansToActiveWorkoutPlanMapper :
-    Mapper<UserWorkoutWithDailyPlans, ActiveWorkoutPlan> {
-    override suspend fun map(input: UserWorkoutWithDailyPlans): ActiveWorkoutPlan {
+    Mapper<com.oguzhanaslann.common_data.local.room.entity.UserWorkoutWithDailyPlans, ActiveWorkoutPlan> {
+    override suspend fun map(input: com.oguzhanaslann.common_data.local.room.entity.UserWorkoutWithDailyPlans): ActiveWorkoutPlan {
         return ActiveWorkoutPlan(
             id = "${input.userDailyPlanEntity.id}",
             name = input.userDailyPlanEntity.name,

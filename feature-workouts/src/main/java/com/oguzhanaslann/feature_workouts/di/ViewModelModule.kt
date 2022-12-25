@@ -1,7 +1,7 @@
 package com.oguzhanaslann.feature_workouts.di
 
 import com.oguzhanaslann.common_domain.AppLanguageUseCase
-import com.oguzhanaslann.commonui.data.local.room.FitTrackDatabase
+import com.oguzhanaslann.common_data.local.room.FitTrackDatabase
 import com.oguzhanaslann.feature_workouts.domain.mapper.WorkoutFromEntityMapper
 import com.oguzhanaslann.feature_workouts.domain.mapper.DailyPlanShortMapper
 import com.oguzhanaslann.feature_workouts.domain.mapper.WorkoutDetailMapper
@@ -20,7 +20,7 @@ object ViewModelModule {
     @Provides
     @ViewModelScoped
     fun provideWorkoutsRepository(
-        fitTrackDatabase: FitTrackDatabase,
+        fitTrackDatabase: com.oguzhanaslann.common_data.local.room.FitTrackDatabase,
         appLanguageUseCase: AppLanguageUseCase
     ): WorkoutsRepository = WorkoutsRepositoryImpl(
         workoutPlanDao = fitTrackDatabase.workoutPlanDao(),

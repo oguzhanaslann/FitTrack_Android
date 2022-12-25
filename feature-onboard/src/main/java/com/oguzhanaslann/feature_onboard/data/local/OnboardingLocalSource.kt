@@ -1,6 +1,6 @@
 package com.oguzhanaslann.feature_onboard.data.local
 
-import com.oguzhanaslann.commonui.data.local.FitTrackDataStore
+import com.oguzhanaslann.common_data.local.FitTrackDataStore
 
 interface OnboardingLocalSource {
     suspend fun markOnboardingAsFinished(): Result<Boolean>

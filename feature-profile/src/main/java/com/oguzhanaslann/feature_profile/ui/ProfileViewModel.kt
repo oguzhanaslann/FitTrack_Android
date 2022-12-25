@@ -15,7 +15,7 @@ import com.oguzhanaslann.common.toState
 import com.oguzhanaslann.domain_profile.domain.ProfileRepository
 import com.oguzhanaslann.domain_profile.domain.model.Profile
 import com.oguzhanaslann.feature_profile.di.ProfileMapper
-import com.oguzhanaslann.feature_profile.domain.usecase.LocalPhotosUseCase
+import com.oguzhanaslann.domain_profile.domain.usecase.LocalPhotosUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow

@@ -1,26 +1,16 @@
-package com.oguzhanaslann.commonui.data.local.room.entity
+package com.oguzhanaslann.common_data.local.room.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 
-@Entity(tableName = "user_daily_plan")
-data class UserDailyPlanEntity(
-
-    @ColumnInfo(name = "user_workout_plan_id")
-    val activeWorkoutPlanId: Int,
-
-    @ColumnInfo(name = "name")
+@Entity(tableName = "user_workout_plan")
+data class UserWorkoutPlanEntity(
     val name: String,
-
-    @ColumnInfo(name = "order")
-    val order : Int,
+    val imageUrl: String,
+    val description: String,
 
     @ColumnInfo(name = "user_id")
     val userId: Int,
-
-    val imageUrl: String,
-
-    val description: String,
 
     @ColumnInfo(name = "start_date")
     val startDate: Long,
@@ -29,15 +19,16 @@ data class UserDailyPlanEntity(
     val endDate: Long,
 
     @ColumnInfo(name = "is_completed")
-    val isCompleted: Boolean = false,
+    val isCompleted: Boolean  = false,
 
     @ColumnInfo(name = "is_active")
     val isActive: Boolean,
+
 
     @ColumnInfo(name = "language_code")
     val languageCode: String
 ) {
     @androidx.room.PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "user_daily_plan_id")
+    @ColumnInfo(name = "user_workout_plan_id")
     var id: Int? = null
 }

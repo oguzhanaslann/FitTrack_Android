@@ -1,4 +1,4 @@
-package com.oguzhanaslann.commonui.data.local
+package com.oguzhanaslann.common_data.local
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences

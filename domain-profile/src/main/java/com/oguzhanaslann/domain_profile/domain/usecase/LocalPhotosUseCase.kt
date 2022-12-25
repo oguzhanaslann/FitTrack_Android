@@ -1,4 +1,4 @@
-package com.oguzhanaslann.feature_profile.domain.usecase
+package com.oguzhanaslann.domain_profile.domain.usecase
 
 import android.content.Context
 import android.net.Uri

@@ -1,9 +1,9 @@
-package com.oguzhanaslann.commonui.data.local.room.dao
+package com.oguzhanaslann.common_data.local.room.dao
 
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
-import com.oguzhanaslann.commonui.data.local.room.entity.*
+import com.oguzhanaslann.common_data.local.room.entity.*
 import kotlinx.coroutines.flow.Flow
 
 @Dao

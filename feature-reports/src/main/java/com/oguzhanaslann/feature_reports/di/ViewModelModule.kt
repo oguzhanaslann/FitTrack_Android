@@ -1,7 +1,7 @@
 package com.oguzhanaslann.feature_reports.di
 
-import com.oguzhanaslann.commonui.data.local.FitTrackDataStore
-import com.oguzhanaslann.commonui.data.local.room.FitTrackDatabase
+import com.oguzhanaslann.common_data.local.FitTrackDataStore
+import com.oguzhanaslann.common_data.local.room.FitTrackDatabase
 import com.oguzhanaslann.feature_reports.domain.mapper.ReportMapper
 import com.oguzhanaslann.feature_reports.data.ReportsRepository
 import dagger.Module
@@ -17,8 +17,8 @@ object ViewModelModule {
     @Provides
     @ViewModelScoped
     fun provideReportsRepository(
-        fitTrackDatabase: FitTrackDatabase,
-        fitTrackDataStore: FitTrackDataStore
+        fitTrackDatabase: com.oguzhanaslann.common_data.local.room.FitTrackDatabase,
+        fitTrackDataStore: com.oguzhanaslann.common_data.local.FitTrackDataStore
     ) = ReportsRepository(
         userDailyPlanDao = fitTrackDatabase.userDailyPlanDao(),
         fitTrackDataStore = fitTrackDataStore,

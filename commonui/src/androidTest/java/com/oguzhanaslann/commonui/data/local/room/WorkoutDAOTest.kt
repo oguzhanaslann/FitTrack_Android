@@ -7,14 +7,14 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.google.common.truth.Truth.assertThat
-import com.oguzhanaslann.commonui.data.local.room.dao.DailyPlanDao
-import com.oguzhanaslann.commonui.data.local.room.dao.DailyPlanExerciseCrossRefDao
-import com.oguzhanaslann.commonui.data.local.room.dao.ExerciseDao
-import com.oguzhanaslann.commonui.data.local.room.dao.TagDao
-import com.oguzhanaslann.commonui.data.local.room.dao.WorkoutPlanDao
-import com.oguzhanaslann.commonui.data.local.room.dao.WorkoutPlanTagCrossRefDao
-import com.oguzhanaslann.commonui.data.local.room.entity.DailyPlanExercise
-import com.oguzhanaslann.commonui.data.local.room.entity.WorkoutPlanTagCrossRef
+import com.oguzhanaslann.common_data.local.room.dao.DailyPlanDao
+import com.oguzhanaslann.common_data.local.room.dao.DailyPlanExerciseCrossRefDao
+import com.oguzhanaslann.common_data.local.room.dao.ExerciseDao
+import com.oguzhanaslann.common_data.local.room.dao.TagDao
+import com.oguzhanaslann.common_data.local.room.dao.WorkoutPlanDao
+import com.oguzhanaslann.common_data.local.room.dao.WorkoutPlanTagCrossRefDao
+import com.oguzhanaslann.common_data.local.room.entity.DailyPlanExercise
+import com.oguzhanaslann.common_data.local.room.entity.WorkoutPlanTagCrossRef
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
@@ -33,20 +33,20 @@ class WorkoutDAOTest {
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    lateinit var db: FitTrackDatabase
+    lateinit var db: com.oguzhanaslann.common_data.local.room.FitTrackDatabase
 
-    lateinit var workoutPlanDao: WorkoutPlanDao
-    lateinit var tagDao: TagDao
-    lateinit var workoutPlanTagDao: WorkoutPlanTagCrossRefDao
-    lateinit var dailyPlanDao: DailyPlanDao
-    lateinit var exerciseDao: ExerciseDao
-    lateinit var dailyPlanExerciseDao: DailyPlanExerciseCrossRefDao
+    lateinit var workoutPlanDao: com.oguzhanaslann.common_data.local.room.dao.WorkoutPlanDao
+    lateinit var tagDao: com.oguzhanaslann.common_data.local.room.dao.TagDao
+    lateinit var workoutPlanTagDao: com.oguzhanaslann.common_data.local.room.dao.WorkoutPlanTagCrossRefDao
+    lateinit var dailyPlanDao: com.oguzhanaslann.common_data.local.room.dao.DailyPlanDao
+    lateinit var exerciseDao: com.oguzhanaslann.common_data.local.room.dao.ExerciseDao
+    lateinit var dailyPlanExerciseDao: com.oguzhanaslann.common_data.local.room.dao.DailyPlanExerciseCrossRefDao
 
     @Before
     fun setup() {
         val context = ApplicationProvider.getApplicationContext<Context>()
         db = Room.inMemoryDatabaseBuilder(
-            context, FitTrackDatabase::class.java
+            context, com.oguzhanaslann.common_data.local.room.FitTrackDatabase::class.java
         ).build()
         workoutPlanDao = db.workoutPlanDao()
         tagDao = db.tagDao()
@@ -79,10 +79,11 @@ class WorkoutDAOTest {
         val tagEntity = createTagEntity()
         tagDao.insert(tagEntity)
 
-        val workoutPlanTagCrossRef = WorkoutPlanTagCrossRef(
-            workoutPlanId = workoutPlanFromDb?.id!!,
-            tagName = tagEntity.name
-        )
+        val workoutPlanTagCrossRef =
+            com.oguzhanaslann.common_data.local.room.entity.WorkoutPlanTagCrossRef(
+                workoutPlanId = workoutPlanFromDb?.id!!,
+                tagName = tagEntity.name
+            )
         workoutPlanTagDao.insert(workoutPlanTagCrossRef)
 
         val workoutPlanWithTags = workoutPlanDao.getWorkoutPlanWithTags(workoutPlanFromDb!!.id!!)
@@ -119,7 +120,7 @@ class WorkoutDAOTest {
         val exerciseFromDb = exerciseDao.getExerciseByName(exerciseEntity.name)
 
         val dailyPlanExercise =
-            DailyPlanExercise(
+            com.oguzhanaslann.common_data.local.room.entity.DailyPlanExercise(
                 dailyPlanId = dailyPlanFromDb!!.id!!,
                 exerciseId = exerciseFromDb!!.id!!,
                 exerciseSet = createExerciseSet()

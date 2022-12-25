@@ -10,7 +10,7 @@ import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.preferencesDataStoreFile
 import com.oguzhanaslann.common_data.FitTrackMemorySource
 import com.oguzhanaslann.common_data.MemorySource
-import com.oguzhanaslann.commonui.data.local.FitTrackDataStore
+import com.oguzhanaslann.common_data.local.FitTrackDataStore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

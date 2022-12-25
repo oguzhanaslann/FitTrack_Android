@@ -2,9 +2,9 @@ package com.oguzhanaslann.feature_reports.data
 
 import com.oguzhanaslann.common.DateHelper
 import com.oguzhanaslann.common.Mapper
-import com.oguzhanaslann.commonui.data.local.FitTrackDataStore
-import com.oguzhanaslann.commonui.data.local.room.dao.UserDailyPlanDao
-import com.oguzhanaslann.commonui.data.local.room.entity.UserDailyPlanWithExercises
+import com.oguzhanaslann.common_data.local.FitTrackDataStore
+import com.oguzhanaslann.common_data.local.room.dao.UserDailyPlanDao
+import com.oguzhanaslann.common_data.local.room.entity.UserDailyPlanWithExercises
 import com.oguzhanaslann.feature_reports.domain.Report
 import com.oguzhanaslann.feature_reports.domain.ReportDailyPlan
 import com.oguzhanaslann.feature_reports.domain.ReportExercise

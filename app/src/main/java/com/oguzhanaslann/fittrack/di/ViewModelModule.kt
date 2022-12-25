@@ -2,7 +2,7 @@ package com.oguzhanaslann.fittrack.di
 
 import com.oguzhanaslann.common_data.MemorySource
 import com.oguzhanaslann.common_domain.AppLanguageUseCase
-import com.oguzhanaslann.commonui.data.local.FitTrackDataStore
+import com.oguzhanaslann.common_data.local.FitTrackDataStore
 import com.oguzhanaslann.fittrack.data.AppInitRepository
 import com.oguzhanaslann.fittrack.domain.usecase.InitializeAppUseCase
 import dagger.Module

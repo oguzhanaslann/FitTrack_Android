@@ -1,6 +1,6 @@
 package com.oguzhanaslann.feature_onboard.di
 
-import com.oguzhanaslann.commonui.data.local.FitTrackDataStore
+import com.oguzhanaslann.common_data.local.FitTrackDataStore
 import com.oguzhanaslann.feature_onboard.data.OnboardingRepository
 import com.oguzhanaslann.feature_onboard.data.local.OnboardingLocalSource
 import dagger.Module
@@ -16,7 +16,7 @@ object OnboardingModule {
     @Provides
     @ViewModelScoped
     fun provideOnboardingRepository(
-        fitTrackDataStore: FitTrackDataStore
+        fitTrackDataStore: com.oguzhanaslann.common_data.local.FitTrackDataStore
     ) : OnboardingRepository {
         return OnboardingRepository(
             localSource = OnboardingLocalSource(fitTrackDataStore)

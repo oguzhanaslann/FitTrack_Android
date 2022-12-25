@@ -1,11 +1,11 @@
 package com.oguzhanaslann.domain_profile.domain.mapper
 
 import com.oguzhanaslann.common.*
-import com.oguzhanaslann.commonui.data.local.room.entity.ProgressionPhotoEntity
-import com.oguzhanaslann.commonui.data.local.room.entity.RecipeEntity
-import com.oguzhanaslann.commonui.data.local.room.entity.UserProfileEntity
-import com.oguzhanaslann.commonui.data.local.room.entity.UserWorkoutWithDailyPlans
-import com.oguzhanaslann.commonui.data.local.room.entity.WeightRecordEntity
+import com.oguzhanaslann.common_data.local.room.entity.ProgressionPhotoEntity
+import com.oguzhanaslann.common_data.local.room.entity.RecipeEntity
+import com.oguzhanaslann.common_data.local.room.entity.UserProfileEntity
+import com.oguzhanaslann.common_data.local.room.entity.UserWorkoutWithDailyPlans
+import com.oguzhanaslann.common_data.local.room.entity.WeightRecordEntity
 import com.oguzhanaslann.domain_profile.domain.model.Profile
 import com.oguzhanaslann.domain_profile.domain.model.ProgressPhoto
 import com.oguzhanaslann.domain_profile.domain.model.UserProfile
@@ -16,13 +16,13 @@ import com.oguzhanaslann.domain_profile.domain.model.OldWorkoutPlanOverView
 import java.util.*
 
 class UserProfileToProfileUIStateMapper(
-    private val progressionMapper: Mapper<ProgressionPhotoEntity, ProgressPhoto>,
-    private val weightMapper: Mapper<WeightRecordEntity, WeightProgress>,
-    private val recipeMapper: Mapper<RecipeEntity, FavoriteRecipe>,
-    private val workoutMapper: Mapper<UserWorkoutWithDailyPlans, ActiveWorkoutPlan>,
-    private val oldWorkoutMapper: Mapper<UserWorkoutWithDailyPlans, OldWorkoutPlanOverView>,
-) : Mapper<UserProfileEntity, Profile> {
-    override suspend fun map(input: UserProfileEntity): Profile {
+    private val progressionMapper: Mapper<com.oguzhanaslann.common_data.local.room.entity.ProgressionPhotoEntity, ProgressPhoto>,
+    private val weightMapper: Mapper<com.oguzhanaslann.common_data.local.room.entity.WeightRecordEntity, WeightProgress>,
+    private val recipeMapper: Mapper<com.oguzhanaslann.common_data.local.room.entity.RecipeEntity, FavoriteRecipe>,
+    private val workoutMapper: Mapper<com.oguzhanaslann.common_data.local.room.entity.UserWorkoutWithDailyPlans, ActiveWorkoutPlan>,
+    private val oldWorkoutMapper: Mapper<com.oguzhanaslann.common_data.local.room.entity.UserWorkoutWithDailyPlans, OldWorkoutPlanOverView>,
+) : Mapper<com.oguzhanaslann.common_data.local.room.entity.UserProfileEntity, Profile> {
+    override suspend fun map(input: com.oguzhanaslann.common_data.local.room.entity.UserProfileEntity): Profile {
 
         val activePLan = input.workoutPlans.find { it.userDailyPlanEntity.isActive }
         val oldPlans =

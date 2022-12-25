@@ -2,19 +2,17 @@ package com.oguzhanaslann.domain_profile.data.local
 
 import com.oguzhanaslann.common.DateHelper
 import com.oguzhanaslann.common.MeasurementUnit
-import com.oguzhanaslann.commonui.data.local.FitTrackDataStore
-import com.oguzhanaslann.commonui.data.local.room.dao.ProgressionPhotoDao
-import com.oguzhanaslann.commonui.data.local.room.dao.UserDao
-import com.oguzhanaslann.commonui.data.local.room.dao.WeightRecordDao
-import com.oguzhanaslann.commonui.data.local.room.entity.ProgressionPhotoEntity
-import com.oguzhanaslann.commonui.data.local.room.entity.UserEntity
-import com.oguzhanaslann.commonui.data.local.room.entity.UserProfileEntity
-import com.oguzhanaslann.commonui.data.local.room.entity.WeightRecordEntity
+import com.oguzhanaslann.common_data.local.FitTrackDataStore
+import com.oguzhanaslann.common_data.local.room.dao.ProgressionPhotoDao
+import com.oguzhanaslann.common_data.local.room.dao.UserDao
+import com.oguzhanaslann.common_data.local.room.dao.WeightRecordDao
+import com.oguzhanaslann.common_data.local.room.entity.UserEntity
+import com.oguzhanaslann.common_data.local.room.entity.UserProfileEntity
+
 import com.oguzhanaslann.domain_profile.domain.model.UserProfileEdit
-import com.oguzhanaslann.feature_profile.domain.usecase.PhotoUrlAndLastEditDate
+import com.oguzhanaslann.domain_profile.domain.usecase.PhotoUrlAndLastEditDate
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
-import java.util.*
 
 interface ProfileLocalDataSource {
     suspend fun getUserId(): Int
@@ -56,7 +54,7 @@ fun ProfileLocalDataSource(
     override suspend fun updateProgressPhotosOfUser(progressPhotoUrls: List<PhotoUrlAndLastEditDate>, userId: Int) {
         progressionPhotoDao.deleteAllPhotosOfUser(userId)
         val progressPhotos = progressPhotoUrls.map {
-            ProgressionPhotoEntity(
+            com.oguzhanaslann.common_data.local.room.entity.ProgressionPhotoEntity(
                 photoUrl = it.first,
                 userId = userId,
                 date = it.second.time
@@ -81,7 +79,7 @@ fun ProfileLocalDataSource(
             birthdate =  userProfileEdit.birthdate?.time ?: user.birthdate,
         )
 
-        val weight = WeightRecordEntity(
+        val weight = com.oguzhanaslann.common_data.local.room.entity.WeightRecordEntity(
             weight = userProfileEdit.weightInKg.toDouble(),
             date = DateHelper.nowAsLong(),
             userId = userId
@@ -94,7 +92,7 @@ fun ProfileLocalDataSource(
     }
 
     override suspend fun logout() {
-        fitTrackDataStore.setUserId(FitTrackDataStore.NONE)
+        fitTrackDataStore.setUserId(com.oguzhanaslann.common_data.local.FitTrackDataStore.NONE)
         fitTrackDataStore.setUserLoggedIn(false)
     }
 }
