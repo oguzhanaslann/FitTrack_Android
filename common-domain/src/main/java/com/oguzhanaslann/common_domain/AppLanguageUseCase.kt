@@ -1,6 +1,7 @@
 package com.oguzhanaslann.common_domain
 
 import com.oguzhanaslann.common_data.MemorySource
+import java.util.*
 
 class AppLanguageUseCase(
     private val memorySource: MemorySource,
@@ -16,6 +17,11 @@ class AppLanguageUseCase(
 
     fun getAppLanguageCode(): String {
         return getAppLanguage().code
+    }
+
+    fun getCurrentLocale(): Locale {
+        val appLanguageCode =  getAppLanguageCode()
+        return Locale(appLanguageCode)
     }
 
     companion object {
