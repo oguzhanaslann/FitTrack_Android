@@ -70,6 +70,12 @@ interface DailyPlanDao : BaseDao<DailyPlanEntity> {
 interface ExerciseDao : BaseDao<ExerciseEntity> {
     @Query("SELECT * FROM exercise WHERE name = :name")
     suspend fun getExerciseByName(name: String): ExerciseEntity?
+
+    @Query("SELECT * FROM exercise WHERE language_code = :languageCode LIMIT :first")
+    fun getExercises(first: Int, languageCode: String): Flow<List<ExerciseEntity>>
+
+    @Query("SELECT * FROM exercise WHERE name LIKE '%' || :query || '%' AND language_code = :languageCode")
+    fun searchExercises(query: String, languageCode: String): Flow<List<ExerciseEntity>>
 }
 
 @Dao

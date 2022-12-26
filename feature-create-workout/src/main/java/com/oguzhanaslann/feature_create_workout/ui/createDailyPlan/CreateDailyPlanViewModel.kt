@@ -6,7 +6,6 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.oguzhanaslann.common.orZero
 import com.oguzhanaslann.feature_create_workout.domain.DailyPlan
-import com.oguzhanaslann.feature_create_workout.domain.Exercise
 import com.oguzhanaslann.feature_create_workout.domain.ExerciseSet
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -19,22 +18,6 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
-data class ExerciseSetUIModel(
-    val name: String = "",
-    val imageUrl: String = "",
-    val sets: Int = 0,
-    val reps: Int = 0,
-    val weight: Int = 0,
-    val restMillis: Long = 0,
-)
-
-data class CreateDailyPlanUIState(
-    val name: String = "",
-    val dailyPlanPhotoUri: Uri? = null,
-    val exercises: List<ExerciseSetUIModel> = emptyList(),
-    val calories: Int = 0,
-)
 
 @HiltViewModel
 class CreateDailyPlanViewModel @Inject constructor(
@@ -82,32 +65,6 @@ class CreateDailyPlanViewModel @Inject constructor(
 
     private val _createDailyPlanEventsChannel = Channel<CreateDailyPlanEvent>()
     val createDailyPlanEvents = _createDailyPlanEventsChannel.receiveAsFlow()
-
-    init {
-        viewModelScope.launch {
-            _exerciseSet.emit(
-                listOf(
-                    ExerciseSet(
-                        Exercise(
-                            name = "Bench Press",
-                            description = "",
-                            imageUrl = "",
-                        ),
-                        reps = 10,
-                        sets = 3,
-                    ),
-
-                    ExerciseSet(
-                        Exercise(
-                            name = "Bench Press - 2",
-                            description = "",
-                            imageUrl = ""
-                        )
-                    ),
-                )
-            )
-        }
-    }
 
     fun onTitleChanged(title: String) {
         _planTitle.update { title }
@@ -162,14 +119,8 @@ class CreateDailyPlanViewModel @Inject constructor(
             exerciseList = _exerciseSet.value
         )
     }
-}
 
-sealed class CreateDailyPlanEvent {
-    class DailyPlanCreated(
-        val dailyPlan: DailyPlan,
-    ) : CreateDailyPlanEvent()
-
-    object DailyPlanNameEmpty : CreateDailyPlanEvent()
-    object DailyPlanCaloriesEmpty : CreateDailyPlanEvent()
-    object DailyPlanExerciseEmpty : CreateDailyPlanEvent()
+    fun addExercise(exerciseSet: ExerciseSet) {
+        _exerciseSet.update { it + exerciseSet }
+    }
 }

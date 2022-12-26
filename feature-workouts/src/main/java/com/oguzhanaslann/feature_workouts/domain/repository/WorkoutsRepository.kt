@@ -21,10 +21,10 @@ interface WorkoutsRepository {
 }
 
 class WorkoutsRepositoryImpl(
-    private val workoutPlanDao: com.oguzhanaslann.common_data.local.room.dao.WorkoutPlanDao,
+    private val workoutPlanDao: WorkoutPlanDao,
     private val appLanguageUseCase: AppLanguageUseCase,
-    private val workoutFromEntityMapper: Mapper<com.oguzhanaslann.common_data.local.room.entity.WorkoutPlanEntity, Workout>,
-    private val workoutDetailMapper: Mapper<com.oguzhanaslann.common_data.local.room.entity.WorkoutPlanDetail, WorkoutDetail>,
+    private val workoutFromEntityMapper: Mapper<WorkoutPlanEntity, Workout>,
+    private val workoutDetailMapper: Mapper<WorkoutPlanDetail, WorkoutDetail>,
 ) : WorkoutsRepository {
     override fun getWorkouts(first: Int): Flow<List<Workout>> {
         return flow {

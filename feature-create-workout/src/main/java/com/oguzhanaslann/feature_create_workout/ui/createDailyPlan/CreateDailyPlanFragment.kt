@@ -10,10 +10,12 @@ import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import coil.load
+import com.oguzhanaslann.commonui.BundleCompat
 import com.oguzhanaslann.commonui.navController
 import com.oguzhanaslann.commonui.showErrorSnackbar
 import com.oguzhanaslann.commonui.verticalLinearLayoutManaged
@@ -21,6 +23,9 @@ import com.oguzhanaslann.commonui.viewBinding
 import com.oguzhanaslann.feature_create_workout.R
 import com.oguzhanaslann.feature_create_workout.databinding.FragmentCreateDailyPlanBinding
 import com.oguzhanaslann.feature_create_workout.domain.DailyPlan
+import com.oguzhanaslann.feature_create_workout.domain.ExerciseSet
+import com.oguzhanaslann.feature_create_workout.ui.createExercise.EXERCISE_SET_CREATE_REQUEST_KEY
+import com.oguzhanaslann.feature_create_workout.ui.createExercise.EXERCISE_SET_KEY
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -49,7 +54,26 @@ class CreateDailyPlanFragment : Fragment(R.layout.fragment_create_daily_plan) {
     }
 
     private fun onAddExerciseClicked() {
-        // TODO("Not yet implemented")
+        navController.navigate(
+            CreateDailyPlanFragmentDirections.actionCreateDailyPlanFragmentToCreateExerciseFragment()
+        )
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setExerciseSetResultListener()
+    }
+
+    private fun setExerciseSetResultListener() {
+        setFragmentResultListener(
+            requestKey = EXERCISE_SET_CREATE_REQUEST_KEY
+        ) { _, bundle ->
+            val exercise =
+                BundleCompat.getParcelable(bundle, EXERCISE_SET_KEY, ExerciseSet::class.java)
+            exercise?.let {
+                viewModel.addExercise(it)
+            }
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

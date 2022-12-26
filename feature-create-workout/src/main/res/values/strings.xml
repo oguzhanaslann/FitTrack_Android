@@ -22,6 +22,11 @@
     <string name="exercise_empty_text">Exercises cannot be empty</string>
     <string name="daily_plan_title_empty">Daily Plan title cannot be empty</string>
     <string name="add_exercise">Add Exercise</string>
+    <string name="search">Search</string>
+    <string name="set_exercise_details">Set Exercise Details</string>
+    <string name="reps">Reps</string>
+    <string name="confirm">Confirm</string>
+    <string name="sets">Sets</string>
 
 
     <plurals name="exercises">

@@ -2,6 +2,7 @@ package com.oguzhanaslann.commonui
 
 import android.animation.ValueAnimator
 import android.app.Activity
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -33,6 +34,8 @@ import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
+import androidx.annotation.StyleRes
+import androidx.appcompat.app.AlertDialog
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
 import androidx.core.view.drawToBitmap
@@ -50,6 +53,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import kotlinx.coroutines.CoroutineScope
@@ -114,7 +118,7 @@ fun Context.isPackageInstalled(packageName: String): Boolean {
 }
 
 inline fun View.doOnceAfterCompleteDraw(
-    crossinline block: (View) -> Unit
+    crossinline block: (View) -> Unit,
 ) {
     val globalLayoutListener = object : ViewTreeObserver.OnGlobalLayoutListener {
         override fun onGlobalLayout() {
@@ -126,7 +130,7 @@ inline fun View.doOnceAfterCompleteDraw(
 }
 
 inline fun View.doOnceOnHasFocus(
-    crossinline block: () -> Unit
+    crossinline block: () -> Unit,
 ) {
     val globalLayoutListener = object : ViewTreeObserver.OnWindowFocusChangeListener {
         override fun onWindowFocusChanged(hasFocus: Boolean) {
@@ -135,7 +139,6 @@ inline fun View.doOnceOnHasFocus(
                 viewTreeObserver.removeOnWindowFocusChangeListener(this)
             }
         }
-
     }
     viewTreeObserver.addOnWindowFocusChangeListener(globalLayoutListener)
 }
@@ -180,20 +183,20 @@ fun View.show() {
 }
 
 fun RecyclerView.verticalLinearLayoutManaged(
-    reversed: Boolean = false
+    reversed: Boolean = false,
 ) {
     this.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, reversed)
 }
 
 fun RecyclerView.horizontalLinearLayoutManaged(
-    reversed: Boolean = false
+    reversed: Boolean = false,
 ) {
     this.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, reversed)
 }
 
 fun RecyclerView.gridLinearLayoutManaged(
     spanCount: Int,
-    reversed: Boolean = false
+    reversed: Boolean = false,
 ) {
     this.layoutManager =
         GridLayoutManager(this.context, spanCount, LinearLayoutManager.VERTICAL, reversed)
@@ -220,7 +223,7 @@ inline fun ViewPager.doOnPageSelected(crossinline block: (Int) -> Unit) {
         override fun onPageScrolled(
             position: Int,
             positionOffset: Float,
-            positionOffsetPixels: Int
+            positionOffsetPixels: Int,
         ) = Unit
 
         override fun onPageSelected(position: Int) = block(position)
@@ -242,7 +245,7 @@ inline fun ViewPager2.doOnPageSelected(crossinline block: (Int) -> Unit) {
 fun SpannableString.setClickableSpan(
     onClick: (View) -> Unit,
     spanRange: Pair<Int, Int>,
-    spanFlag: Int = Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+    spanFlag: Int = Spanned.SPAN_EXCLUSIVE_EXCLUSIVE,
 ) {
     val clickableSpan = object : ClickableSpan() {
         override fun onClick(p0: View) {
@@ -285,7 +288,7 @@ inline fun EditText.doOnDoneAction(crossinline action: () -> Unit) {
 }
 
 fun Fragment.launchOnViewLifecycleOwnerScope(
-    block: suspend (lifecycleOwner: LifecycleOwner, scope: CoroutineScope) -> Unit
+    block: suspend (lifecycleOwner: LifecycleOwner, scope: CoroutineScope) -> Unit,
 ) {
 
     viewLifecycleOwner.lifecycleScope.launch {
@@ -361,7 +364,6 @@ val Context?.isNightMode: Boolean
         if (this == null) return false
         val uiMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
         return uiMode == Configuration.UI_MODE_NIGHT_YES
-
     }
 
 /**
@@ -513,7 +515,7 @@ fun showCustomSnackbar(
     paddingBottom: Int = 0,
     paddingStart: Int = 0,
     paddingEnd: Int = 0,
-    initViews: (layout: View, Snackbar) -> Unit
+    initViews: (layout: View, Snackbar) -> Unit,
 ): Snackbar {
     val snackbar = Snackbar.make(context, container, "", durationMillis)
     snackbar.view.setBackgroundColor(Color.TRANSPARENT)
@@ -531,7 +533,7 @@ fun showSuccessSnackbar(
     message: String?,
     onDialogDismissed: () -> Unit = {},
     durationMillis: Int = Snackbar.LENGTH_SHORT,
-    container: View
+    container: View,
 ) {
     showCustomSnackbar(
         context = context,
@@ -566,7 +568,7 @@ fun showSuccessSnackbar(
     container: View,
     message: String?,
     onDialogDismissed: () -> Unit = {},
-    durationMillis: Int = Snackbar.LENGTH_SHORT
+    durationMillis: Int = Snackbar.LENGTH_SHORT,
 ) {
     showSuccessSnackbar(
         context = container.context,
@@ -582,7 +584,7 @@ fun showErrorSnackbar(
     message: String?,
     container: View,
     onDialogDismissed: () -> Unit = {},
-    durationMillis: Int = Snackbar.LENGTH_SHORT
+    durationMillis: Int = Snackbar.LENGTH_SHORT,
 ) {
     showCustomSnackbar(
         context = context,
@@ -617,7 +619,7 @@ fun showErrorSnackbar(
     message: String?,
     container: View,
     onDialogDismissed: () -> Unit = {},
-    durationMillis: Int = Snackbar.LENGTH_SHORT
+    durationMillis: Int = Snackbar.LENGTH_SHORT,
 ) {
     showErrorSnackbar(
         message = message,
@@ -646,7 +648,7 @@ val Fragment.navController
 fun TextView.setSpan(
     hint: String,
     spannedText: String,
-    onSpanClicked: (View) -> Unit
+    onSpanClicked: (View) -> Unit,
 ) {
 
     fun String.indexRangeOf(sub: String): Pair<Int, Int>? {
@@ -672,8 +674,7 @@ fun TextView.setSpan(
     text = spannableString
 }
 
-
-fun Uri.copyTo(file : File,context: Context) {
+fun Uri.copyTo(file: File, context: Context) {
     val inputStream = context.contentResolver?.openInputStream(this)
     val outputStream = file.outputStream()
     inputStream?.copyTo(outputStream)
@@ -691,10 +692,10 @@ fun File.toUrlString(): String {
 }
 
 fun Fragment.showDatePicker(
-    constraintBuilder : CalendarConstraints.Builder.() -> Unit = {},
-    onDateSelected : (Long) -> Unit,
-    datePickerBuilder : MaterialDatePicker.Builder<Long>.() -> Unit = {},
-    tag : String = "DATE_PICKER"
+    constraintBuilder: CalendarConstraints.Builder.() -> Unit = {},
+    onDateSelected: (Long) -> Unit,
+    datePickerBuilder: MaterialDatePicker.Builder<Long>.() -> Unit = {},
+    tag: String = "DATE_PICKER",
 ) {
 
     val constraintsBuilder = CalendarConstraints.Builder()
@@ -712,5 +713,42 @@ fun Fragment.showDatePicker(
             }
         }
         .show(childFragmentManager, tag)
+}
 
+fun Context.createCustomDialog(
+    inflater: LayoutInflater,
+    @LayoutRes layoutRes: Int,
+    @StyleRes style: Int = R.style.ThemeOverlay_App_MaterialAlertDialog,
+    root: ViewGroup? = null,
+    initBlock: (View, Dialog) -> Unit,
+    onShow: (Dialog) -> Unit = {},
+): AlertDialog {
+    val layout = inflater.inflate(layoutRes, root)
+    val dialog = MaterialAlertDialogBuilder(this,style)
+        .setView(layout)
+        .create()
+
+    dialog.setOnShowListener {
+        onShow(dialog)
+    }
+
+    initBlock(layout, dialog)
+    return dialog
+}
+
+fun Fragment.createCustomDialog(
+    @LayoutRes layoutRes: Int,
+    root: ViewGroup? = null,
+    @StyleRes style: Int = R.style.ThemeOverlay_App_MaterialAlertDialog,
+    initBlock: (View, Dialog) -> Unit,
+    onShown: (Dialog) -> Unit = {},
+): AlertDialog {
+    return requireContext().createCustomDialog(
+        inflater = layoutInflater,
+        layoutRes = layoutRes,
+        root = root,
+        initBlock = initBlock,
+        onShow = onShown,
+        style = style
+    )
 }

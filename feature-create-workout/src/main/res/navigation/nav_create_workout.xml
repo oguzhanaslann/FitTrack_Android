@@ -22,5 +22,24 @@
         android:id="@+id/createDailyPlanFragment"
         tools:layout="@layout/fragment_create_daily_plan"
         android:name="com.oguzhanaslann.feature_create_workout.ui.createDailyPlan.CreateDailyPlanFragment"
-        android:label="CreateDailyPlanFragment" />
+        android:label="CreateDailyPlanFragment" >
+        <action
+            android:id="@+id/action_createDailyPlanFragment_to_createExerciseFragment"
+            app:destination="@id/createExerciseFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/createExerciseFragment"
+        tools:layout="@layout/fragment_create_exercise"
+        android:name="com.oguzhanaslann.feature_create_workout.ui.createExercise.CreateExerciseFragment"
+        android:label="CreateExerciseFragment" >
+        <action
+            android:id="@+id/action_createExerciseFragment_to_exerciseSetCustomizeDialog"
+            app:destination="@id/exerciseSetCustomizeDialog" />
+    </fragment>
+    <fragment
+        android:id="@+id/exerciseSetCustomizeDialog"
+        tools:layout="@layout/fragment_exercise_set_customize_dialog"
+        android:name="com.oguzhanaslann.feature_create_workout.ui.createExercise.ExerciseSetCustomizeDialog"
+        android:label="ExerciseSetCustomizeDialog" />
 </navigation>
