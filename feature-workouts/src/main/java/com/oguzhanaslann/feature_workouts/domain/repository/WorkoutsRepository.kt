@@ -143,7 +143,8 @@ class WorkoutsRepositoryImpl(
                     isCompleted = false,
                     isActive = true,
                     languageCode = getAppLanguage(),
-                    description = ""
+                    description = "",
+                    calories = dailyPlan.calories
                 )
             }
 

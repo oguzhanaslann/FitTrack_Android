@@ -122,7 +122,7 @@
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{@string/kcal_value_text(viewModel.calories)}"
+                    android:text="@{@string/calories_format_text(viewModel.calories)}"
                     android:textAppearance="?attr/textAppearanceBodyMedium"
                     android:textColor="?attr/colorOnBackground"
                     app:layout_constraintBottom_toBottomOf="@id/textView3"

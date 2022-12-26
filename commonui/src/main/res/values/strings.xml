@@ -20,6 +20,9 @@
 
     <string name="select_date">Select Date</string>
 
+    <string name="calories_format_text" translatable="false">%d Kcal</string>
+
+
     <string name="percentage">{0}%</string>
     <string name="kcal" translatable="false">Kcal</string>
     <plurals name="days">

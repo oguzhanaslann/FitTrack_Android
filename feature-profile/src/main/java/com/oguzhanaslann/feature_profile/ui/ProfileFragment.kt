@@ -240,6 +240,8 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                     Timber.e("Navigation to Workout Detail failed")
                 }
             }
+
+            binding.activePlanLayout.activePlanStartButton.setOnClickListener { binding.activePlanLayout.root.performClick() }
         }
     }
 

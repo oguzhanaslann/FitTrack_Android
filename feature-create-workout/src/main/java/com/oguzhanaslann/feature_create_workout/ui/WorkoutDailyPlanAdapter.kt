@@ -65,7 +65,10 @@ class WorkoutDailyPlanAdapter(
         fun onBind(currentItem: DailyPlanUIModel) = binding.run {
             planName.text = currentItem.name
             caloriesText.text =
-                root.context.getString(R.string.kcal_value_text, currentItem.calories)
+                root.context.getString(
+                    com.oguzhanaslann.commonui.R.string.calories_format_text,
+                    currentItem.calories
+                )
             planExeciseCountChip.text = root.context.resources.getQuantityString(
                 R.plurals.exercises,
                 currentItem.exerciseCount,

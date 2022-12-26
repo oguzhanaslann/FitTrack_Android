@@ -8,7 +8,6 @@
     <string name="publish">Yayınla</string>
     <string name="exercises">Egzersizler</string>
     <string name="add_daily_plan">Günlük plan ekle</string>
-    <string name="kcal_value_text">%d kalori</string>
     <string name="plans">planlar</string>
     <string name="workout_created_successfully">Antrenman başarıyla oluşturuldu</string>
     <string name="workout_description_empty">Antrenman açıklaması boş olamaz</string>

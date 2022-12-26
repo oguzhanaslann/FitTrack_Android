@@ -76,3 +76,16 @@ data class UserDailyPlanWithExercises(
     )
     val exercises : List<UserExerciseEntity>
 )
+
+
+data class UserWorkoutWithDailyPlansAndExercises(
+    @Embedded
+    val userWorkoutPlanEntity: UserWorkoutPlanEntity,
+
+    @Relation(
+        parentColumn = "user_workout_plan_id",
+        entityColumn = "user_workout_plan_id",
+        entity = UserDailyPlanEntity::class
+    )
+    val dailyPlans : List<UserDailyPlanWithExercises>
+)

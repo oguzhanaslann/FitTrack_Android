@@ -39,5 +39,7 @@ data class UserDailyPlanEntity(
     val isActive: Boolean,
 
     @ColumnInfo(name = "language_code")
-    val languageCode: String
+    val languageCode: String,
+
+    val calories: Int,
 )

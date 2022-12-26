@@ -7,6 +7,6 @@
     <string name="workout_detail">Antrenman Ayrıntıları</string>
     <string name="program">Program</string>
     <string name="workout_daily_day">Gün - %d</string>
-    <string name="kcal_value_text">%d kcal</string>
     <string name="description">Açıklama</string>
+    <string name="search">Ara</string>
 </resources>

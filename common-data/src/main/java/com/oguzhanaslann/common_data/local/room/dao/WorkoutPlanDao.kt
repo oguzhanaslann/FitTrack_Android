@@ -98,9 +98,20 @@ interface UserWorkoutPlanDao : BaseDao<UserWorkoutPlanEntity> {
     suspend fun getActiveUserWorkoutPlan(userId: Int): UserWorkoutWithDailyPlans?
 
     @Transaction
+    @Query("SELECT * FROM user_workout_plan WHERE user_workout_plan_id = :id")
+    suspend fun getUserWorkoutWithDailyPlansAndExercisesSuspend(id: String): UserWorkoutWithDailyPlansAndExercises?
+
+    @Transaction
+    @Query("SELECT * FROM user_workout_plan WHERE user_workout_plan_id = :id")
+    fun getUserWorkoutWithDailyPlansAndExercises(id: String): Flow<UserWorkoutWithDailyPlansAndExercises?>
+
+    @Transaction
     @Query("SELECT * FROM user_workout_plan WHERE user_id = :userId AND is_active = 0 AND is_completed = 1")
     suspend fun getPastCompletedUserWorkoutWithDailyPlans(userId: Int): List<UserWorkoutWithDailyPlans>?
 
     @Query("SELECT * FROM user_workout_plan WHERE user_id = :userId AND is_active = 0 AND is_completed = 1")
     suspend fun getPastCompletedUserWorkouts(userId: Int): List<UserWorkoutPlanEntity>?
+
+
+
 }

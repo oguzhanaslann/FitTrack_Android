@@ -33,7 +33,11 @@ class WorkoutProgramAdapter(
         fun onBind(currentItem: DailyPlan, position: Int) = binding.run {
             workoutDayText.text = root.context.getString(R.string.workout_daily_day, (position + 1))
             workoutNameText.text = currentItem.name
-            caloriesText.text = root.context.getString(R.string.kcal_value_text,currentItem.calories)
+            caloriesText.text =
+                root.context.getString(
+                    com.oguzhanaslann.commonui.R.string.calories_format_text,
+                    currentItem.calories
+                )
             root.setOnClickListener {
                 onClick(currentItem)
             }

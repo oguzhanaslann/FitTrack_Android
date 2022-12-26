@@ -8,7 +8,6 @@
     <string name="publish">Publish</string>
     <string name="exercises">Exercises</string>
     <string name="add_daily_plan">Add daily plan</string>
-    <string name="kcal_value_text">%d kcal</string>
     <string name="plans">Plans</string>
     <string name="workout_created_successfully">Workout created successfully</string>
     <string name="workout_description_empty">Workout description cannot be empty</string>

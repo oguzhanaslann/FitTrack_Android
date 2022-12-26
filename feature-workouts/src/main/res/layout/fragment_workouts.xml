@@ -41,7 +41,7 @@
                     android:background="@drawable/background_search_shape"
                     android:drawableStart="@drawable/ic_baseline_search_24"
                     android:drawablePadding="8dp"
-                    android:hint="Search"
+                    android:hint="@string/search"
                     android:inputType="text"
                     android:paddingHorizontal="16dp"
                     android:paddingVertical="6dp"
