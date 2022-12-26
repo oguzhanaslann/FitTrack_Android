@@ -36,7 +36,9 @@ import com.oguzhanaslann.feature_profile.databinding.FragmentProfileBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.text.MessageFormat
 import java.util.*
+import kotlin.math.min
 
 @AndroidEntryPoint
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
@@ -141,16 +143,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         }
 
         binding.logoutContainer.setOnClickListener {
-            AlertDialog.Builder(requireContext())
-                .setTitle(getString(R.string.logout))
-                .setMessage(getString(R.string.are_you_sure_to_logout))
-                .setPositiveButton(getString(R.string.yes)) { _, _ ->
-                    profileViewModel.logout()
-                }
-                .setNegativeButton(getString(R.string.no)) { dialog, _ ->
-                    dialog.dismiss()
-                }
-                .show()
+            showLogoutVerificationDialog()
         }
 
         binding.profileEditPhotoButton.setOnClickListener {
@@ -164,6 +157,19 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             horizontalLinearLayoutManaged()
             adapter = progressPhotoAdapter
         }
+    }
+
+    private fun showLogoutVerificationDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle(getString(R.string.logout))
+            .setMessage(getString(R.string.are_you_sure_to_logout))
+            .setPositiveButton(getString(R.string.yes)) { _, _ ->
+                profileViewModel.logout()
+            }
+            .setNegativeButton(getString(R.string.no)) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 
     private fun subscribeObservers() {
@@ -217,7 +223,23 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         it.activeWorkoutPlan?.let {
             binding.activePlanLayout.activeWorkoutPlanName.text = it.name
             binding.activePlanLayout.activeWorkoutPlanDescription.text = it.description
-            binding.activePlanLayout.activePlanProgress.progress = maxOf(it.progress, 100f)
+            binding.activePlanLayout.activePlanProgress.progress = min(it.progress, 100f)
+            binding.activePlanLayout.activePlanProgressPercentageText.text = MessageFormat.format(
+                getString(com.oguzhanaslann.commonui.R.string.percentage),
+                it.progress.toInt()
+            )
+            binding.activePlanLayout.activePlanImage.load(it.imageUrl) {
+                error(com.oguzhanaslann.commonui.R.drawable.placeholder_thumbnail)
+            }
+
+            binding.activePlanLayout.root.setOnClickListener { _ ->
+                navigator.navigateToWorkoutDetail(
+                    navController = navController,
+                    workoutId = it.id
+                ) {
+                    Timber.e("Navigation to Workout Detail failed")
+                }
+            }
         }
     }
 

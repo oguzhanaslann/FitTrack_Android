@@ -3,6 +3,7 @@ package com.oguzhanaslann.commonui
 import android.net.Uri
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
+import timber.log.Timber
 
 interface Navigator {
     fun navigateToOnBoard(
@@ -24,9 +25,15 @@ interface Navigator {
         onErrorAction: () -> Unit = {}
     )
 
-    // navigate crete workout
     fun navigateToCreateWorkout(
         navController: NavController,
+        navOptions: NavOptions? = null,
+        onErrorAction: () -> Unit = {}
+    )
+
+    fun navigateToWorkoutDetail(
+        navController: NavController,
+        workoutId: String,
         navOptions: NavOptions? = null,
         onErrorAction: () -> Unit = {}
     )
@@ -85,11 +92,12 @@ fun Navigator(): Navigator {
             navController: NavController,
             deeplinkUri: Uri,
             navOptions: NavOptions? = null,
-            onErrorAction: () -> Unit = {},
+            onErrorAction: () -> Unit = {}
         ) {
             try {
                 navController.navigate(deeplinkUri,navOptions)
             } catch (navException: IllegalArgumentException) {
+                Timber.e(navException.message)
                 onErrorAction()
             }
         }
@@ -102,6 +110,21 @@ fun Navigator(): Navigator {
             navigateSafe(
                 navController = navController,
                 deeplinkUri = DeeplinkBuilder.asUri(DeeplinkBuilder.CREATE_WORKOUT_DEEPLINK),
+                navOptions = navOptions,
+                onErrorAction = onErrorAction
+            )
+        }
+
+        override fun navigateToWorkoutDetail(
+            navController: NavController,
+            workoutId: String,
+            navOptions: NavOptions?,
+            onErrorAction: () -> Unit
+        ) {
+            navigateSafe(
+                navController = navController,
+                deeplinkUri = DeeplinkBuilder
+                    .asUri(DeeplinkBuilder.WORKOUT_DETAIL_DEEPLINK, workoutId(workoutId)),
                 navOptions = navOptions,
                 onErrorAction = onErrorAction
             )
