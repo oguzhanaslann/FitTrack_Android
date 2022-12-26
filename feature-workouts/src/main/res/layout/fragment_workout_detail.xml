@@ -22,8 +22,9 @@
                 app:collapsedTitleTextAppearance="?attr/textAppearanceTitleMedium"
                 app:collapsedTitleTextColor="?attr/colorOnPrimary"
                 app:expandedTitleGravity="center"
+                app:contentScrim="?attr/colorPrimary"
                 app:expandedTitleTextAppearance="?attr/textAppearanceTitleMedium"
-                app:expandedTitleTextColor="?attr/colorOnPrimary"
+                app:expandedTitleTextColor="@color/white"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 tools:maxLines="1"
                 tools:title="@tools:sample/lorem/random">
@@ -134,9 +135,9 @@
                             tools:text="30" />
 
                         <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/textview_workout_stat_duration_days"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/days"
                             android:textAppearance="?attr/textAppearanceHeadlineSmall"
                             android:textColor="?attr/colorPrimary" />
                     </LinearLayout>

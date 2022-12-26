@@ -1,4 +1,4 @@
-package com.oguzhanaslann.commonui.data.local.room
+package com.oguzhanaslann.common_data.data.local.room
 
 import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
@@ -96,7 +96,7 @@ class WorkoutDAOTest {
         workoutPlanDao.insert(workoutPlanEntity)
         val workoutPlanFromDb = workoutPlanDao.getWorkoutPlanByName(workoutPlanEntity.name)
 
-        val dailyPlanEntity = createDailyPlanEntity(workoutPlanFromDb!!.id!!)
+        val dailyPlanEntity = createDailyPlanEntity(workoutPlanId = workoutPlanFromDb!!.id!!)
         dailyPlanDao.insert(dailyPlanEntity)
 
         val workoutPlanWithDailyPlans =
@@ -110,7 +110,7 @@ class WorkoutDAOTest {
         workoutPlanDao.insert(workoutPlanEntity)
         val workoutPlanFromDb = workoutPlanDao.getWorkoutPlanByName(workoutPlanEntity.name)
 
-        val dailyPlanEntity = createDailyPlanEntity(workoutPlanFromDb!!.id!!)
+        val dailyPlanEntity = createDailyPlanEntity(workoutPlanId = workoutPlanFromDb!!.id!!)
         dailyPlanDao.insert(dailyPlanEntity)
 
         val dailyPlanFromDb = dailyPlanDao.getDailyPlanByName(dailyPlanEntity.name)

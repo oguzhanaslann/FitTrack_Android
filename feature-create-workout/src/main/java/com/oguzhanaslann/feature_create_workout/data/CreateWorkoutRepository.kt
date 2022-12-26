@@ -11,8 +11,8 @@ import com.oguzhanaslann.common_data.local.room.entity.DailyPlanExercise
 import com.oguzhanaslann.common_data.local.room.entity.ExerciseEntity
 import com.oguzhanaslann.common_data.local.room.entity.ExerciseSet
 import com.oguzhanaslann.common_data.local.room.entity.WorkoutPlanEntity
-import com.oguzhanaslann.feature_create_workout.domain.Exercise
-import com.oguzhanaslann.feature_create_workout.domain.Workout
+import com.oguzhanaslann.common_domain.Exercise
+import com.oguzhanaslann.common_domain.Workout
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow

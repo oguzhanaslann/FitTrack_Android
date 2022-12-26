@@ -17,7 +17,7 @@ data class UserEntity(
     val measurementUnit: String? = null,
     val birthdate: Long? = null,
     @ColumnInfo(name = "active_workout_plan_id")
-    val activeWorkoutPlanId: Int? = null,
+    val activeWorkoutPlanId: String? = null,
 ) {
     @androidx.room.PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "user_id")

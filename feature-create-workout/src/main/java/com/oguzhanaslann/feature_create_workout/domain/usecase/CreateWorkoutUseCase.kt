@@ -3,11 +3,12 @@ package com.oguzhanaslann.feature_create_workout.domain.usecase
 import android.util.Log
 import com.oguzhanaslann.common_domain.AppLanguageUseCase
 import com.oguzhanaslann.feature_create_workout.data.CreateWorkoutRepository
-import com.oguzhanaslann.feature_create_workout.domain.DailyPlan
-import com.oguzhanaslann.feature_create_workout.domain.Exercise
-import com.oguzhanaslann.feature_create_workout.domain.Workout
+import com.oguzhanaslann.common_domain.DailyPlan
+import com.oguzhanaslann.common_domain.Exercise
+import com.oguzhanaslann.common_domain.Workout
 import com.oguzhanaslann.feature_create_workout.domain.WorkoutToBeSaved
 import kotlinx.coroutines.flow.Flow
+import java.util.UUID
 
 class CreateWorkoutUseCase(
     private val appLanguageUseCase: AppLanguageUseCase,
@@ -43,6 +44,7 @@ class CreateWorkoutUseCase(
         } ?: ""
 
         val workout = Workout(
+            id = UUID.randomUUID().toString(),
             name = workoutToBeSaved.name,
             imageUrl = coverPhotoUrl,
             description = workoutToBeSaved.description,
@@ -56,6 +58,7 @@ class CreateWorkoutUseCase(
                 }
 
                 DailyPlan(
+                    id = UUID.randomUUID().toString(),
                     name = it.name,
                     imageUrl = dailyPlanPhotoUrl,
                     calories = it.calories,

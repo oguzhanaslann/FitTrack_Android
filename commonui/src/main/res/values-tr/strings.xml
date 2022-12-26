@@ -1,0 +1,29 @@
+<resources>
+    <string name="email_invalid">E-posta geçerli değil</string>
+    <string name="password_invalid">Şifre geçerli değil</string>
+    <string name="unknown_error">\"bir şeyler yanlış gitti \"</string>
+    <string name="email_or_password_wrong">E-postanız veya şifreniz yanlış</string>
+    <string name="already_taken_email">Bu e-posta zaten alınmış</string>
+    <string name="name">İsim</string>
+    <string name="surname">Soyadı</string>
+    <string name="date_of_birth">Doğum tarihi</string>
+
+    <string name="height">boy uzunluğu</string>
+    <string name="weight">Ağırlık</string>
+    <string name="save">Kayıt etmek</string>
+    <string name="birthdate_empty_error">Lütfen doğum tarihinizi giriniz</string>
+    <string name="height_empty_error">Lütfen seçiniz boyunuzu giriniz</string>
+    <string name="name_empty_error">Lütfen adınızı giriniz</string>
+    <string name="surname_empty_error">\"Lütfen soyadınızı giriniz\"</string>
+    <string name="weight_empty_error">Lütfen kilonuzu seçin</string>
+
+    <string name="select_date">Tarih seç</string>
+    <string name="percentage">%{0}</string>
+
+
+    <plurals name="days">
+        <item quantity="one">gün</item>
+        <item quantity="other">günler</item>
+    </plurals>
+
+</resources>

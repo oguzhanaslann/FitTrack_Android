@@ -1,4 +1,4 @@
-package com.oguzhanaslann.feature_create_workout.domain
+package com.oguzhanaslann.common_domain
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

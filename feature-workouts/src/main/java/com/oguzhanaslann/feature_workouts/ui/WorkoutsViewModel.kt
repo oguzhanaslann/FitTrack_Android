@@ -7,8 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.oguzhanaslann.common.State
 import com.oguzhanaslann.common.mapBy
 import com.oguzhanaslann.common.mapByStateSuspend
+import com.oguzhanaslann.common_domain.Workout
 import com.oguzhanaslann.feature_workouts.domain.mapper.WorkoutSearchItemMapper
-import com.oguzhanaslann.feature_workouts.domain.model.Workout
 import com.oguzhanaslann.feature_workouts.domain.repository.WorkoutsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

@@ -1,0 +1,33 @@
+<resources>
+    <string name="add_cover_photo">Kapak Fotoğrafı Ekle</string>
+    <string name="cover_photo">Kapak fotoğrafı</string>
+    <string name="name_of_the_workout">Antrenmanın adı</string>
+    <string name="title">Başlık</string>
+    <string name="description">Açıklama</string>
+    <string name="enter_description">Açıklamayı girin</string>
+    <string name="publish">Yayınla</string>
+    <string name="exercises">Egzersizler</string>
+    <string name="add_daily_plan">Günlük plan ekle</string>
+    <string name="kcal_value_text">%d kalori</string>
+    <string name="plans">planlar</string>
+    <string name="workout_created_successfully">Antrenman başarıyla oluşturuldu</string>
+    <string name="workout_description_empty">Antrenman açıklaması boş olamaz</string>
+    <string name="workout_title_empty">Antrenman antrenman başlığı boş olamaz</string>
+    <string name="workout_plan_empty">Antrenman Günlük Planı boş olamaz</string>
+    <string name="calories">kalori</string>
+    <string name="calories_empty_text">Kalori 0\'dan büyük olmalıdır</string>
+    <string name="exercise_empty_text">Alıştırmalar boş olamaz</string>
+    <string name="daily_plan_title_empty">Günlük Plan başlığı boş olamaz</string>
+    <string name="add_exercise">Egzersiz Ekle</string>
+    <string name="search">Aramak</string>
+    <string name="set_exercise_details">Egzersiz Ayrıntılarını Ayarla</string>
+    <string name="reps">Tekrar</string>
+    <string name="confirm">Onaylamak</string>
+    <string name="sets">Setler</string>
+
+
+    <plurals name="exercises">
+        <item quantity="one">%d egzersiz</item>
+        <item quantity="other">%d egzersiz</item>
+    </plurals>
+</resources>

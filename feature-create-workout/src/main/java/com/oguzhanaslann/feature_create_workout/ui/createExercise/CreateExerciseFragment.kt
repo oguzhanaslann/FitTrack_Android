@@ -13,7 +13,7 @@ import com.oguzhanaslann.commonui.verticalLinearLayoutManaged
 import com.oguzhanaslann.commonui.viewBinding
 import com.oguzhanaslann.feature_create_workout.R
 import com.oguzhanaslann.feature_create_workout.databinding.FragmentCreateExerciseBinding
-import com.oguzhanaslann.feature_create_workout.domain.Exercise
+import com.oguzhanaslann.common_domain.Exercise
 import dagger.hilt.android.AndroidEntryPoint
 
 const val EXERCISE_SET_CREATE_REQUEST_KEY = "EXERCISE_SET_CREATE_REQUEST_KEY"

@@ -1,0 +1,23 @@
+<resources>
+    <string name="add_photo">yeni fotoğraf ekle</string>
+    <string name="done">Tamamlandı</string>
+    <string name="active_plan">Aktif plan</string>
+    <string name="_continue">Devam et</string>
+    <string name="see_plan">Plana Bakın</string>
+    <string name="old_workout_plans">Eski antrenmanlar</string>
+    <string name="favorite_recipes">Favori Tarifler</string>
+    <string name="weight">Ağırlık</string>
+    <string name="height">Boy uzunluğu</string>
+    <string name="age">Yaş</string>
+    <string name="my_body">Vücudum</string>
+    <string name="notifications">Bildirimler</string>
+    <string name="logout">Çıkış Yap</string>
+    <string name="gallery">Galeri</string>
+    <string name="photo_added_successfully">Fotoğraf başarıyla eklendi</string>
+    <string name="photo_adding_failed">Fotoğraf eklenemedi</string>
+    <string name="profile_info_updated_description">Profil bilgileri güncellendi</string>
+    <string name="profile_edit">Profilinizi düzenleyin</string>
+    <string name="yes">Evet</string>
+    <string name="no">Numara</string>
+    <string name="are_you_sure_to_logout">Çıkış yapacağından emin misin\?</string>
+</resources>

@@ -1,13 +1,14 @@
-package com.oguzhanaslann.commonui.data.local.room
+package com.oguzhanaslann.common_data.data.local.room
 
 import androidx.annotation.VisibleForTesting
-import com.oguzhanaslann.commonui.data.local.room.entity.*
 
 @VisibleForTesting
 fun createWorkoutPlanEntity(
+    id: String = "1",
     name: String = "Workout Plan 1",
     languageCode: String = "en",
 ) = com.oguzhanaslann.common_data.local.room.entity.WorkoutPlanEntity(
+    id = id,
     name = name,
     imageUrl = "",
     description = "Lorem ipsum",
@@ -16,7 +17,7 @@ fun createWorkoutPlanEntity(
 
 @VisibleForTesting
 fun createRecipeEntity(
-    title : String = "Recipe 1",
+    title: String = "Recipe 1",
     languageCode: String = "en",
 ) = com.oguzhanaslann.common_data.local.room.entity.RecipeEntity(
     title = title,
@@ -49,10 +50,12 @@ fun createTagEntity() = com.oguzhanaslann.common_data.local.room.entity.TagEntit
 
 @VisibleForTesting
 fun createDailyPlanEntity(
-    workoutPlanId: Int,
-    name : String = "Daily Plan 1",
+    id : String = "1",
+    workoutPlanId: String,
+    name: String = "Daily Plan 1",
     languageCode: String = "en",
 ) = com.oguzhanaslann.common_data.local.room.entity.DailyPlanEntity(
+    id = id,
     name = "Daily Plan 1",
     imageUrl = "",
     workoutPlanId = workoutPlanId,
@@ -62,9 +65,11 @@ fun createDailyPlanEntity(
 
 @VisibleForTesting
 fun createExerciseEntity(
+    id: String = "1",
     name: String = "Exercise 1",
     languageCode: String = "en",
 ) = com.oguzhanaslann.common_data.local.room.entity.ExerciseEntity(
+    id = id,
     name = name,
     imageUrl = "",
     description = "Lorem ipsum",
@@ -81,11 +86,13 @@ fun createExerciseSet() = com.oguzhanaslann.common_data.local.room.entity.Exerci
 
 @VisibleForTesting
 fun createUserWorkoutPlanEntity(
+    id : String = "1",
     userId: Int,
     languageCode: String = "en",
     isCompleted: Boolean = false,
     isActive: Boolean = false,
 ) = com.oguzhanaslann.common_data.local.room.entity.UserWorkoutPlanEntity(
+    id = id,
     name = "",
     imageUrl = "",
     description = "",
@@ -99,7 +106,8 @@ fun createUserWorkoutPlanEntity(
 
 @VisibleForTesting
 fun createUserDailyPlanEntity(
-    activeWorkoutPlanId: Int,
+    id : String = "1",
+    activeWorkoutPlanId: String,
     userId: Int,
     languageCode: String = "en",
     isCompleted: Boolean = false,
@@ -107,6 +115,7 @@ fun createUserDailyPlanEntity(
     startDate: Long = 0,
     endDate: Long = 0,
 ) = com.oguzhanaslann.common_data.local.room.entity.UserDailyPlanEntity(
+    id = id,
     activeWorkoutPlanId = activeWorkoutPlanId,
     name = "",
     imageUrl = "",
@@ -122,10 +131,12 @@ fun createUserDailyPlanEntity(
 
 @VisibleForTesting
 fun createUserExerciseEntity(
-    activeDailyPlanId: Int,
+    id : String = "1",
+    activeDailyPlanId: String,
     languageCode: String = "en",
     isCompleted: Boolean = false,
 ) = com.oguzhanaslann.common_data.local.room.entity.UserExerciseEntity(
+    id = id,
     name = "",
     imageUrl = "",
     description = "",

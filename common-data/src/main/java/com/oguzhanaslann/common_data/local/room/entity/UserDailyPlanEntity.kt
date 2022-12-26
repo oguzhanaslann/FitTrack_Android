@@ -11,7 +11,7 @@ data class UserDailyPlanEntity(
     var id: String,
 
     @ColumnInfo(name = "user_workout_plan_id")
-    val activeWorkoutPlanId: Int,
+    val activeWorkoutPlanId: String,
 
     @ColumnInfo(name = "name")
     val name: String,

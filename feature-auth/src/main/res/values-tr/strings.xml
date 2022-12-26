@@ -1,0 +1,15 @@
+<resources>
+    <string name="sign_in">Kayıt olmak</string>
+    <string name="sign_up">Üye olmak</string>
+    <string name="welcome_back">Tekrar hoşgeldiniz</string>
+    <string name="join_us">Bize katılın</string>
+    <string name="email">E-posta</string>
+    <string name="password">Parola</string>
+    <string name="don_t_have_an_account_sign_up">Hesabınız yok mu\? Üye olmak</string>
+    <string name="don_t_have_an_account_sign_up_span_text">Üye olmak</string>
+    <string name="privacy_policy">Gizlilik Politikası</string>
+    <string name="user_agreement">Kullanım Şartları</string>
+    <string name="tell_us_about_yourself">Bize kendinden bahset</string>
+    <string name="enter_your_profile_information">Profil bilgilerinizi girin</string>
+    <string name="sign_in_instead">Bunun yerine oturum açın</string>
+</resources>

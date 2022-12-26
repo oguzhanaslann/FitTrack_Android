@@ -1,4 +1,4 @@
-package com.oguzhanaslann.commonui.data.local.room
+package com.oguzhanaslann.common_data.data.local.room
 
 import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
@@ -16,7 +16,6 @@ import com.oguzhanaslann.common_data.local.room.dao.UserWorkoutPlanDao
 import com.oguzhanaslann.common_data.local.room.dao.WeightRecordDao
 import com.oguzhanaslann.common_data.local.room.dao.WorkoutPlanDao
 import com.oguzhanaslann.common_data.local.room.entity.UserEntity
-import com.oguzhanaslann.common_data.local.room.entity.UserFavoriteRecipeCrossRef
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.After
@@ -36,14 +35,14 @@ class UserDAOTest {
 
     lateinit var db: com.oguzhanaslann.common_data.local.room.FitTrackDatabase
 
-    lateinit var userDao: com.oguzhanaslann.common_data.local.room.dao.UserDao
-    lateinit var workoutPlanDao: com.oguzhanaslann.common_data.local.room.dao.WorkoutPlanDao
-    lateinit var progressionPhotoDao: com.oguzhanaslann.common_data.local.room.dao.ProgressionPhotoDao
-    lateinit var recipeDao: com.oguzhanaslann.common_data.local.room.dao.RecipeDao
-    lateinit var userFavoriteRecipeDao: com.oguzhanaslann.common_data.local.room.dao.UserFavoriteRecipeCrossRefDao
-    lateinit var weightRecordDao: com.oguzhanaslann.common_data.local.room.dao.WeightRecordDao
-    lateinit var userWorkoutPlanDao: com.oguzhanaslann.common_data.local.room.dao.UserWorkoutPlanDao
-    lateinit var userDailyPlanDao: com.oguzhanaslann.common_data.local.room.dao.UserDailyPlanDao
+    lateinit var userDao: UserDao
+    lateinit var workoutPlanDao: WorkoutPlanDao
+    lateinit var progressionPhotoDao: ProgressionPhotoDao
+    lateinit var recipeDao: RecipeDao
+    lateinit var userFavoriteRecipeDao: UserFavoriteRecipeCrossRefDao
+    lateinit var weightRecordDao: WeightRecordDao
+    lateinit var userWorkoutPlanDao: UserWorkoutPlanDao
+    lateinit var userDailyPlanDao: UserDailyPlanDao
 
     @Before
     fun setup() {
@@ -70,7 +69,7 @@ class UserDAOTest {
     @Test
     fun test_user_getUserByEmail_success() = runTest {
         val user =
-            com.oguzhanaslann.common_data.local.room.entity.UserEntity("sample@gmail.com", "123456")
+            UserEntity("sample@gmail.com", "123456")
         userDao.insert(user)
         val userFromDB = userDao.getUserByEmail("sample@gmail.com")
         assertThat(userFromDB).isEqualTo(user)
@@ -79,7 +78,7 @@ class UserDAOTest {
     @Test
     fun test_user_getUserByEmail_fail() = runTest {
         val user =
-            com.oguzhanaslann.common_data.local.room.entity.UserEntity("sample@gmail.com", "123456")
+            UserEntity("sample@gmail.com", "123456")
         userDao.insert(user)
         val userFromDB = userDao.getUserByEmail("other@email.com")
         assertThat(userFromDB).isNotEqualTo(user)
@@ -88,7 +87,7 @@ class UserDAOTest {
     @Test
     fun test_user_get_user_with_workout_plan_success() = runTest {
         val user =
-            com.oguzhanaslann.common_data.local.room.entity.UserEntity("sample@gmail.com", "123456")
+            UserEntity("sample@gmail.com", "123456")
         userDao.insert(user)
 
         val workoutPlanEntity = createWorkoutPlanEntity()
@@ -108,7 +107,7 @@ class UserDAOTest {
     @Test
     fun test_user_get_user_with_favorite_recipes_success() = runTest {
         val user =
-            com.oguzhanaslann.common_data.local.room.entity.UserEntity("sample@gmail.com", "123456")
+            UserEntity("sample@gmail.com", "123456")
         userDao.insert(user)
 
         val userFromDb = userDao.getUserByEmail(user.email)
@@ -132,7 +131,7 @@ class UserDAOTest {
     @Test
     fun test_user_get_user_with_favorite_recipes_empty() = runTest {
         val user =
-            com.oguzhanaslann.common_data.local.room.entity.UserEntity("sample@gmail.com", "123456")
+            UserEntity("sample@gmail.com", "123456")
         userDao.insert(user)
         val userFromDb = userDao.getUserByEmail(user.email)
         val userWithFavoriteRecipes = userDao.getUserWithFavoriteRecipes(userFromDb!!.id!!)
@@ -143,7 +142,7 @@ class UserDAOTest {
     @Test
     fun test_user_getUserProfile_success() = runTest {
         val user =
-            com.oguzhanaslann.common_data.local.room.entity.UserEntity("sample@gmail.com", "123456")
+            UserEntity("sample@gmail.com", "123456")
         userDao.insert(user)
 
         val workoutPlanEntity = createWorkoutPlanEntity()
@@ -173,13 +172,18 @@ class UserDAOTest {
         val weightRecordEntity = createWeightRecordEntity(userFromDb.id!!)
         weightRecordDao.insert(weightRecordEntity)
 
-        val plan = createUserWorkoutPlanEntity(userFromDb.id!!)
+        val plan = createUserWorkoutPlanEntity(
+            userId = userFromDb.id!!
+        )
         userWorkoutPlanDao.insert(plan)
         val plansFromDb = userWorkoutPlanDao.getUserWorkoutPlanByUserId(userFromDb.id!!)
         assertThat(plansFromDb).hasSize(1)
         val planFromDb = plansFromDb.first()
 
-        val dailyPlan = createUserDailyPlanEntity(planFromDb.id!!, userFromDb.id!!)
+        val dailyPlan = createUserDailyPlanEntity(
+            activeWorkoutPlanId = planFromDb.id!!,
+            userId = userFromDb.id!!
+        )
         userDailyPlanDao.insert(dailyPlan)
 
         val userProfile = userDao.getUserProfileSuspend(userFromDb.id!!)

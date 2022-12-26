@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.oguzhanaslann.feature_create_workout.databinding.ItemExerciseSearchLayoutBinding
-import com.oguzhanaslann.feature_create_workout.domain.Exercise
+import com.oguzhanaslann.common_domain.Exercise
 
 class ExerciseSearchAdapter(
     private val onExerciseClicked: (Exercise) -> Unit = {}

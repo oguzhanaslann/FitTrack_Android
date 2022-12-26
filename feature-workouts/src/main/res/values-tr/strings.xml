@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="workout">Antrenman</string>
+    <string name="see_more">Daha Fazla Gör</string>
+    <string name="an_error_occurred">Bir Hata Oluştu</string>
+    <string name="workout_detail_transition_name" translatable="false">book_list_transition_name</string>
+    <string name="workout_detail">Antrenman Ayrıntıları</string>
+    <string name="program">Program</string>
+    <string name="workout_daily_day">Gün - %d</string>
+    <string name="kcal_value_text">%d kcal</string>
+    <string name="description">Açıklama</string>
+</resources>

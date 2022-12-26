@@ -19,7 +19,7 @@ interface UserDailyPlanDao : BaseDao<UserDailyPlanEntity> {
     """
     )
     suspend fun getUserDailyPlanByUserWorkoutPlanIdAndNameAndOrder(
-        userWorkoutPlanId: Int,
+        userWorkoutPlanId: String,
         name: String,
         order: Int
     ): UserDailyPlanEntity?

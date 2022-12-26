@@ -21,7 +21,7 @@
         <deepLink
             android:id="@+id/deepLink"
             android:autoVerify="true"
-            app:uri="https://com.oguzhanaslann.fittrack/workoutDetail" />
+            app:uri="https://com.oguzhanaslann.fittrack/workoutDetail/?workoutId={workoutId}" />
         <argument
             android:name="workoutId"
             app:argType="string" />

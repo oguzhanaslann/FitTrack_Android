@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.oguzhanaslann.common.State
-import com.oguzhanaslann.feature_create_workout.domain.Exercise
-import com.oguzhanaslann.feature_create_workout.domain.ExerciseSet
+import com.oguzhanaslann.common_domain.Exercise
+import com.oguzhanaslann.common_domain.ExerciseSet
 import com.oguzhanaslann.feature_create_workout.domain.usecase.CreateWorkoutUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

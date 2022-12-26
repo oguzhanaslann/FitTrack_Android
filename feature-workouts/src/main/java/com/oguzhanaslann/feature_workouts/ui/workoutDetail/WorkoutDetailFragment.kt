@@ -3,14 +3,17 @@ package com.oguzhanaslann.feature_workouts.ui.workoutDetail
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.children
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
+import coil.load
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.oguzhanaslann.common.onSuccess
+import com.oguzhanaslann.common_domain.DailyPlan
 import com.oguzhanaslann.commonui.navController
 import com.oguzhanaslann.commonui.verticalLinearLayoutManaged
 import com.oguzhanaslann.commonui.viewBinding
@@ -35,7 +38,7 @@ class WorkoutDetailFragment : Fragment(R.layout.fragment_workout_detail) {
         )
     }
 
-    private fun onDailyPlanClick(dailyPlanShort: DailyPlanShort) {
+    private fun onDailyPlanClick(dailyPlanShort: DailyPlan) {
         // TODO("Not yet implemented")
     }
 
@@ -52,7 +55,7 @@ class WorkoutDetailFragment : Fragment(R.layout.fragment_workout_detail) {
         }
 
         binding.startWorkoutButton.setOnClickListener {
-            // TODO("Not yet implemented")
+            viewModel.onStartWorkoutRequested(args.workoutId)
         }
 
         binding.rvPrograms.apply {
@@ -63,15 +66,24 @@ class WorkoutDetailFragment : Fragment(R.layout.fragment_workout_detail) {
 
     private fun subscribeObservers() {
         lifecycleScope.launch {
-            viewModel.workoutDetail
+            viewModel.workoutDetailState
                 .flowWithLifecycle(lifecycle)
                 .collectLatest {
-                    it.onSuccess {
+                    binding.startWorkoutButton.isVisible = !it.isActive
+                    it.workoutDetail.onSuccess {
                         binding.toolbar.title = it.name
+                        binding.toolbarBookListImage.load(it.imageUrl) {
+                            error(com.oguzhanaslann.commonui.R.drawable.placeholder_thumbnail)
+                        }
                         binding.textviewWorkoutDescription.text = it.description
                         programAdapter.submitList(it.programs)
                         setUpChipsBy(it)
                         binding.textviewWorkoutStatDuration.text = it.programs.size.toString()
+                        binding.textviewWorkoutStatDurationDays.text = binding.root.context.resources.getQuantityString(
+                            com.oguzhanaslann.commonui.R.plurals.days,
+                            it.programs.size,
+                            it.programs.size
+                        )
                         binding.textviewWorkoutStatCalories.text = it.calories.toString()
                     }
                 }

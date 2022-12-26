@@ -1,6 +1,7 @@
-package com.oguzhanaslann.feature_create_workout.domain
+package com.oguzhanaslann.common_domain
 
 data class Workout(
+    val id : String,
     val name: String,
     val imageUrl: String,
     val description: String,

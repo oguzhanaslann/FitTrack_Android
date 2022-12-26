@@ -32,15 +32,15 @@ interface WorkoutPlanDao : BaseDao<WorkoutPlanEntity> {
 
     @Transaction
     @Query("SELECT * FROM workout_plan WHERE workout_plan_id = :id")
-    suspend fun getWorkoutPlanWithTags(id: Int): WorkoutPlanWithTags?
+    suspend fun getWorkoutPlanWithTags(id: String): WorkoutPlanWithTags?
 
     @Transaction
     @Query("SELECT * FROM workout_plan WHERE workout_plan_id = :id")
-    suspend fun getWorkoutPlanWithDailyPlans(id: Int): WorkoutPlanWithDailyPlans?
+    suspend fun getWorkoutPlanWithDailyPlans(id: String): WorkoutPlanWithDailyPlans?
 
     @Transaction
     @Query("SELECT * FROM workout_plan WHERE workout_plan_id = :id")
-    suspend fun getWorkoutPlanDetail(id: Int): WorkoutPlanDetail?
+    suspend fun getWorkoutPlanDetail(id: String): WorkoutPlanDetail?
 
     // getWorkoutPlanDetail flow
     @Transaction
@@ -87,11 +87,11 @@ interface UserWorkoutPlanDao : BaseDao<UserWorkoutPlanEntity> {
     suspend fun getUserWorkoutPlanByUserId(userId: Int): List<UserWorkoutPlanEntity>
 
     @Query("SELECT * FROM user_workout_plan WHERE user_workout_plan_id = :id")
-    suspend fun getUserWorkoutPlanById(id: Int): UserWorkoutPlanEntity?
+    suspend fun getUserWorkoutPlanById(id: String): UserWorkoutPlanEntity?
 
     @Transaction
     @Query("SELECT * FROM user_workout_plan WHERE user_workout_plan_id = :id")
-    suspend fun getUserWorkoutPlanWithWorkoutPlan(id: Int): UserWorkoutWithDailyPlans?
+    suspend fun getUserWorkoutPlanWithWorkoutPlan(id: String): UserWorkoutWithDailyPlans?
 
     @Transaction
     @Query("SELECT * FROM user_workout_plan WHERE user_id = :userId AND is_active = 1")

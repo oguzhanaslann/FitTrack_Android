@@ -15,6 +15,9 @@ val State<*>.isLoading: Boolean
 val State<*>.isSuccess: Boolean
     get() = this is State.Success
 
+val State<*>.isError: Boolean
+    get() = this is State.Error
+
 val State<*>.isFinalized: Boolean
     get() = (this != State.Loading || this != State.Initial)
 
@@ -32,6 +35,17 @@ inline fun <T> State<T>.onLoading(crossinline block: () -> Unit): State<T> {
 
 inline fun <T> State<T>.onInitial(crossinline block: () -> Unit): State<T> {
     if (this is State.Initial) {
+        block()
+    }
+    return this
+}
+
+//onAny ( selector: (State<T>) -> Boolean, action: (T) -> Unit): T
+inline fun <T> State<T>.onAny(
+    crossinline selector: (State<T>) -> Boolean,
+    crossinline block: () -> Unit
+): State<T> {
+    if (selector(this)) {
         block()
     }
     return this

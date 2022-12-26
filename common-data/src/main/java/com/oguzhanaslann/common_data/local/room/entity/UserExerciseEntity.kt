@@ -9,7 +9,7 @@ data class UserExerciseEntity(
     @ColumnInfo(name = "user_exercise_id")
     var id: String,
     @ColumnInfo(name = "user_daily_plan_id")
-    val activeDailyPlanId: Int,
+    val activeDailyPlanId: String,
     val name: String,
     val imageUrl: String,
     val description: String,

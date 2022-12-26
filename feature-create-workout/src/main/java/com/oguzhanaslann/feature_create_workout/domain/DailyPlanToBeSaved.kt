@@ -2,6 +2,7 @@ package com.oguzhanaslann.feature_create_workout.domain
 
 import android.net.Uri
 import android.os.Parcelable
+import com.oguzhanaslann.common_domain.ExerciseSet
 import kotlinx.parcelize.Parcelize
 
 @Parcelize

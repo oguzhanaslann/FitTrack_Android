@@ -25,6 +25,10 @@ interface UserDao : BaseDao<UserEntity> {
     @Query("SELECT * FROM user WHERE user_id = :id")
     fun getUserById(id: Int): Flow<UserEntity>
 
+    // get user active workout plan id
+    @Query("SELECT active_workout_plan_id FROM user WHERE user_id = :userId")
+    suspend fun getUserActiveWorkoutPlanId(userId: Int): String?
+
 
     @Query("DELETE FROM user")
     suspend fun clear()
@@ -36,7 +40,7 @@ interface UserDao : BaseDao<UserEntity> {
 
     // set user active workout plan id
     @Query("UPDATE user SET active_workout_plan_id = :workoutPlanId WHERE user_id = :userId")
-    suspend fun setActiveWorkoutPlanId(userId: Int, workoutPlanId: Int)
+    suspend fun setActiveWorkoutPlanId(userId: Int, workoutPlanId: String)
 
     //UserWithFavoriteRecipes
     @Transaction

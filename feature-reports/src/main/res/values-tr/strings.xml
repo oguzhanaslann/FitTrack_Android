@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="select_a_date">Bir tarih seçin</string>
+    <string name="we_couldn_t_load_your_report">Raporunuzu yükleyemedik</string>
+    <string name="no_report_found">Rapor bulunamadı</string>
+</resources>

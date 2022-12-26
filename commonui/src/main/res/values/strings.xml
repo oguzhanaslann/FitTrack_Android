@@ -19,4 +19,11 @@
     <string name="weight_empty_error">Please select your weight</string>
 
     <string name="select_date">Select Date</string>
+
+    <string name="percentage">{0}%</string>
+    <string name="kcal" translatable="false">Kcal</string>
+    <plurals name="days">
+        <item quantity="one">day</item>
+        <item quantity="other">days</item>
+    </plurals>
 </resources>

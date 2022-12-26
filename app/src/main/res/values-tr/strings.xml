@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">FitTrack</string>
+    <string name="action_settings">Ayarlar</string>
+    <string name="next">Sonraki</string>
+    <string name="previous">Öncesi</string>
+    <string name="home">Ev</string>
+    <string name="workout">Egzersiz yapmak</string>
+    <string name="reports">Raporlar</string>
+    <string name="profile">Profil</string>
+    <string name="create_workout">Antrenman Oluştur</string>
+</resources>

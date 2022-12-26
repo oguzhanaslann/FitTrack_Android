@@ -1,0 +1,12 @@
+<resources>
+    <string name="onboard_page_title_1">iyi sağlık</string>
+    <string name="onboard_page_description_1">Sağlıklı olmak her şeydir, sağlık yoksa hiçbir şey değildir. Öyleyse neden yapmıyoruz</string>
+    <string name="onboard_page_title_2">Güçlü olmak</string>
+    <string name="onboard_page_description_2">Fiziksel olarak formda ve sağlıklı olmak için her gün 30 dakika vücut geliştirme yapın.</string>
+    <string name="onboard_page_title_3">güzel bir vücuda sahip olmak</string>
+    <string name="onboard_page_description_3">Egzersiz kraldır. Beslenme kraliçedir. Onları bir araya getirin ve bir krallığınız olsun.</string>
+    <string name="onboard_go_next">Sonraki</string>
+    <string name="onboard_start">Başlamak</string>
+    <string name="please_try_again">Lütfen tekrar deneyin</string>
+    <string name="figure">Figür</string>
+</resources>

@@ -6,7 +6,7 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.oguzhanaslann.common.orZero
 import com.oguzhanaslann.feature_create_workout.domain.DailyPlanToBeSaved
-import com.oguzhanaslann.feature_create_workout.domain.ExerciseSet
+import com.oguzhanaslann.common_domain.ExerciseSet
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow

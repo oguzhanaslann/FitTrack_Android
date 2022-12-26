@@ -1,4 +1,4 @@
-package com.oguzhanaslann.commonui.data.local.room
+package com.oguzhanaslann.common_data.data.local.room
 
 import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
@@ -7,9 +7,6 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.google.common.truth.Truth.assertThat
-import com.oguzhanaslann.common_data.local.room.dao.UserDailyPlanDao
-import com.oguzhanaslann.common_data.local.room.dao.UserExerciseDao
-import com.oguzhanaslann.common_data.local.room.dao.UserWorkoutPlanDao
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.After
@@ -60,14 +57,17 @@ class UserWorkoutDaosTest {
     @Test
     fun test_active_workout_with_daily_plans() = runTest {
         val anyUserId = 1001010
-        val plan = createUserWorkoutPlanEntity(anyUserId)
+        val plan = createUserWorkoutPlanEntity(userId = anyUserId)
 
         userWorkoutPlanDao.insert(plan)
         val plansFromDb = userWorkoutPlanDao.getUserWorkoutPlanByUserId(anyUserId)
         assertThat(plansFromDb).hasSize(1)
         val planFromDb = plansFromDb.first()
 
-        val dailyPlan = createUserDailyPlanEntity(planFromDb.id!!, anyUserId)
+        val dailyPlan = createUserDailyPlanEntity(
+            activeWorkoutPlanId = planFromDb.id!!,
+            userId = anyUserId
+        )
 
         userDailyPlanDao.insert(dailyPlan)
 
@@ -115,7 +115,7 @@ class UserWorkoutDaosTest {
     @Test
     fun test_user_workout_plans() = runTest {
         val anyUserId = 1001010
-        val plan = createUserWorkoutPlanEntity(anyUserId)
+        val plan = createUserWorkoutPlanEntity(userId = anyUserId)
 
         userWorkoutPlanDao.insert(plan)
         val plansFromDb = userWorkoutPlanDao.getUserWorkoutPlanByUserId(anyUserId)

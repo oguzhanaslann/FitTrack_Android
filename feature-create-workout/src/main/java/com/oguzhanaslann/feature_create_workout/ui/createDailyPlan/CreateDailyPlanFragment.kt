@@ -23,7 +23,7 @@ import com.oguzhanaslann.commonui.viewBinding
 import com.oguzhanaslann.feature_create_workout.R
 import com.oguzhanaslann.feature_create_workout.databinding.FragmentCreateDailyPlanBinding
 import com.oguzhanaslann.feature_create_workout.domain.DailyPlanToBeSaved
-import com.oguzhanaslann.feature_create_workout.domain.ExerciseSet
+import com.oguzhanaslann.common_domain.ExerciseSet
 import com.oguzhanaslann.feature_create_workout.ui.createExercise.EXERCISE_SET_CREATE_REQUEST_KEY
 import com.oguzhanaslann.feature_create_workout.ui.createExercise.EXERCISE_SET_KEY
 import dagger.hilt.android.AndroidEntryPoint
