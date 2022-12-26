@@ -10,7 +10,7 @@ import androidx.room.Entity
 )
 data class WorkoutPlanTagCrossRef(
     @ColumnInfo(name = "workout_plan_id")
-    val workoutPlanId: Int,
+    val workoutPlanId: String,
     @ColumnInfo(name = "tag_name")
     val tagName: String
 )

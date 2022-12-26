@@ -17,6 +17,7 @@ import com.oguzhanaslann.commonui.viewBinding
 import com.oguzhanaslann.feature_workouts.R
 import com.oguzhanaslann.feature_workouts.databinding.FragmentWorkoutDetailBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -64,7 +65,7 @@ class WorkoutDetailFragment : Fragment(R.layout.fragment_workout_detail) {
         lifecycleScope.launch {
             viewModel.workoutDetail
                 .flowWithLifecycle(lifecycle)
-                .collect {
+                .collectLatest {
                     it.onSuccess {
                         binding.toolbar.title = it.name
                         binding.textviewWorkoutDescription.text = it.description

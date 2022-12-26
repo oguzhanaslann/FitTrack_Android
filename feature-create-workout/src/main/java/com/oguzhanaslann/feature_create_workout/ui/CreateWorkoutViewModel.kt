@@ -5,7 +5,9 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.oguzhanaslann.feature_create_workout.domain.DailyPlan
+import com.oguzhanaslann.feature_create_workout.domain.DailyPlanToBeSaved
+import com.oguzhanaslann.feature_create_workout.domain.WorkoutToBeSaved
+import com.oguzhanaslann.feature_create_workout.domain.usecase.CreateWorkoutUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,14 +22,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CreateWorkoutViewModel @Inject constructor(
-
+    private val createWorkoutUseCase: CreateWorkoutUseCase,
 ) : ViewModel() {
 
     private val _workoutTitle = MutableStateFlow<String>("")
     private val _workoutDescription = MutableStateFlow<String>("")
     private val _coverPhoto = MutableStateFlow<Uri?>(null)
 
-    private val addPlans = MutableStateFlow<List<DailyPlan>>(emptyList())
+    private val addPlans = MutableStateFlow<List<DailyPlanToBeSaved>>(emptyList())
 
     private val _userDailyPlans = addPlans.map {
         it.map { dailyPlan ->
@@ -96,7 +98,14 @@ class CreateWorkoutViewModel @Inject constructor(
     }
 
     private suspend fun createWorkout() {
-
+        createWorkoutUseCase.saveWorkout(
+            workoutToBeSaved = WorkoutToBeSaved(
+                name = _workoutTitle.value,
+                description = _workoutDescription.value,
+                coverPhoto = _coverPhoto.value,
+                plan = addPlans.value
+            )
+        )
         _createWorkoutEventsChannel.send(CreateWorkoutEvent.WorkoutCreated)
     }
 
@@ -108,7 +117,7 @@ class CreateWorkoutViewModel @Inject constructor(
         return _workoutDescription.value
     }
 
-    fun onDailyPlanCreated(plan: DailyPlan) {
+    fun onDailyPlanCreated(plan: DailyPlanToBeSaved) {
         addPlans.value = addPlans.value + plan
     }
 

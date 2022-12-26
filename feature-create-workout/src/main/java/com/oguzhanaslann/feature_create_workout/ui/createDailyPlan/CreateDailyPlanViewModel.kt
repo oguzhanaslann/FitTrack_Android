@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.oguzhanaslann.common.orZero
-import com.oguzhanaslann.feature_create_workout.domain.DailyPlan
+import com.oguzhanaslann.feature_create_workout.domain.DailyPlanToBeSaved
 import com.oguzhanaslann.feature_create_workout.domain.ExerciseSet
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -111,10 +111,10 @@ class CreateDailyPlanViewModel @Inject constructor(
         }
     }
 
-    private fun createDailyPlanInstance(): DailyPlan {
-        return DailyPlan(
+    private fun createDailyPlanInstance(): DailyPlanToBeSaved {
+        return DailyPlanToBeSaved(
             name = _planTitle.value,
-            imageUrl = _coverPhoto.value,
+            imageUri = _coverPhoto.value,
             calories = _calories.value,
             exerciseList = _exerciseSet.value
         )

@@ -1,7 +1,7 @@
 package com.oguzhanaslann.feature_workouts.ui.workoutDetail
 
 data class WorkoutDetail(
-    val id: Int,
+    val id: String,
     val name: String,
     val imageUrl: String,
     val calories: Int,

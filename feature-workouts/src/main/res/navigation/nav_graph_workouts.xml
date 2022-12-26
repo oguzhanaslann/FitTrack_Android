@@ -24,6 +24,6 @@
             app:uri="https://com.oguzhanaslann.fittrack/workoutDetail" />
         <argument
             android:name="workoutId"
-            app:argType="integer" />
+            app:argType="string" />
     </fragment>
 </navigation>

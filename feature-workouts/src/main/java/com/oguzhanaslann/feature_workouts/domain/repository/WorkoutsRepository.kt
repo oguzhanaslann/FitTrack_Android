@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.map
 interface WorkoutsRepository {
     fun getWorkouts(first: Int): Flow<List<Workout>>
     fun searchWorkouts(query: String): Flow<List<Workout>>
-    fun getWorkoutDetail(id: Int): Flow<WorkoutDetail>
+    fun getWorkoutDetail(id: String): Flow<WorkoutDetail>
 }
 
 class WorkoutsRepositoryImpl(
@@ -55,7 +55,7 @@ class WorkoutsRepositoryImpl(
         }
     }
 
-    override fun getWorkoutDetail(id: Int): Flow<WorkoutDetail> {
+    override fun getWorkoutDetail(id: String): Flow<WorkoutDetail> {
         return flow {
             val workoutPlanEntity = workoutPlanDao.getWorkoutPlanDetailStream(id = id)
             emitAll(

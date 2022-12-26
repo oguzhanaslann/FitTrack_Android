@@ -6,6 +6,10 @@ import androidx.room.Entity
 @Entity(tableName = "user_daily_plan")
 data class UserDailyPlanEntity(
 
+    @androidx.room.PrimaryKey
+    @ColumnInfo(name = "user_daily_plan_id")
+    var id: String,
+
     @ColumnInfo(name = "user_workout_plan_id")
     val activeWorkoutPlanId: Int,
 
@@ -36,8 +40,4 @@ data class UserDailyPlanEntity(
 
     @ColumnInfo(name = "language_code")
     val languageCode: String
-) {
-    @androidx.room.PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "user_daily_plan_id")
-    var id: Int? = null
-}
+)

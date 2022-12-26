@@ -3,7 +3,6 @@ package com.oguzhanaslann.feature_create_workout.ui
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -23,10 +22,11 @@ import com.oguzhanaslann.commonui.verticalLinearLayoutManaged
 import com.oguzhanaslann.commonui.viewBinding
 import com.oguzhanaslann.feature_create_workout.R
 import com.oguzhanaslann.feature_create_workout.databinding.FragmentCreateWorkoutBinding
-import com.oguzhanaslann.feature_create_workout.domain.DailyPlan
+import com.oguzhanaslann.feature_create_workout.domain.DailyPlanToBeSaved
 import com.oguzhanaslann.feature_create_workout.ui.createDailyPlan.DailyPlanCreatedKey
 import com.oguzhanaslann.feature_create_workout.ui.createDailyPlan.DailyPlanCreatedRequestKey
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -66,7 +66,9 @@ class CreateWorkoutFragment : Fragment(R.layout.fragment_create_workout) {
             requestKey = DailyPlanCreatedRequestKey
         ) { requestKey, bundle ->
             val dailyPlan =
-                BundleCompat.getParcelable(bundle, DailyPlanCreatedKey, DailyPlan::class.java)
+                BundleCompat.getParcelable(bundle,
+                    DailyPlanCreatedKey,
+                    DailyPlanToBeSaved::class.java)
             dailyPlan?.let {
                 viewModel.onDailyPlanCreated(it)
             }
@@ -118,7 +120,7 @@ class CreateWorkoutFragment : Fragment(R.layout.fragment_create_workout) {
         lifecycleScope.launch {
             viewModel.createWorkoutEvents
                 .flowWithLifecycle(lifecycle)
-                .collect {
+                .collectLatest {
                     when (it) {
                         CreateWorkoutEvent.WorkoutCreated -> showSuccessSnackbar(
                             container = binding.root,

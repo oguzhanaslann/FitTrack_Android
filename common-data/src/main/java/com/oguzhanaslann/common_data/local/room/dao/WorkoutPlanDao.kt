@@ -45,7 +45,7 @@ interface WorkoutPlanDao : BaseDao<WorkoutPlanEntity> {
     // getWorkoutPlanDetail flow
     @Transaction
     @Query("SELECT * FROM workout_plan WHERE workout_plan_id = :id")
-    fun getWorkoutPlanDetailStream(id: Int): Flow<WorkoutPlanDetail?>
+    fun getWorkoutPlanDetailStream(id: String): Flow<WorkoutPlanDetail?>
 
 }
 

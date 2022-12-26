@@ -5,6 +5,9 @@ import androidx.room.Entity
 
 @Entity(tableName = "user_exercise")
 data class UserExerciseEntity(
+    @androidx.room.PrimaryKey
+    @ColumnInfo(name = "user_exercise_id")
+    var id: String,
     @ColumnInfo(name = "user_daily_plan_id")
     val activeDailyPlanId: Int,
     val name: String,
@@ -15,9 +18,5 @@ data class UserExerciseEntity(
     val isCompleted: Boolean = false,
 
     @ColumnInfo(name = "language_code")
-    val languageCode: String
-) {
-    @androidx.room.PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "user_exercise_id")
-    var id: Int? = null
-}
+    val languageCode: String,
+)

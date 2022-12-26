@@ -22,7 +22,7 @@ import com.oguzhanaslann.commonui.verticalLinearLayoutManaged
 import com.oguzhanaslann.commonui.viewBinding
 import com.oguzhanaslann.feature_create_workout.R
 import com.oguzhanaslann.feature_create_workout.databinding.FragmentCreateDailyPlanBinding
-import com.oguzhanaslann.feature_create_workout.domain.DailyPlan
+import com.oguzhanaslann.feature_create_workout.domain.DailyPlanToBeSaved
 import com.oguzhanaslann.feature_create_workout.domain.ExerciseSet
 import com.oguzhanaslann.feature_create_workout.ui.createExercise.EXERCISE_SET_CREATE_REQUEST_KEY
 import com.oguzhanaslann.feature_create_workout.ui.createExercise.EXERCISE_SET_KEY
@@ -152,7 +152,7 @@ class CreateDailyPlanFragment : Fragment(R.layout.fragment_create_daily_plan) {
         }
     }
 
-    private fun sendCreationResultAndGoBack(dailyPlan: DailyPlan) {
+    private fun sendCreationResultAndGoBack(dailyPlan: DailyPlanToBeSaved) {
         setFragmentResult(
             requestKey = DailyPlanCreatedRequestKey,
             result = Bundle().apply {

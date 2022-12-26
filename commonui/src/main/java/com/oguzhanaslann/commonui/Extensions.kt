@@ -687,6 +687,12 @@ fun File.createIfNotExist() {
     }
 }
 
+fun File.createDirIfNotExist() {
+    if (!exists()) {
+        mkdirs()
+    }
+}
+
 fun File.toUrlString(): String {
     return toURI().toURL().toString()
 }

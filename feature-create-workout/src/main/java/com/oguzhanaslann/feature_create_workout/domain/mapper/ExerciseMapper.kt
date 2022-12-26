@@ -7,6 +7,7 @@ import com.oguzhanaslann.feature_create_workout.domain.Exercise
 class ExerciseMapper: Mapper<ExerciseEntity, Exercise> {
     override suspend fun map(input: ExerciseEntity): Exercise {
         return Exercise(
+            id = input.id,
             name = input.name,
             description = input.description,
             imageUrl = input.imageUrl,

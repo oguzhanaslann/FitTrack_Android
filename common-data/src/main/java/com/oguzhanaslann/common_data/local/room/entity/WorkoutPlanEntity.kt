@@ -8,16 +8,15 @@ import androidx.room.Relation
 
 @Entity(tableName = "workout_plan")
 data class WorkoutPlanEntity(
+    @androidx.room.PrimaryKey
+    @ColumnInfo(name = "workout_plan_id")
+    var id: String,
     val name: String,
     val imageUrl: String,
     val description: String,
     @ColumnInfo(name = "language_code")
     val languageCode: String,
-) {
-    @androidx.room.PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "workout_plan_id")
-    var id: Int? = null
-}
+)
 
 data class WorkoutPlanWithTags(
     @Embedded val workoutPlanEntity: WorkoutPlanEntity,

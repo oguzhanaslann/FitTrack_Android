@@ -20,7 +20,7 @@ class WorkoutDetailViewModel @Inject constructor(
     val workoutDetail: StateFlow<State<WorkoutDetail>>
         get() = _workoutDetail
 
-    fun getWorkoutDetail(id: Int) {
+    fun getWorkoutDetail(id: String) {
         viewModelScope.launch {
             _workoutDetail.value = State.Loading
             repository.getWorkoutDetail(id = id)

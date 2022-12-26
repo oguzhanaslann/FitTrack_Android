@@ -3,6 +3,7 @@ package com.oguzhanaslann.feature_create_workout.ui.createExercise
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import java.lang.Integer.max
 import java.lang.Integer.min
 
 class ExerciseSetCustomizeViewModel : ViewModel() {
@@ -18,7 +19,7 @@ class ExerciseSetCustomizeViewModel : ViewModel() {
     }
 
     fun decreaseReps() {
-        _reps.value = min(_reps.value?.minus(1) ?: 0, MIN_REPS)
+        _reps.value = max(_reps.value?.minus(1) ?: 0, MIN_REPS)
     }
 
     fun increaseSets() {
@@ -26,7 +27,7 @@ class ExerciseSetCustomizeViewModel : ViewModel() {
     }
 
     fun decreaseSets() {
-        _sets.value = min(_sets.value?.minus(1) ?: 0, MIN_SETS)
+        _sets.value = max(_sets.value?.minus(1) ?: 0, MIN_SETS)
     }
 
     fun getCurrentReps() = _reps.value ?: 0
