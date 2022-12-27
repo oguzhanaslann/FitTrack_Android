@@ -24,6 +24,7 @@ interface UserDailyPlanDao : BaseDao<UserDailyPlanEntity> {
         order: Int
     ): UserDailyPlanEntity?
 
+
     @Transaction
     @Query(
         """
@@ -32,6 +33,14 @@ interface UserDailyPlanDao : BaseDao<UserDailyPlanEntity> {
     """
     )
     suspend fun getUserCompletedExercises(userId: Int): List<UserDailyPlanWithExercises>?
+
+    @Transaction
+    @Query(
+        """
+        SELECT * FROM user_daily_plan WHERE user_daily_plan_id = :userDailyPlanId
+    """
+    )
+    suspend fun getUserDailyPlanWithExercises(userDailyPlanId: String): UserDailyPlanWithExercises?
 
     @Transaction
     @Query(
@@ -58,4 +67,5 @@ interface UserDailyPlanDao : BaseDao<UserDailyPlanEntity> {
         userId: Int,
         date: Long
     ): List<UserDailyPlanWithExercises>?
+
 }

@@ -71,6 +71,11 @@ fun getUriOfDrawable(context: Context?, @DrawableRes drawableId: Int): Uri? = co
     Uri.parse("android.resource://${packageName}/$drawableId")
 }
 
+
+
+fun getUrlOfDrawable(context: Context, @DrawableRes drawableId: Int): String =
+    getUriOfDrawable(context, drawableId).toString()
+
 //@ColorInt
 //fun Context.themeColor(
 //    @AttrRes themeAttrId: Int

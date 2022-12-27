@@ -1,6 +1,7 @@
 package com.oguzhanaslann.feature_reports.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -78,7 +79,11 @@ class ReportsFragment : Fragment(R.layout.fragment_reports) {
     private fun subscribeObservers() {
         reportsViewModel.reports.observe(viewLifecycleOwner) {
             it.onSuccess {
-                reportsAdapter.submitList(it.dailyPlan?.exercises)
+                Log.e("TAG", "subscribeObservers: $it")
+                binding.currentPastPlanName.text = it.dailyPlan?.name ?: ""
+                reportsAdapter.submitList(
+                    it.dailyPlan?.exercises
+                )
             }.onError {
                 when (it) {
                     ReportsViewModel.NOT_FOUND_EXCEPTION ->

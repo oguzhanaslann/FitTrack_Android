@@ -160,6 +160,9 @@ class WorkoutsRepositoryImpl(
                         description = exercise.exercise.description,
                         isCompleted = false,
                         languageCode = getAppLanguage(),
+                        order = index,
+                        reps = exercise.reps,
+                        set = exercise.sets,
                     )
                 }
             }

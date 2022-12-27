@@ -7,14 +7,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.oguzhanaslann.feature_reports.databinding.ItemExerciseLayoutBinding
+import com.oguzhanaslann.feature_reports.databinding.ItemReportLayoutBinding
 import com.oguzhanaslann.feature_reports.domain.ReportExercise
 
 class ReportExerciseAdapter :
     ListAdapter<ReportExercise, ReportExerciseAdapter.Holder>(DiffCallBack()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        val binding = ItemExerciseLayoutBinding.inflate(
+        val binding = ItemReportLayoutBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
@@ -28,7 +28,7 @@ class ReportExerciseAdapter :
         holder.onBind(currentItem)
     }
 
-    inner class Holder(val binding: ItemExerciseLayoutBinding) :
+    inner class Holder(val binding: ItemReportLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun onBind(currentItem: ReportExercise) = binding.run {
             exerciseImage.load(currentItem.image) {
@@ -37,7 +37,7 @@ class ReportExerciseAdapter :
             }
 
             exerciseNameText.text = currentItem.name
-            exerciseDescriptionText.text = currentItem.description
+            exerciseDescriptionTextView.text = currentItem.description
             exerciseDoneImage.isVisible = currentItem.isDone
         }
     }

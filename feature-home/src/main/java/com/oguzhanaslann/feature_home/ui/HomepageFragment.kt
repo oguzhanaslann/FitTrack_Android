@@ -1,4 +1,4 @@
-package com.oguzhanaslann.feature_home
+package com.oguzhanaslann.feature_home.ui
 
 import android.os.Bundle
 import android.view.View
@@ -6,7 +6,9 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import coil.load
+import com.oguzhanaslann.commonui.navController
 import com.oguzhanaslann.commonui.viewBinding
+import com.oguzhanaslann.feature_home.R
 import com.oguzhanaslann.feature_home.databinding.FragmentHomepageBinding
 import com.oguzhanaslann.feature_home.domain.model.DailyWorkoutOverview
 import dagger.hilt.android.AndroidEntryPoint
@@ -61,6 +63,19 @@ class HomepageFragment : Fragment(R.layout.fragment_homepage) {
                 error(com.oguzhanaslann.commonui.R.drawable.placeholder_thumbnail)
             }
 
+            binding.todaysDailyWorkoutCard.setOnClickListener {
+                navController.navigate(
+                    HomepageFragmentDirections.actionHomepageFragmentToTraceWorkoutFragment(
+                        todaysWorkoutOverview.id
+                    )
+                )
+            }
+
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getTodaysWorkoutOverview()
     }
 }

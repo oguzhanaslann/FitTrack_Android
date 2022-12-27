@@ -1,4 +1,4 @@
-package com.oguzhanaslann.feature_home
+package com.oguzhanaslann.feature_home.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
@@ -70,6 +70,10 @@ class HomepageViewModel @Inject constructor(
                 }
         }
 
+        getAndCollectTodaysWorkoutOverview()
+    }
+
+    private fun getAndCollectTodaysWorkoutOverview() {
         viewModelScope.launch {
             _todaysWorkoutOverview.emitAll(
                 homepageRepository.getTodaysWorkoutOverview()
@@ -84,5 +88,9 @@ class HomepageViewModel @Inject constructor(
             DateHelper.DAY_MONTH_WITH_NAME_YEAR_FORMAT,
             locale = appLanguageUseCase.getCurrentLocale()
         )
+    }
+
+    fun getTodaysWorkoutOverview() {
+        getAndCollectTodaysWorkoutOverview()
     }
 }

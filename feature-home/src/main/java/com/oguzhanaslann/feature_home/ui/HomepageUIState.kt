@@ -1,4 +1,4 @@
-package com.oguzhanaslann.feature_home
+package com.oguzhanaslann.feature_home.ui
 
 import com.oguzhanaslann.feature_home.domain.model.DailyWorkoutOverview
 

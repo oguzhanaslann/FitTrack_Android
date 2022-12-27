@@ -8,4 +8,9 @@
     <string name="workout_daily_day">Day - %d</string>
     <string name="description">Description</string>
     <string name="search">Search</string>
+    <string name="work_out_in_progress">A workout already in progress</string>
+    <string name="workout_in_process_warning_text">You already have a workout in progress. Do you want to start a new one?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="workout_started">Workout started</string>
 </resources>

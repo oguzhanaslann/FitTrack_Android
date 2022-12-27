@@ -19,4 +19,8 @@ data class UserExerciseEntity(
 
     @ColumnInfo(name = "language_code")
     val languageCode: String,
+
+    val order: Int,
+    val reps: Int? = null,
+    val set : Int? = null,
 )

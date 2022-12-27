@@ -6,7 +6,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".HomepageFragment">
+        tools:context=".ui.HomepageFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -51,7 +51,7 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="16dp"
                         android:alpha="0.7"
-                        android:text="15 may 2020"
+                        tools:text="15 may 2020"
                         android:textAppearance="?attr/textAppearanceBodySmall"
                         android:textColor="?attr/colorOnSurfaceVariant"
                         app:layout_constraintBottom_toTopOf="@+id/user_name"
@@ -67,7 +67,7 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
                         android:layout_marginBottom="16dp"
-                        android:text="Hello, John Doe"
+                        tools:text="Hello, John Doe"
                         android:textAppearance="?attr/textAppearanceTitleLarge"
                         android:textColor="?attr/colorOnSurfaceVariant"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -102,6 +102,7 @@
                         android:id="@+id/daily_workout_image"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
                         android:src="@drawable/placeholder_thumbnail"
                         android:visibility="visible"
                         app:layout_constraintBottom_toBottomOf="parent"

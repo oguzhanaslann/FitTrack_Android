@@ -15,6 +15,9 @@ val preferencesUserIsLoggedInKey =
     booleanPreferencesKey("com.oguzhanaslann.fittrack.user_is_logged_in")
 val preferencesUserIdKey = intPreferencesKey("com.oguzhanaslann.fittrack.user_id")
 
+val preferencesIsDatabasePopulatedKey =
+    booleanPreferencesKey("com.oguzhanaslann.fittrack.is_database_populated")
+
 class FitTrackDataStore(
     private val dataStore: DataStore<Preferences>,
 ) {
@@ -49,6 +52,13 @@ class FitTrackDataStore(
     }
 
     suspend fun getUserId() = dataStore.safeData.map { it[preferencesUserIdKey] ?: NONE }
+
+    suspend fun setDatabasePopulated(isPopulated: Boolean) = runSafeSetOperation {
+        dataStore.edit { it[preferencesIsDatabasePopulatedKey] = isPopulated }
+    }
+
+    suspend fun getDatabasePopulated() =
+        dataStore.safeData.map { it[preferencesIsDatabasePopulatedKey] ?: false }
 
     companion object {
         const val NONE = -1

@@ -70,7 +70,7 @@ class ExerciseAdapter(
             exerciseName.text = currentItem.name
 
             val repsAndSets = if (currentItem.reps > 0 && currentItem.sets > 0) {
-                "${currentItem.reps}x ${currentItem.sets} "
+                "${currentItem.reps}x${currentItem.sets} "
             } else {
                 ""
             }

@@ -9,4 +9,10 @@
     <string name="workout_daily_day">Gün - %d</string>
     <string name="description">Açıklama</string>
     <string name="search">Ara</string>
+
+    <string name="work_out_in_progress">Devam eden bir Antrenman programınız var</string>
+    <string name="workout_in_process_warning_text">Zaten bir antrenman sürdürüyorsunuz. Yeni bir tane başlatmak ister misiniz?</string>
+    <string name="yes">Evet</string>
+    <string name="no">Hayır</string>
+    <string name="workout_started">Antrenman başladı</string>
 </resources>

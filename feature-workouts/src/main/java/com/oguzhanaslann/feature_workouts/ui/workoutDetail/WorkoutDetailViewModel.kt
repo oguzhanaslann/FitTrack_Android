@@ -2,6 +2,7 @@ package com.oguzhanaslann.feature_workouts.ui.workoutDetail
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.oguzhanaslann.common.State
 import com.oguzhanaslann.common.isError
@@ -41,7 +42,7 @@ class WorkoutDetailViewModel @Inject constructor(
     private val _workoutDetail = MutableStateFlow<State<WorkoutDetail>>(State.Initial)
     private val _isActive = MutableStateFlow(false)
 
-    val workoutDetailState = combine(
+    private val _workoutDetailState = combine(
         _workoutDetail,
         _isActive
     ) { workoutDetail, isActive ->
@@ -54,6 +55,8 @@ class WorkoutDetailViewModel @Inject constructor(
         SharingStarted.WhileSubscribed(5000),
         WorkoutDetailState.initial()
     )
+
+    val workoutDetailState = _workoutDetailState.asLiveData()
 
     private val _workoutDetailEventChannel = Channel<WorkoutDetailEvent>()
     val workoutDetailEvent = _workoutDetailEventChannel.receiveAsFlow()
@@ -111,6 +114,10 @@ class WorkoutDetailViewModel @Inject constructor(
         viewModelScope.launch {
             sendEventSuspend(event)
         }
+    }
+
+    fun onPermissionGranted() {
+        tryStartingWorkout()
     }
 }
 
