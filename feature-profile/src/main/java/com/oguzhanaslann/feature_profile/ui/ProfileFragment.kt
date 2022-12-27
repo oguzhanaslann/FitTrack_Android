@@ -1,6 +1,7 @@
 package com.oguzhanaslann.feature_profile.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -78,9 +79,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         }
 
     private val oldWorkoutPlanAdapter by lazy {
-        OldWorkoutPlanAdapter(
-            onSeeDetailsClick = ::onSeeDetailsClick
-        )
+        OldWorkoutPlanAdapter()
     }
 
     private val favoriteRecipeAdapter by lazy {
@@ -106,14 +105,14 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 setAvoidFirstLastClipping(true)
                 setDrawLimitLinesBehindData(true)
 
-                valueFormatter = object : ValueFormatter() {
-                    override fun getAxisLabel(value: Float, axis: AxisBase?): String {
-                        val day = Date(value.toLong())
-                        return DateHelper.tryFormat(day,
-                            DateHelper.DAY_MONTH_WITH_NAME_YEAR_FORMAT,
-                            autoLocale = true)
-                    }
-                }
+//                valueFormatter = object : ValueFormatter() {
+//                    override fun getAxisLabel(value: Float, axis: AxisBase?): String {
+//                        val day = Date(value.toLong())
+//                        return DateHelper.tryFormat(day,
+//                            DateHelper.DAY_MONTH_WITH_NAME_YEAR_FORMAT,
+//                            autoLocale = true)
+//                    }
+//                }
                 //                typeface = Typeface.createFromAsset(requireContext().assets, "app/src/main/res/font/poppins_semi_bold.ttf")
             }
 
@@ -156,6 +155,11 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         binding.rvGallery.apply {
             horizontalLinearLayoutManaged()
             adapter = progressPhotoAdapter
+        }
+
+        binding.oldWorkoutPlansRecyclerView.apply {
+            horizontalLinearLayoutManaged()
+            adapter = oldWorkoutPlanAdapter
         }
     }
 
@@ -269,7 +273,5 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         }
     }
 
-    private fun onSeeDetailsClick(oldWorkoutPlanOverView: OldWorkoutPlanOverView) {
-        //  TODO("Not yet implemented")
-    }
+
 }

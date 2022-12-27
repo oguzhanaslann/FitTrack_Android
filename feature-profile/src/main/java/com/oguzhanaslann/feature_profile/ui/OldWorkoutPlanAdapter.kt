@@ -10,7 +10,6 @@ import com.oguzhanaslann.feature_profile.databinding.OldWorkoutPlanLayoutBinding
 import com.oguzhanaslann.domain_profile.domain.model.OldWorkoutPlanOverView
 
 class OldWorkoutPlanAdapter(
-    private inline val onSeeDetailsClick: (OldWorkoutPlanOverView) -> Unit = {}
 ) : ListAdapter<OldWorkoutPlanOverView, OldWorkoutPlanAdapter.Holder>(DiffCallBack()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
@@ -33,7 +32,6 @@ class OldWorkoutPlanAdapter(
         fun onBind(currentItem: OldWorkoutPlanOverView) = binding.run {
             oldWorkoutPlanName.text = currentItem.name
             oldWorkoutPlanImage.load(currentItem.imageUrl)
-            oldWorkoutStartButton.setOnClickListener { onSeeDetailsClick(currentItem) }
         }
     }
 
